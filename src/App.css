@@ -1,0 +1,15 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.App {
+  padding: 20px;
+  text-align: center;
+  background: yellow;
+}
+
+.title {
+  margin-bottom: 20px;
+}
