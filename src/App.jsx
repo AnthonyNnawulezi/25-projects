@@ -1,8 +1,13 @@
 import "./App.css";
 import CurrencyConverter from "./assets/currency converter";
+import BMICalculator from "./components/BMICalculator";
+import ButtonRippleEffect from "./components/buttonrippleeffect";
 import CountDownTimerTest from "./components/countdown-timer/test";
 import DigitalClock from "./components/digital-clock";
+import DragAndDrop from "./components/drag-and-drop";
 import FilterProducts from "./components/filter-category";
+import FileUpload from "./components/form-validation";
+import FormValidation from "./components/form-validation";
 import MusicPlayer from "./components/music-player";
 import PaginationTest from "./components/pagination/test";
 import ProgressBar from "./components/progress-bar/test";
@@ -26,6 +31,11 @@ function App() {
       <TipCalcultator />
       <MusicPlayer />
       <ProgresBar />
+      <BMICalculator />
+      <ButtonRippleEffect />
+      <DragAndDrop />
+      <FormValidation />
+      <FileUpload />
     </div>
   );
 }

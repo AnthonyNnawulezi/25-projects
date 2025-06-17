@@ -1,17 +1,20 @@
 import { useState } from "react";
 import "./style.css";
 
+//optimized
 function BMICalculator() {
-  const [weight, setWeight] = useState(null);
-  const [height, setHeight] = useState(null);
+  const [weight, setWeight] = useState("");
+  const [height, setHeight] = useState("");
   const [bmi, setBmi] = useState(null);
-  const [errorMessage, setErrorMessage] = useState(null);
+  const [errorMessage, setErrorMessage] = useState("");
 
   function calculateBmi() {
     if (!height || !weight) {
       setErrorMessage("Please enter the height and weight");
+      setBmi(null);
       return;
     }
+
     const numericHeight = parseFloat(height);
     const numericWeight = parseFloat(weight);
 
@@ -21,50 +24,56 @@ function BMICalculator() {
       numericHeight <= 0 ||
       numericWeight <= 0
     ) {
-      setErrorMessage("Please enter valid values for both height and weight");
+      setErrorMessage("Please enter valid positive numbers");
+      setBmi(null);
       return;
     }
 
-    const calculateHeight = numericHeight / 100;
-    const calculateBmi =
-      numericWeight / (calculateHeight * calculateHeight).toFixed(2);
+    const heightInMeters = numericHeight / 100;
+    const bmiValue = numericWeight / heightInMeters ** 2;
 
-    setBmi(calculateBmi);
+    setBmi(bmiValue.toFixed(2));
     setErrorMessage("");
   }
 
-  // console.log(bmi);
+  const getBmiCategory = (bmi) => {
+    if (bmi < 18.5) return "Underweight";
+    if (bmi < 24.9) return "Normal weight";
+    if (bmi < 29.9) return "Overweight";
+    return "Obese";
+  };
 
   return (
     <div className="bmi-container">
       <h1>BMI Calculator</h1>
+
       <div className="input-container">
-        <label htmlFor="">Height(cm):</label>
+        <label htmlFor="height">Height (cm):</label>
         <input
+          id="height"
           type="number"
           value={height}
-          onChange={(event) => setHeight(event.target.value)}
+          onChange={(e) => setHeight(e.target.value)}
         />
       </div>
+
       <div className="input-container">
-        <label htmlFor="">Weight(kg):</label>
+        <label htmlFor="weight">Weight (kg):</label>
         <input
+          id="weight"
           type="number"
           value={weight}
-          onChange={(event) => setWeight(event.target.value)}
+          onChange={(e) => setWeight(e.target.value)}
         />
       </div>
+
       <button onClick={calculateBmi}>Calculate BMI</button>
-      {errorMessage ? <p className="error-message">{errorMessage}</p> : null}
-      {errorMessage !== "" ? null : (
+
+      {errorMessage && <p className="error-message">{errorMessage}</p>}
+
+      {bmi && !errorMessage && (
         <p className="result">
-          {bmi < 18.5
-            ? "Underweight"
-            : bmi >= 18.5 && bmi < 24.9
-            ? "Normal weight"
-            : bmi >= 25 && bmi < 29.9
-            ? "Overweight"
-            : "Obese"}
+          BMI: {bmi} — {getBmiCategory(parseFloat(bmi))}
         </p>
       )}
     </div>

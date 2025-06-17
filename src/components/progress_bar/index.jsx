@@ -16,7 +16,7 @@ function ProgresBar() {
   }
 
   return (
-    <div className="container">
+    <div className="progress-container">
       <h1>Custom Progress Bar</h1>
       <div className="progress-bar">
         <div className="wrapper1">

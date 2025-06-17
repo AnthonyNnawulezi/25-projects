@@ -1,0 +1,44 @@
+.drag-and-drop-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: red;
+
+  h1 {
+    margin-top: 30px;
+    margin-bottom: 50px;
+  }
+}
+.drag-and-drop-board {
+  display: flex;
+  gap: 40px;
+  background-color: blueviolet;
+}
+
+.todo-card {
+  height: 50px;
+  width: 200px;
+  background-color: #25f800a4;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  font-weight: bold;
+  font-size: 12px;
+}
+
+.in-progress,
+.completed {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* .todo-list-wrapper {
+  height: 500px;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+} */
