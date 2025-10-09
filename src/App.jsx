@@ -8,10 +8,13 @@ import DragAndDrop from "./components/drag-and-drop";
 import FilterProducts from "./components/filter-category";
 import FileUpload from "./components/form-validation";
 import FormValidation from "./components/form-validation";
+import FileUpload1 from "./components/form-validation/index1";
 import MusicPlayer from "./components/music-player";
+import NestedComments from "./components/nested-comments";
 import PaginationTest from "./components/pagination/test";
 import ProgressBar from "./components/progress-bar/test";
 import ProgresBar from "./components/progress_bar";
+import Quiz from "./components/quiz-app";
 import RandonQuoteGenerator from "./components/quote-generator";
 import TipCalcultator from "./components/tip-calculator";
 import TooltipTest from "./components/tooltip/test";
@@ -35,7 +38,10 @@ function App() {
       <ButtonRippleEffect />
       <DragAndDrop />
       <FormValidation />
-      <FileUpload />
+      {/* <FileUpload /> */}
+      <FileUpload1 />
+      <Quiz />
+      <NestedComments />
     </div>
   );
 }
