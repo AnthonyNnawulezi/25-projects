@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "./style.css";
 
 function Comment({ comment, key, addReply }) {
   const [reply, setReply] = useState("");
@@ -6,7 +7,7 @@ function Comment({ comment, key, addReply }) {
 
   return (
     <li key={key}>
-      {comment.title}
+      <span>{comment.title}</span>
       {!showReply ? (
         <button onClick={() => setShowReply(true)}>Add Reply</button>
       ) : null}

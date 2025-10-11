@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "./style.css";
 import Comment from "./comment";
 
 function NestedComments() {
@@ -42,7 +43,19 @@ function NestedComments() {
     setComments(updatedComments);
   }
 
-  function addNewComment(comments, commentId, reply) {}
+  function addNewComment(comments, commentId, reply) {
+    for (let i = 0; i < comments.length; i++) {
+      let comment = comments[i];
+      if (comment.id === commentId) {
+        comment.children.unshift(newComment(reply));
+        return true;
+      }
+      for (let j = 0; j < comment.children.length; j++) {
+        let childComment = comment.children[j];
+        addNewComment(childComment.children, commentId, reply);
+      }
+    }
+  }
 
   return (
     <div className="nested-comments">
@@ -57,7 +70,14 @@ function NestedComments() {
           onChange={(e) => setInputValue(e.target.value)}
         ></textarea>
         <br />
-        <button>Add Comment</button>
+        <button
+          onClick={() => {
+            setComments([...comments, newComment(inputValue)]);
+            setInputValue("");
+          }}
+        >
+          Add Comment
+        </button>
       </div>
       <ul>
         {comments.map((comment) => (

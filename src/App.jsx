@@ -12,11 +12,13 @@ import FileUpload1 from "./components/form-validation/index1";
 import MusicPlayer from "./components/music-player";
 import NestedComments from "./components/nested-comments";
 import PaginationTest from "./components/pagination/test";
+import PdfViewer from "./components/PdfViewer";
 import ProgressBar from "./components/progress-bar/test";
 import ProgresBar from "./components/progress_bar";
 import Quiz from "./components/quiz-app";
 import RandonQuoteGenerator from "./components/quote-generator";
 import TipCalcultator from "./components/tip-calculator";
+import Todo from "./components/todo";
 import TooltipTest from "./components/tooltip/test";
 
 function App() {
@@ -42,6 +44,8 @@ function App() {
       <FileUpload1 />
       <Quiz />
       <NestedComments />
+      <PdfViewer />
+      <Todo />
     </div>
   );
 }
