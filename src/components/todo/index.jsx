@@ -16,11 +16,10 @@ import "./style.css";
 
 const todoQuery = query(collection(db, "todos"), orderBy("timestamp", "desc"));
 
-function Todo() {
+function Todo({ authInfo = null }) {
   const [input, setInput] = useState("");
   const [todos, setTodos] = useState([]);
   const [currentTodo, setCurrentTodo] = useState(null);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     onSnapshot(todoQuery, (snapshot) => {
@@ -73,6 +72,7 @@ function Todo() {
             key={todo.id}
             setCurrentTodo={setCurrentTodo}
             todo={todo}
+            authInfo={authInfo}
           />
         ))}
       </ul>

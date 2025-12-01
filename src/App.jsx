@@ -1,12 +1,12 @@
 import "./App.css";
 import CurrencyConverter from "./assets/currency converter";
+import FireBaseAuth from "./components/auth-app";
 import BMICalculator from "./components/BMICalculator";
 import ButtonRippleEffect from "./components/buttonrippleeffect";
 import CountDownTimerTest from "./components/countdown-timer/test";
 import DigitalClock from "./components/digital-clock";
 import DragAndDrop from "./components/drag-and-drop";
 import FilterProducts from "./components/filter-category";
-import FileUpload from "./components/form-validation";
 import FormValidation from "./components/form-validation";
 import FileUpload1 from "./components/form-validation/index1";
 import MusicPlayer from "./components/music-player";
@@ -46,6 +46,7 @@ function App() {
       <NestedComments />
       <PdfViewer />
       <Todo />
+      <FireBaseAuth />
     </div>
   );
 }
