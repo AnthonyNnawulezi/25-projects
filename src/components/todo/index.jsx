@@ -10,7 +10,7 @@ import {
   serverTimestamp,
   updateDoc,
 } from "firebase/firestore";
-import { db } from "../../firebase-config";
+import { db } from "../../firebase-config/";
 import Todos from "./todo";
 import "./style.css";
 
@@ -22,16 +22,26 @@ function Todo({ authInfo = null }) {
   const [currentTodo, setCurrentTodo] = useState(null);
 
   useEffect(() => {
-    onSnapshot(todoQuery, (snapshot) => {
-      setTodos(
-        snapshot.docs.map((doc) => ({
-          id: doc.id,
-          todo: doc.data(),
-        }))
-      );
-      console.log(todos, "snapshot");
-    });
-  }, [input]);
+    if (!authInfo?.user) return; // Don't attach listener if user not authenticated
+
+    const unsubscribe = onSnapshot(
+      todoQuery,
+      (snapshot) => {
+        setTodos(
+          snapshot.docs.map((doc) => ({
+            id: doc.id,
+            todo: doc.data(),
+          }))
+        );
+        console.log(todos, "snapshot");
+      },
+      (error) => {
+        console.error("Snapshot error:", error);
+      }
+    );
+
+    return () => unsubscribe(); // Cleanup listener on unmount
+  }, [authInfo?.user]);
 
   const addOrEditTodo = (e) => {
     e.preventDefault();

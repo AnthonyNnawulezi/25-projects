@@ -3,7 +3,7 @@ import {
   auth,
   loginUsingEmailAndPassword,
   registerUsingEmailAndPassword,
-} from "../../firebase-config";
+} from "../../firebase-config/";
 import { useAuthState } from "react-firebase-hooks/auth";
 import Todo from "../todo";
 
@@ -22,7 +22,7 @@ function Registration({ formData, setFormData, registerUser }) {
         />
       </div>
       <div className="input-wrapper">
-        <label htmlFor="">Email:</label>
+        <label htmlFor="email">Email:</label>
         <input
           type="email"
           id="email"
@@ -34,7 +34,7 @@ function Registration({ formData, setFormData, registerUser }) {
       </div>
 
       <div className="input-wrapper">
-        <label htmlFor="">Password:</label>
+        <label htmlFor="password">Password:</label>
         <input
           type="password"
           name="password"
@@ -55,7 +55,7 @@ function Login({ formData, setFormData, loginUser }) {
   return (
     <div className="login">
       <div className="input-wrapper">
-        <label htmlFor="">Email:</label>
+        <label htmlFor="email">Email:</label>
         <input
           type="email"
           id="email"
@@ -67,7 +67,7 @@ function Login({ formData, setFormData, loginUser }) {
       </div>
 
       <div className="input-wrapper">
-        <label htmlFor="">Password:</label>
+        <label htmlFor="password">Password:</label>
         <input
           type="password"
           name="password"
@@ -97,19 +97,48 @@ function UnAuthPage() {
     password: "",
   });
 
-  const [user, loading, error] = useAuthState(auth);
+  const [error, setError] = useState("");
+
+  const [user, loading, authError] = useAuthState(auth);
 
   console.log(registerData);
 
   function registerUser() {
+    setError(""); // Clear previous errors
     const { name, email, password } = registerData;
-    // call login function from firebase-config
-    registerUsingEmailAndPassword(name, email, password);
+
+    if (!name || !email || !password) {
+      setError("All fields are required");
+      return;
+    }
+
+    registerUsingEmailAndPassword(name, email, password)
+      .then(() => {
+        setError("");
+        setRegisterData({ name: "", email: "", password: "" });
+      })
+      .catch((err) => {
+        setError(err.message || "Registration failed");
+      });
   }
 
   function loginUser() {
+    setError(""); // Clear previous errors
     const { email, password } = loginData;
-    loginUsingEmailAndPassword(email, password);
+
+    if (!email || !password) {
+      setError("Email and password are required");
+      return;
+    }
+
+    loginUsingEmailAndPassword(email, password)
+      .then(() => {
+        setError("");
+        setLoginData({ email: "", password: "" });
+      })
+      .catch((err) => {
+        setError(err.message || "Login failed");
+      });
   }
 
   return (
@@ -122,6 +151,7 @@ function UnAuthPage() {
           Login
         </button>
       </div>
+      {error && <div className="error-message">{error}</div>}
       <div className="tab-content">
         {activeTab ? (
           <Login
@@ -137,7 +167,7 @@ function UnAuthPage() {
           />
         )}
       </div>
-      {user && <Todo authInfo={{ user, loading, error }} />}
+      {user && <Todo authInfo={{ user, loading, error: authError }} />}
     </div>
   );
 }

@@ -1,8 +1,9 @@
-import { auth } from "../../firebase-config";
+import { auth } from "../../firebase-config/";
 import AuthPage from "./auth";
 import UnAuthPage from "./unauth";
 import { useAuthState } from "react-firebase-hooks/auth";
 import "./style.css";
+import Todo from "../todo";
 
 function FireBaseAuth() {
   const [user, loading, error] = useAuthState(auth);
@@ -13,7 +14,9 @@ function FireBaseAuth() {
   ) : error ? (
     <div>Error: {error.message}</div>
   ) : user ? (
-    <AuthPage />
+    <div>
+      <AuthPage />
+    </div>
   ) : (
     <UnAuthPage />
   );

@@ -1,9 +1,11 @@
 import "./App.css";
 import CurrencyConverter from "./assets/currency converter";
 import FireBaseAuth from "./components/auth-app";
+import SortUsers from "./components/sorting-users";
 import BMICalculator from "./components/BMICalculator";
 import ButtonRippleEffect from "./components/buttonrippleeffect";
 import CountDownTimerTest from "./components/countdown-timer/test";
+import DebounceApi from "./components/Debounce-api";
 import DigitalClock from "./components/digital-clock";
 import DragAndDrop from "./components/drag-and-drop";
 import FilterProducts from "./components/filter-category";
@@ -20,6 +22,7 @@ import RandonQuoteGenerator from "./components/quote-generator";
 import TipCalcultator from "./components/tip-calculator";
 import Todo from "./components/todo";
 import TooltipTest from "./components/tooltip/test";
+import MovieApp from "./components/movie-app";
 
 function App() {
   return (
@@ -47,6 +50,9 @@ function App() {
       <PdfViewer />
       <Todo />
       <FireBaseAuth />
+      <DebounceApi />
+      <SortUsers />
+      <MovieApp />
     </div>
   );
 }

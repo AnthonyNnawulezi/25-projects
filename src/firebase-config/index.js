@@ -1,4 +1,4 @@
-import { initializeApp } from "firebase/app";
+import { initializeApp, getApps, getApp } from "firebase/app";
 import { addDoc, collection, getFirestore } from "firebase/firestore";
 import {
   createUserWithEmailAndPassword,
@@ -17,17 +17,25 @@ const firebaseConfig = {
   measurementId: "G-6MWY2TSCGY",
 };
 
-const firebaseApp = initializeApp(firebaseConfig);
+// Initialize Firebase - only if not already initialized
+const firebaseApp =
+  getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
 export const db = getFirestore(firebaseApp);
 // const auth = firebaseApp.auth();
 const auth = getAuth(firebaseApp);
 
 async function loginUsingEmailAndPassword(email, password) {
   try {
-    // await auth.signInWithEmailAndPassword(email, password); ask why not work instead of below
-    await signInWithEmailAndPassword(auth, email, password);
+    const userCredential = await signInWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+    console.log("User logged in successfully:", userCredential.user.email);
+    return userCredential.user;
   } catch (error) {
-    console.log(error);
+    console.error("Login error:", error.message, error.code);
+    throw error; // Re-throw so the calling component can handle it
   }
 }
 
@@ -41,19 +49,23 @@ async function registerUsingEmailAndPassword(name, email, password) {
     const user = userCredential.user;
 
     // save to database
-    await addDoc(collection(db, "users"), {
+    const docRef = await addDoc(collection(db, "users"), {
       uid: user.uid,
       name,
       authProvider: "local",
       email,
     });
+
+    console.log("User registered and saved to database:", docRef.id);
+    return user;
   } catch (error) {
-    console.log(error);
+    console.error("Registration error:", error.message, error.code);
+    throw error; // Re-throw so the calling component can handle it
   }
 }
 
 function logout() {
-  auth.signOut();
+  // auth.signOut();
   signOut(auth);
 }
 

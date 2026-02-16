@@ -1,12 +1,11 @@
-import { auth, db, logout } from "../../firebase-config";
+import { auth, db, logout } from "../../firebase-config/index.js";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { useEffect, useState } from "react";
-import Todos from "../todo/todo";
 import Todo from "../todo";
 
 function AuthPage() {
-  const [loading, user, error] = useAuthState(auth);
+  const [user, loading, error] = useAuthState(auth);
   const [userDetails, setUserDetails] = useState(null);
 
   async function fetchUserDetails() {
