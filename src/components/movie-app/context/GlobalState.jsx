@@ -11,20 +11,25 @@ function GlobalState({ children }) {
   const api_key = "fd5ba8be7732f6d13596b5e82c8fa701";
 
   useEffect(() => {
-    console.log(debounceMovies);
-  }, [debounceMovies]);
+    const fetchMovies = async () => {
+      if (!debounceMovies) return; // Don't fetch if search is empty
+      setLoading(true);
+      try {
+        const response = await fetch(
+          `https://api.themoviedb.org/3/search/movie?api_key=${api_key}&query=${debounceMovies}&include_adult=false&language=en-US&page=1`,
+        );
+        const data = await response.json();
+        console.log("Data", data);
+        setMovies(data.results || []);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  useEffect(() => {
-    try {
-      const response = fetch(
-        `https://api.themoviedb.org/3/authentication/guest_session/new?api_key=${api_key}&query=${debounceMovies}`,
-      );
-      const data = response.json();
-      console.log("Data", data);
-    } catch (error) {
-      console.error(error);
-    }
-  }, []);
+    fetchMovies();
+  }, [debounceMovies, search]);
 
   return (
     <MovieContext.Provider
