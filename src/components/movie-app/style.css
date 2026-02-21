@@ -29,3 +29,117 @@
   background: rgb(36, 154, 69);
   object-fit: cover;
 }
+
+.watchlist-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: space-between;
+}
+
+.watchlist {
+  width: 200px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  overflow: hidden;
+  text-align: center;
+}
+.watchlist img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+}
+.watchlist h3 {
+  margin: 10px 0;
+}
+.watchlist p {
+  margin: 0 10px 10px;
+}
+.buttons {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 10px;
+}
+.buttons button {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 4px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+}
+.buttons button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+.watched-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: space-between;
+}
+.watched {
+  width: 200px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  overflow: hidden;
+  text-align: center;
+}
+.watched img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+}
+.watched h3 {
+  margin: 10px 0;
+}
+.watched p {
+  margin: 0 10px 10px;
+}
+.buttons {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 10px;
+}
+.buttons button {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 4px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+}
+.buttons button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+.movie-app-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+.movie-app-container h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.movie-app-container .nav {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+.movie-app-container .nav button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+}
+.movie-app-container .nav button.active {
+  background-color: #0056b3;
+}
+.movie-app-container .nav button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}

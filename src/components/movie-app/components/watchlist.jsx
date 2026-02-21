@@ -1,7 +1,49 @@
+import { useContext } from "react";
+import { add_to_watchlist } from "../type";
+import { MovieContext } from "../context/GlobalState";
+
 function watchlist() {
+  const { state } = useContext(MovieContext);
   return (
     <div className="watchlist">
       <h1>Watch List</h1>
+      <div className="watchlist-wrapper">
+        <p className="watchlist-count">
+          {state.watchlist.length} movies in watchlist
+        </p>
+        {state?.watchlist?.length > 0 ? (
+          state.watchlist.map((movie) => (
+            <div key={movie.id} className="watchlist-movie">
+              {movie?.poster_path ? (
+                <img
+                  src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                  alt={movie.title}
+                />
+              ) : (
+                <div className="fill-img">No Image Available</div>
+              )}
+              <div className="movie-info">
+                <h3>{movie?.title}</h3>
+                <p>Release Date: {movie?.release_date}</p>
+                <p>Rating: {movie?.vote_average}</p>
+              </div>
+              <div className="buttons">
+                <button onClick={() => removeFromWatchlist(movie)}>
+                  Remove from Watchlist
+                </button>
+                <button
+                  disabled={state.watched.some((m) => m.id === movie.id)}
+                  onClick={() => addToWatched(movie)}
+                >
+                  Add to Watched
+                </button>
+              </div>
+            </div>
+          ))
+        ) : (
+          <p>No movies in watchlist</p>
+        )}
+      </div>
     </div>
   );
 }

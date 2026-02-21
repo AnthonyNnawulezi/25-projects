@@ -1,4 +1,9 @@
+import { useContext } from "react";
+import { MovieContext } from "../context/GlobalState";
+
 function MovieCard({ movie, key }) {
+  const { addToWatchlist, addToWatched, state } = useContext(MovieContext);
+
   return (
     <div key={key} className="movie-card">
       {movie?.poster_path ? (
@@ -15,8 +20,20 @@ function MovieCard({ movie, key }) {
         <p>Rating: {movie?.vote_average}</p>
       </div>
       <div className="buttons-wrapper">
-        <button>Add to Watchlist</button>
-        <button>Add to Watched</button>
+        <button
+          disabled={state.watchlist.some((m) => m.id === movie.id)}
+          // disabled={state.watchlist.findIndex((m) => m.id === movie.id) !== -1}
+          // disabled={state.watchlist.findIndex((m) => m.id === movie.id) > -1 ? true : false}
+          onClick={() => addToWatchlist(movie)}
+        >
+          Add to Watchlist
+        </button>
+        <button
+          disabled={state.watched.findIndex((m) => m.id === movie.id) !== -1}
+          onClick={() => addToWatched(movie)}
+        >
+          Add to Watched
+        </button>
       </div>
     </div>
   );

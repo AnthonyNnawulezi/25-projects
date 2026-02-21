@@ -1,5 +1,7 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useReducer, useState } from "react";
 import useDebounce from "../../Debounce-api/use-debounce";
+import { Reducer } from "./Reducer";
+import { add_to_watched, add_to_watchlist } from "../type";
 
 export const MovieContext = createContext();
 
@@ -9,6 +11,15 @@ function GlobalState({ children }) {
   const [loading, setLoading] = useState(false);
   const debounceMovies = useDebounce(search, 500);
   const api_key = "fd5ba8be7732f6d13596b5e82c8fa701";
+  const initialState = {
+    watchlist: localStorage.getItem("watchlist")
+      ? JSON.parse(localStorage.getItem("watchlist"))
+      : [],
+    watched: localStorage.getItem("watched")
+      ? JSON.parse(localStorage.getItem("watched"))
+      : [],
+  };
+  const [state, dispatch] = useReducer(Reducer, initialState);
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -31,6 +42,23 @@ function GlobalState({ children }) {
     fetchMovies();
   }, [debounceMovies, search]);
 
+  function addToWatchlist(movie) {
+    console.log(movie);
+    dispatch({
+      type: add_to_watchlist,
+      payload: movie,
+    });
+  }
+  function addToWatched(movie) {
+    console.log(movie);
+    dispatch({
+      type: add_to_watched,
+      payload: movie,
+    });
+  }
+
+  console.log("state", state);
+
   return (
     <MovieContext.Provider
       value={{
@@ -41,6 +69,9 @@ function GlobalState({ children }) {
         loading,
         setLoading,
         debounceMovies,
+        addToWatched,
+        addToWatchlist,
+        state,
       }}
     >
       {children}
