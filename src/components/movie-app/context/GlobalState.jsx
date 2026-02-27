@@ -1,7 +1,12 @@
 import { createContext, useEffect, useReducer, useState } from "react";
 import useDebounce from "../../Debounce-api/use-debounce";
 import { Reducer } from "./Reducer";
-import { add_to_watched, add_to_watchlist } from "../type";
+import {
+  add_to_watched,
+  add_to_watchlist,
+  remove_from_watched,
+  remove_from_watchlist,
+} from "../type";
 
 export const MovieContext = createContext();
 
@@ -40,7 +45,15 @@ function GlobalState({ children }) {
     };
 
     fetchMovies();
-  }, [debounceMovies, search]);
+  }, [debounceMovies]);
+
+  useEffect(() => {
+    localStorage.setItem("watchlist", JSON.stringify(state.watchlist));
+  }, [state.watchlist]);
+
+  useEffect(() => {
+    localStorage.setItem("watched", JSON.stringify(state.watched));
+  }, [state.watched]);
 
   function addToWatchlist(movie) {
     console.log(movie);
@@ -57,6 +70,30 @@ function GlobalState({ children }) {
     });
   }
 
+  function removeFromWatchlist(movie) {
+    dispatch({
+      type: remove_from_watchlist,
+      payload: movie,
+    });
+  }
+
+  function removeFromWatched(movie) {
+    dispatch({
+      type: remove_from_watched,
+      payload: movie,
+    });
+  }
+
+  function moveToWatchlist(movie) {
+    removeFromWatched(movie);
+    addToWatchlist(movie);
+  }
+
+  function moveToWatched(movie) {
+    removeFromWatchlist(movie);
+    addToWatched(movie);
+  }
+
   console.log("state", state);
 
   return (
@@ -71,7 +108,11 @@ function GlobalState({ children }) {
         debounceMovies,
         addToWatched,
         addToWatchlist,
+        removeFromWatchlist,
+        removeFromWatched,
         state,
+        moveToWatchlist,
+        moveToWatched,
       }}
     >
       {children}

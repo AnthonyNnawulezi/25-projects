@@ -23,6 +23,7 @@ import TipCalcultator from "./components/tip-calculator";
 import Todo from "./components/todo";
 import TooltipTest from "./components/tooltip/test";
 import MovieApp from "./components/movie-app";
+import GoogleAuthentication from "./components/google-authentication";
 
 function App() {
   return (
@@ -53,6 +54,7 @@ function App() {
       <DebounceApi />
       <SortUsers />
       <MovieApp />
+      <GoogleAuthentication />
     </div>
   );
 }

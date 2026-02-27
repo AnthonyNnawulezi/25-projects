@@ -1,4 +1,10 @@
+import { useContext } from "react";
+import { MovieContext } from "../context/GlobalState";
+
 function WatchedMovies() {
+  const { removeFromWatched, state, moveToWatchlist } =
+    useContext(MovieContext);
+
   return (
     <div className="watched">
       <h1>Watched Movies</h1>
@@ -21,14 +27,11 @@ function WatchedMovies() {
                 <p>Rating: {movie?.vote_average}</p>
               </div>
               <div className="buttons">
-                <button onClick={() => removeFromWatchlist(movie)}>
+                <button onClick={() => removeFromWatched(movie)}>
                   Remove from Watched
                 </button>
-                <button
-                  disabled={state.watched.some((m) => m.id === movie.id)}
-                  onClick={() => addToWatched(movie)}
-                >
-                  Add to Watched
+                <button onClick={() => moveToWatchlist(movie)}>
+                  Move To Watchlist
                 </button>
               </div>
             </div>

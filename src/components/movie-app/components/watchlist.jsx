@@ -1,9 +1,9 @@
 import { useContext } from "react";
-import { add_to_watchlist } from "../type";
 import { MovieContext } from "../context/GlobalState";
 
-function watchlist() {
-  const { state } = useContext(MovieContext);
+function Watchlist() {
+  const { state, removeFromWatchlist, moveToWatched } =
+    useContext(MovieContext);
   return (
     <div className="watchlist">
       <h1>Watch List</h1>
@@ -31,11 +31,8 @@ function watchlist() {
                 <button onClick={() => removeFromWatchlist(movie)}>
                   Remove from Watchlist
                 </button>
-                <button
-                  disabled={state.watched.some((m) => m.id === movie.id)}
-                  onClick={() => addToWatched(movie)}
-                >
-                  Add to Watched
+                <button onClick={() => moveToWatched(movie)}>
+                  Move to Watched
                 </button>
               </div>
             </div>
@@ -48,4 +45,4 @@ function watchlist() {
   );
 }
 
-export default watchlist;
+export default Watchlist;

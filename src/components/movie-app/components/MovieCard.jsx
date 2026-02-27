@@ -15,9 +15,9 @@ function MovieCard({ movie, key }) {
         <div className="fill-img">No Image Available</div>
       )}
       <div className="movie-info">
-        <h3>{movie?.title}</h3>
-        <p>Release Date: {movie?.release_date}</p>
-        <p>Rating: {movie?.vote_average}</p>
+        <h3>{movie.title}</h3>
+        <p>Release Date: {movie.release_date ?? "Unknown"}</p>
+        <p>Rating: {movie.vote_average ?? "N/A"}</p>
       </div>
       <div className="buttons-wrapper">
         <button
