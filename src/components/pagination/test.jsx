@@ -54,14 +54,36 @@ function ProductList() {
   const [currentPage, setCurrentPage] = useState(1);
   const totalPages = Math.ceil(PRODUCTS.length / ITEMS_PER_PAGE);
 
-  const visibleProducts = useMemo(() => {
+  const currentItems = useMemo(() => {
     const indexOfLastItem = currentPage * ITEMS_PER_PAGE;
     const indexOfFirstItem = indexOfLastItem - ITEMS_PER_PAGE;
     return PRODUCTS.slice(indexOfFirstItem, indexOfLastItem);
   }, [currentPage]);
 
-  function handlePageChange(newPage) {
+  function handlePageChange(page) {
     if (page < 1 || page > totalPages) return;
-    setCurrentPage(newPage);
+    setCurrentPage(page);
   }
+
+  return (
+    <section className="pagination-container">
+      <h1>Pagination</h1>
+
+      {currentItems.length > 0 ? (
+        <ul className="list-items">
+          {currentItems.map((item) => (
+            <li key={item.id}>{item.name}</li>
+          ))}
+        </ul>
+      ) : (
+        <p>No products found.</p>
+      )}
+
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={handlePageChange}
+      />
+    </section>
+  );
 }
