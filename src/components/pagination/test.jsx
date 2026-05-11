@@ -65,6 +65,13 @@ function ProductList() {
     setCurrentPage(page);
   }
 
+  //or
+//   const handlePageChange = (page) => {
+//   if (page < 1 || page > totalPages) return;  // clean guard clause
+//   if (page === currentPage) return;             // prevent redundant update
+//   setCurrentPage(page);
+};
+
   return (
     <section className="pagination-container">
       <h1>Pagination</h1>
