@@ -61,7 +61,7 @@ function Pagination({ currentPage, totalPages = 10, onPageChange }) {
       </button>
       {pages.map((page) => (
         <button
-          className={`pagination-btn ${currentPage === pageNo ? "active" : ""}`}
+          className={`pagination-btn ${currentPage === page ? "active" : ""}`}
           key={page}
           onClick={() => onPageChange(page)} //updating the current page.
           aria-current={currentPage === page ? "page" : undefined}

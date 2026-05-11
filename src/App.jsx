@@ -13,7 +13,7 @@ import FormValidation from "./components/form-validation";
 import FileUpload1 from "./components/form-validation/index1";
 import MusicPlayer from "./components/music-player";
 import NestedComments from "./components/nested-comments";
-import PaginationTest from "./components/pagination/test";
+import ProductList from "./components/pagination/test";
 import PdfViewer from "./components/PdfViewer";
 import ProgressBar from "./components/progress-bar/test";
 import ProgresBar from "./components/progress_bar";
