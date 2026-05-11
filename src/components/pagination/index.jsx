@@ -54,25 +54,26 @@ function Pagination({ currentPage, totalPages = 10, onPageChange }) {
       <button
         className="pagination-btn"
         onClick={() => onPageChange(currentPage - 1)}
-        disabled={currentPage === 1} // Disable when on first page
+        disabled={currentPage === 1}
+        aria-label="Previous Page"
       >
         Prev
       </button>
-      {pages.map((pageNo) => (
+      {pages.map((page) => (
         <button
           className={`pagination-btn ${currentPage === pageNo ? "active" : ""}`}
-          key={pageNo}
-          onClick={() => onPageChange(pageNo)} //updating the current page.
+          key={page}
+          onClick={() => onPageChange(page)} //updating the current page.
+          aria-current={currentPage === page ? "page" : undefined}
         >
-          {pageNo}
+          {page}
         </button>
       ))}
-
-      {/* Next Button */}
       <button
         className="pagination-btn"
         onClick={() => onPageChange(currentPage + 1)}
-        disabled={currentPage === totalPages} // Correctly disables on last page
+        disabled={currentPage === totalPages}
+        aria-label="Next Page"
       >
         Next
       </button>
