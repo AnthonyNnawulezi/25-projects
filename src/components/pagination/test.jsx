@@ -87,3 +87,5 @@ function ProductList() {
     </section>
   );
 }
+
+export default ProductList;
