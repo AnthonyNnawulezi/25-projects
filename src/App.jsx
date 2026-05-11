@@ -29,7 +29,7 @@ function App() {
   return (
     <div className="App">
       <h1 className="title">25 React js Projects</h1>
-      <PaginationTest />
+      <ProductList />
       <DigitalClock />
       <CountDownTimerTest />
       <ProgressBar />

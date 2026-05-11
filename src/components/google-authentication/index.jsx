@@ -41,13 +41,32 @@ function GoogleAuthentication() {
     if (authInfo) fetchProfile();
   }, [authInfo]);
 
+  function logout() {
+    setAuthInfo(null);
+    setProfile(null);
+    setError(null);
+  }
+
+  console.log("Auth and Profile", authInfo, profile);
+
   return (
     <div className="authentication-container">
       <h1>Google Authentication</h1>
-      <button onClick={login}>Login with Google</button>
-      {authInfo && <p>Authentication Info: {JSON.stringify(authInfo)}</p>}
-      {profile && <p>Profile Info: {JSON.stringify(profile)}</p>}
-      {error && <p>Error: {JSON.stringify(error)}</p>}
+      {profile !== null ? (
+        <div className="profile-info">
+          <img
+            src={profile?.picture}
+            alt="Profile"
+            className="profile-picture"
+          />
+          <h2>{profile.name}</h2>
+          <p>{profile.email}</p>
+          <button onClick={logout}>Logout</button>
+        </div>
+      ) : (
+        <button onClick={login}>Login with Google</button>
+      )}
+      {error && <p className="error-message">Error: {error.message}</p>}
     </div>
   );
 }
