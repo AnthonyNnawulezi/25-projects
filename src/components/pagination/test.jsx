@@ -42,7 +42,7 @@ import "./pagination.css";
 
 // export default PaginationTest;
 
-// 2nd version
+// 2nd version, moved constants outside so they are only recalculated when dpendency changes, or wrap in useMemo inside function
 
 const ITEMS_PER_PAGE = 12;
 const PRODUCTS = Array.from({ length: 102 }, (_, index) => ({
@@ -52,16 +52,16 @@ const PRODUCTS = Array.from({ length: 102 }, (_, index) => ({
 
 function ProductList() {
   const [currentPage, setCurrentPage] = useState(1);
-
-  const totalPages = Math.ceil(ALL_PRODUCTS.length / ITEMS_PER_PAGE);
+  const totalPages = Math.ceil(PRODUCTS.length / ITEMS_PER_PAGE);
 
   const visibleProducts = useMemo(() => {
     const indexOfLastItem = currentPage * ITEMS_PER_PAGE;
     const indexOfFirstItem = indexOfLastItem - ITEMS_PER_PAGE;
-    return ALL_PRODUCTS.slice(indexOfFirstItem, indexOfLastItem);
+    return PRODUCTS.slice(indexOfFirstItem, indexOfLastItem);
   }, [currentPage]);
 
   function handlePageChange(newPage) {
+    if (page < 1 || page > totalPages) return;
     setCurrentPage(newPage);
   }
 }
