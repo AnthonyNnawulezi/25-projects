@@ -1,6 +1,6 @@
 function Pagination({ handlePageChange, currentPage, totalPages }) {
   let pageNos = [];
-  for (let i = 0; i < totalPages; i++) {
+  for (let i = 1; i <= totalPages; i++) {
     pageNos.push([i]);
   }
   return (

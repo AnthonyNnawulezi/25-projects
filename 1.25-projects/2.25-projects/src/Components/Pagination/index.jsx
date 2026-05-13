@@ -7,7 +7,7 @@ function ProductsList() {
   const PRODUCTS = useMemo(() => {
     let productItems = [];
 
-    for (let i = 0; i <= 150; i += 1) {
+    for (let i = 1; i <= 150; i += 1) {
       productItems.push({
         id: i,
         name: "Product",
@@ -19,13 +19,13 @@ function ProductsList() {
 
   const [currentPage, setCurrentPage] = useState(1);
   const ITEMS_PER_PAGE = 12;
+  const totalPages = Math.ceil(PRODUCTS.length / ITEMS_PER_PAGE);
 
   function handlePageChange(page) {
-    if (page < 1 || page > ITEMS_PER_PAGE) return;
+    if (page < 1 || page > totalPages) return;
     setCurrentPage(page);
   }
 
-  const totalPages = Math.ceil(PRODUCTS.length / ITEMS_PER_PAGE);
   const currentItems = useMemo(() => {
     const indexOfLast = currentPage * ITEMS_PER_PAGE;
     const indexOfFirst = indexOfLast - ITEMS_PER_PAGE;
