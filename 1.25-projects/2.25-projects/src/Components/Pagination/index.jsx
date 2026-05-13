@@ -19,7 +19,8 @@ function ProductsList() {
   const [currentPage, setCurrentPage] = useState(1);
   const ITEMS_PER_PAGE = 12;
 
-  function goToPage(page) {
+  function handlePageChange(page) {
+    if (page < 1 || page > currentItems.length) return;
     setCurrentPage(page);
   }
 
@@ -28,7 +29,6 @@ function ProductsList() {
     const indexOfFirst = indexOfLast - ITEMS_PER_PAGE;
     return PRODUCTS.slice(indexOfFirst, indexOfLast);
   }, [PRODUCTS, currentPage]);
-  console.log(currentItems);
 
   return (
     <section>
@@ -39,7 +39,7 @@ function ProductsList() {
         ))}
       </div>
       <Pagination
-        goToPage={goToPage}
+        handlePageChange={handlePageChange}
         currentPage={currentPage}
         currentItems={currentItems}
       />

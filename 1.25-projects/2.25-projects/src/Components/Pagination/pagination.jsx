@@ -1,21 +1,23 @@
-function Pagination({ goToPage, currentPage, currentItems }) {
+function Pagination({ handlePageChange, currentPage, currentItems }) {
   return (
     <div>
-      <button onClick={goToPage(currentPage - 1)}>Previous</button>
-      <button onClick={goToPage}>
+      <button onClick={() => handlePageChange(currentPage - 1)}>
+        Previous
+      </button>
+      <button onClick={handlePageChange}>
         `
         {currentItems.map((item) => (
           <button
             key={item}
             className="btn ${currentPage === item ? 'active' : ''} "
-            onClick={goToPage}
+            onClick={() => handlePageChange(currentPage)}
           >
             {item}
           </button>
         ))}
         `
       </button>
-      <button onClick={goToPage(currentPage + 1)}>Next</button>
+      <button onClick={() => handlePageChange(currentPage + 1)}>Next</button>
     </div>
   );
 }
