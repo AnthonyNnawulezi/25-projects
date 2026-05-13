@@ -7,10 +7,10 @@ function ProductsList() {
   const PRODUCTS = useMemo(() => {
     let productItems = [];
 
-    for (let i = 0; i < 150; i++) {
-      productItems.id = i++;
+    for (let i = 0; i <= 150; i += 1) {
+      productItems.id = i;
       productItems.name = "Product";
-      productItems.push[i];
+      productItems.push(...[i]);
     }
     return productItems;
   }, []);
@@ -35,7 +35,7 @@ function ProductsList() {
       <h1>Pagination</h1>
       <div className="list-container">
         {currentItems.map((item) => (
-          <li key={item}>Products`{PRODUCTS.id}`</li>
+          <li key={item}>Products{item.id}</li>
         ))}
       </div>
       <Pagination
