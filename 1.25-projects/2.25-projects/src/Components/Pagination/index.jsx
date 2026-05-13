@@ -8,9 +8,10 @@ function ProductsList() {
     let productItems = [];
 
     for (let i = 0; i <= 150; i += 1) {
-      productItems.id = i;
-      productItems.name = "Product";
-      productItems.push(...[i]);
+      productItems.push({
+        id: i,
+        name: "Product",
+      });
     }
     return productItems;
   }, []);
@@ -35,7 +36,7 @@ function ProductsList() {
       <h1>Pagination</h1>
       <div className="list-container">
         {currentItems.map((item) => (
-          <li key={item}>Products{item.id}</li>
+          <li key={item.id}>Products{item.id}</li>
         ))}
       </div>
       <Pagination
