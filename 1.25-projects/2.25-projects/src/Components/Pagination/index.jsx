@@ -1,6 +1,4 @@
 import { useMemo, useState } from "react";
-import "./style.css";
-import "./style.css";
 import Pagination from "./pagination";
 
 function ProductsList() {
