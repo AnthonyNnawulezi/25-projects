@@ -1,7 +1,7 @@
-function Pagination({ handlePageChange, currentPage, currentItems }) {
+function Pagination({ handlePageChange, currentPage, totalPages }) {
   let pageNos = [];
-  for (let i = 0; i < currentItems.length; i++) {
-    pageNos.push(currentItems[i]);
+  for (let i = 0; i < totalPages; i++) {
+    pageNos.push([i]);
   }
   return (
     <div>
@@ -10,11 +10,11 @@ function Pagination({ handlePageChange, currentPage, currentItems }) {
       </button>
       {pageNos.map((item) => (
         <button
-          key={item.id}
-          className="btn ${currentPage === item ? 'active' : ''} "
-          onClick={() => handlePageChange(currentPage)}
+          key={item}
+          className="btn {currentPage === item ? 'active' : ''} "
+          onClick={() => handlePageChange(item)}
         >
-          {item.id}
+          {item}
         </button>
       ))}
       <button onClick={() => handlePageChange(currentPage + 1)}>Next</button>

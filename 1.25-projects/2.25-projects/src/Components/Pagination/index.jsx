@@ -25,6 +25,7 @@ function ProductsList() {
     setCurrentPage(page);
   }
 
+  const totalPages = Math.ceil(PRODUCTS.length / ITEMS_PER_PAGE);
   const currentItems = useMemo(() => {
     const indexOfLast = currentPage * ITEMS_PER_PAGE;
     const indexOfFirst = indexOfLast - ITEMS_PER_PAGE;
@@ -43,6 +44,7 @@ function ProductsList() {
         handlePageChange={handlePageChange}
         currentPage={currentPage}
         currentItems={currentItems}
+        totalPages={totalPages}
       />
     </section>
   );
