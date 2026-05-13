@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import Pagination from "./pagination";
+import "./style.css";
 
 function ProductsList() {
   const PRODUCTS = useMemo(() => {
@@ -32,7 +33,7 @@ function ProductsList() {
 
   return (
     <section>
-      <h1>Pagination</h1>
+      <h1 className="pagination-title">Pagination</h1>
       <div className="list-container">
         {currentItems.map((item) => (
           <li key={item.id}>Products{item.id}</li>

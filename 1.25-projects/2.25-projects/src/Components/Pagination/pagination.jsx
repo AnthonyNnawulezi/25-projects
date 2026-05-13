@@ -10,6 +10,7 @@ function Pagination({ handlePageChange, currentPage, totalPages }) {
       <button
         onClick={() => handlePageChange(currentPage - 1)}
         disabled={currentPage === 1}
+        className="pagination-button"
       >
         Previous
       </button>
@@ -25,6 +26,7 @@ function Pagination({ handlePageChange, currentPage, totalPages }) {
       <button
         onClick={() => handlePageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
+        className="pagination-button"
       >
         Next
       </button>

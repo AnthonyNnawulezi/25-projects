@@ -1,3 +1,52 @@
+*,
+*::after,
+*::before {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+section {
+  text-align: center;
+  background-color: #deb887;
+  border-radius: 8px;
+  width: 90vw;
+  height: 90vh;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+h1 {
+  margin-bottom: 15px;
+}
+
+.list-container {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  padding: 10px;
+  min-width: 500px;
+  gap: 10px;
+}
+
+li {
+  background-color: #f5deb3;
+  padding: 12px 15px;
+  border-radius: 8px;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+button {
+  padding: 8px;
+  background-color: #d2b48c;
+  outline: none;
+  border: 1px solid rgb(164, 131, 97);
+}
+
 .active {
   background-color: black;
   color: white;
