@@ -5,7 +5,6 @@ function Pagination({ handlePageChange, currentPage, currentItems }) {
         Previous
       </button>
       <button onClick={handlePageChange}>
-        `
         {currentItems.map((item) => (
           <button
             key={item}
@@ -15,7 +14,6 @@ function Pagination({ handlePageChange, currentPage, currentItems }) {
             {item}
           </button>
         ))}
-        `
       </button>
       <button onClick={() => handlePageChange(currentPage + 1)}>Next</button>
     </div>

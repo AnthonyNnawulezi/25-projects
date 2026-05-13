@@ -20,7 +20,7 @@ function ProductsList() {
   const ITEMS_PER_PAGE = 12;
 
   function handlePageChange(page) {
-    if (page < 1 || page > currentItems.length) return;
+    if (page < 1 || page > ITEMS_PER_PAGE) return;
     setCurrentPage(page);
   }
 
