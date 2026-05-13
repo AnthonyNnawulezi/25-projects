@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import "./style.css";
 import "./style.css";
-import { Pagination } from "../pagination";
+import Pagination from "./pagination";
 
 function ProductsList() {
   const PRODUCTS = useMemo(() => {
