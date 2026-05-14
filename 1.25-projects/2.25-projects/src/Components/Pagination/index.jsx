@@ -42,7 +42,6 @@ function ProductsList() {
       <Pagination
         handlePageChange={handlePageChange}
         currentPage={currentPage}
-        currentItems={currentItems}
         totalPages={totalPages}
       />
     </section>
