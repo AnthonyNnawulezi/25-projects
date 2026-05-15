@@ -26,14 +26,14 @@ function CountDownTimer({ initial, onTimeFinish }) {
     return () => {
       clearInterval(intervalReference.current);
     };
-  }, [isRunning, onTimeFinish]);
+  }, [isRunning]);
 
   const minutes = Math.floor(time / 60);
   const seconds = time % 60;
 
   function playAndPause() {
-    setIsRunning((prevIsRunning) => !prevIsRunning); //or
-    // setIsRunning(!prevIsRunning)
+    setIsRunning((prevIsRunning) => !prevIsRunning);
+    //or setIsRunning(!prevIsRunning)
   }
 
   function reset() {
@@ -112,4 +112,4 @@ function CountDownTimer({ initial, onTimeFinish }) {
 //   );
 // }
 
-// export default CountDownTimer;
+export default CountDownTimer;
