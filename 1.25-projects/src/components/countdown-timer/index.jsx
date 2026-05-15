@@ -36,7 +36,6 @@ function CountDownTimer({ initial, onTimeFinish }) {
   }
 
   function reset() {
-    clearInterval(intervalReference.current);
     setTime(initial);
     setIsRunning(false);
   }
