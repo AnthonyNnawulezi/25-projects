@@ -33,7 +33,6 @@ function CountDownTimer({ initial, onTimeFinish }) {
 
   function playAndPause() {
     setIsRunning((prevIsRunning) => !prevIsRunning);
-    //or setIsRunning(!prevIsRunning)
   }
 
   function reset() {
