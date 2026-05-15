@@ -1,0 +1,7 @@
+.clock-container span {
+  font-weight: bold;
+  font-size: 25px;
+}
+.clock-container {
+  margin-bottom: 15px;
+}

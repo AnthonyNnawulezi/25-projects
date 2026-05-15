@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import "./style.css";
 
 function DigitalClock() {
   const [time, setTime] = useState(new Date());
@@ -27,7 +28,14 @@ function DigitalClock() {
         <span>{formattedTime.hours}</span>:<span>{formattedTime.minutes}</span>:
         <span>{formattedTime.seconds}</span>
       </div>
-      <h3 className="date-container">{}</h3>
+      <h3 className="date-container">
+        {time.toLocaleDateString(undefined, {
+          weekday: "long",
+          month: "long",
+          day: "2-digit",
+          year: "numeric",
+        })}
+      </h3>
     </section>
   );
 }
