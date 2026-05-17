@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 // function CountDownTimer() {
 //   const [timeLeft, setTimeLeft] = useState(120);
@@ -90,6 +90,18 @@ function CountDownTimer({ initial, onTimeFinish }) {
 
     return () => clearInterval(intervalRef.current);
   }, [isRunning]);
+
+  const start = useCallback(() => {
+    setIsRunning(true);
+  }, []);
+
+  const toggleTimer = () => setIsRunning((prev) => !prev);
+
+  const reset = useCallback(() => {
+    clearInterval(intervalRef.current);
+    setTimeLeft(initial);
+    setIsRunning(false);
+  }, [initial]);
 }
 
 export default CountDownTimer;
