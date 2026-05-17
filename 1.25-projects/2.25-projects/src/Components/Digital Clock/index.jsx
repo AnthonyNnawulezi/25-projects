@@ -3,7 +3,6 @@ import "./style.css";
 
 function DigitalClock() {
   const [time, setTime] = useState(new Date());
-  console.log(time.toLocaleDateString);
 
   useEffect(() => {
     const timeoutId = setInterval(() => {
