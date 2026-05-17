@@ -66,7 +66,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 //   );
 // }
 
-function CountDownTimer({ initial, onTimeFinish }) {
+function CountDownTimer({ initial = 120, onTimeFinish }) {
   const [timeLeft, setTimeLeft] = useState(initial);
   const [isRunning, setIsRunning] = useState(true);
   const intervalRef = useRef(null);
@@ -118,7 +118,7 @@ function CountDownTimer({ initial, onTimeFinish }) {
         {minutes}:{seconds}
       </p>
       <div className="button-container">
-        <button type="button" onClick={toggle}>
+        <button type="button" onClick={toggleTimer}>
           {isRunning ? "Pause" : "Resume"}
         </button>
         <button type="button" onClick={reset}>
