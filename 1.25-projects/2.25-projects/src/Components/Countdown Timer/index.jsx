@@ -102,6 +102,38 @@ function CountDownTimer({ initial, onTimeFinish }) {
     setTimeLeft(initial);
     setIsRunning(false);
   }, [initial]);
+
+  const { minutes, seconds } = useMemo(
+    () => ({
+      minutes: String(Math.floor(timeLeft / 60)).padStart(2, "0"),
+      seconds: String(Math.floor(timeLeft % 60)).padStart(2, "0"),
+    }),
+    [timeLeft],
+  );
+
+  return (
+    <section>
+      <h1>CountDown Timer</h1>
+      <p>
+        {minutes}:{seconds}
+      </p>
+      <div className="button-container">
+        <button type="button" onClick={toggle}>
+          {isRunning ? "Pause" : "Resume"}
+        </button>
+        <button type="button" onClick={reset}>
+          Reset
+        </button>
+        <button
+          type="button"
+          onClick={start}
+          disabled={isRunning === true && timeLeft > 0}
+        >
+          Start
+        </button>
+      </div>
+    </section>
+  );
 }
 
 export default CountDownTimer;
