@@ -2,14 +2,12 @@ function ProgressBarStep({ steps, activeStep, setActiveStep }) {
   function handlePrevStep() {
     setActiveStep((prevStep) => Math.max(prevStep - 1, 0)); //Ensures activeStep never goes below 0.
   }
+
   function handleNextStep() {
-    setActiveStep((prevStep) => Math.min(prevStep + 1, steps.length - 1)); //Ensures activeStep never exceeds the last step. -1 cos it is starting from 0
+    setActiveStep((prevStep) => Math.min(prevStep + 1, steps.length - 1));
   }
+
   function calculateCurrStepWidth() {
-    // (steps.length - 1) :The total number of steps minus one (because progress is measured between steps, not on steps).
-    //100 / (steps.length - 1)	Determines how much percentage each step should take in the progress bar.
-    // * activeStep	Multiplies by the current step to get the actual progress.
-    //`${...}%`	Formats the result as a percentage for CSS usage.
     return `${(100 / (steps.length - 1)) * activeStep}%`;
   }
 
