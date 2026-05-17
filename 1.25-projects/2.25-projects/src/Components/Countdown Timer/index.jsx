@@ -9,10 +9,11 @@ function CountDownTimer() {
     if (timeLeft > 0 && isRunning) {
       intervalRef.current = setInterval(() => {
         setTimeLeft((prev) => prev - 1);
-        setIsRunning(true);
       }, 1000);
     } else if (timeLeft === 0) {
       clearInterval(intervalRef.current);
+      setIsRunning(false);
+      setTimeLeft(120);
     }
     return () => clearInterval(intervalRef.current);
   }, [isRunning, timeLeft]);
@@ -23,7 +24,7 @@ function CountDownTimer() {
 
   const reset = () => {
     setIsRunning(false);
-    setTimeLeft(timeLeft);
+    setTimeLeft(120);
   };
 
   const start = () => {
