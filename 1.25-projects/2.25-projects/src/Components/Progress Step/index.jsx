@@ -36,11 +36,15 @@ function ProgressStep() {
       <h1>Progress Step</h1>
 
       {steps.map((step) => {
-        <li key={step} style={`step ${progressWidth}`}></li>;
+        <li key={step} style={`{progressWidth}`}></li>;
       })}
       <div className="buttons">
-        <button onClick={goToPrevious}>Previous</button>
-        <button onClick={goToNext}>Next</button>
+        <button onClick={goToPrevious} disabled={activeStep === 0}>
+          Previous
+        </button>
+        <button disabled={activeStep === totalSteps} onClick={goToNext}>
+          Next
+        </button>
       </div>
     </section>
   );
