@@ -52,7 +52,7 @@ import "./style.css";
 //         <button onClick={goToPrevious} disabled={activeStep === 0}>
 //           Previous
 //         </button>
-//         <button disabled={activeStep === totalSteps} onClick={goToNext}>
+//         <button disabled={activeStep === totalSteps - 1} onClick={goToNext}>
 //           Next
 //         </button>
 //       </div>
@@ -79,17 +79,45 @@ function ProgressStep() {
   ];
 
   const totalSteps = steps?.length ?? 0;
+
   const progressWidth = useMemo(() => {
     if (totalSteps <= 1) return "0%";
     return `${(activeStep / (totalSteps - 1)) * 100}%`;
   }, [activeStep, totalSteps]);
 
-  const goToPrev = useCallback(() => {
+  const goToPrevious = useCallback(() => {
     setActiveStep((s) => Math.max(s - 1, 0));
   }, [activeStep, totalSteps]);
   const goToNext = useCallback(() => {
     setActiveStep((s) => Math.min(s + 1, totalSteps - 1));
   }, [activeStep, totalSteps]);
+
+  return (
+    <section>
+      <h1>Progress Step</h1>
+
+      <div className="step-container">
+        {steps?.map((step, i) => (
+          <li
+            key={step}
+            className={`step ${i <= activeStep ? "active" : null}`}
+            // style={{ width: progressWidth }} width issue is taken care of in the css
+          >
+            {step}
+          </li>
+        ))}
+      </div>
+
+      <div className="buttons">
+        <button onClick={goToPrevious} disabled={activeStep === 0}>
+          Previous
+        </button>
+        <button disabled={activeStep === totalSteps - 1} onClick={goToNext}>
+          Next
+        </button>
+      </div>
+    </section>
+  );
 }
 
 export default ProgressStep;

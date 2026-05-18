@@ -1,8 +1,10 @@
 .step-container {
   display: flex;
   margin-bottom: 15px;
+  width: 100%;
 }
 
 .step {
   list-style: none;
+  flex: 1;
 }
