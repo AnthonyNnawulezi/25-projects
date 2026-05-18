@@ -63,9 +63,33 @@ import "./style.css";
 // export default ProgressStep;
 
 function ProgressStep() {
+  const [activeStep, setActiveStep] = useState(0);
+
+  const steps = [
+    "Step 1",
+    "Step 2",
+    "Step 3",
+    "Step 4",
+    "Step 5",
+    "Step 6",
+    "Step 7",
+    "Step 8",
+    "Step 9",
+    "Step 10",
+  ];
+
   const totalSteps = steps?.length ?? 0;
   const progressWidth = useMemo(() => {
     if (totalSteps <= 1) return "0%";
     return `${(activeStep / (totalSteps - 1)) * 100}%`;
   }, [activeStep, totalSteps]);
+
+  const goToPrev = useCallback(() => {
+    setActiveStep((s) => Math.max(s - 1, 0));
+  }, [activeStep, totalSteps]);
+  const goToNext = useCallback(() => {
+    setActiveStep((s) => Math.min(s + 1, totalSteps - 1));
+  }, [activeStep, totalSteps]);
 }
+
+export default ProgressStep;
