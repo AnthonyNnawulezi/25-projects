@@ -2,6 +2,7 @@ import "./App.css";
 import CountDownTimer from "./Components/Countdown Timer";
 import DigitalClock from "./Components/Digital Clock";
 import ProductsList from "./Components/Pagination";
+import ProgressStep from "./Components/Progress Step";
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
       <ProductsList />
       <DigitalClock />
       <CountDownTimer />
+      <ProgressStep />
     </div>
   );
 }
