@@ -1,0 +1,7 @@
+.step-container {
+  display: flex;
+}
+
+.step {
+  list-style: none;
+}

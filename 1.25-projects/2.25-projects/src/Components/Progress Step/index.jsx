@@ -1,4 +1,5 @@
 import { useCallback, useMemo, useState } from "react";
+import "./style.css";
 
 function ProgressStep() {
   const [activeStep, setActiveStep] = useState(0);
@@ -19,25 +20,34 @@ function ProgressStep() {
 
   const progressWidth = useMemo(() => {
     if (steps && steps.length > 0) {
-      return `${(steps / steps.length) * 100}%`;
+      return `${(steps / totalSteps) * 100}%`;
     }
-  }, [activeStep]);
+  }, [activeStep, totalSteps]);
 
   const goToNext = useCallback(() => {
     setActiveStep((previous) => Math.min(previous + 1, totalSteps));
   }, [activeStep, totalSteps]);
 
   const goToPrevious = useCallback(() => {
-    setActiveStep((previous) => Math.max(previous - 1, totalSteps));
+    setActiveStep((previous) => Math.max(previous - 1, 0));
   }, [activeStep, totalSteps]);
 
   return (
     <section>
       <h1>Progress Step</h1>
 
-      {steps.map((step) => {
-        <li key={step} style={`{progressWidth}`}></li>;
-      })}
+      <div className="step-container">
+        {steps?.map((step, i) => (
+          <li
+            key={step}
+            className={`step ${i <= activeStep ? "active" : null}`}
+            style={{ width: progressWidth }}
+          >
+            {step}
+          </li>
+        ))}
+      </div>
+
       <div className="buttons">
         <button onClick={goToPrevious} disabled={activeStep === 0}>
           Previous
