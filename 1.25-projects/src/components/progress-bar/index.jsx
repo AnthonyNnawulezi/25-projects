@@ -1,6 +1,6 @@
 function ProgressBarStep({ steps, activeStep, setActiveStep }) {
   function handlePrevStep() {
-    setActiveStep((prevStep) => Math.max(prevStep - 1, 0)); //Ensures activeStep never goes below 0.
+    setActiveStep((prevStep) => Math.max(prevStep - 1, 0));
   }
 
   function handleNextStep() {
