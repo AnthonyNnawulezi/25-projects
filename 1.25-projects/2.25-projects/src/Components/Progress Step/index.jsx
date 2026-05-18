@@ -64,4 +64,8 @@ import "./style.css";
 
 function ProgressStep() {
   const totalSteps = steps?.length ?? 0;
+  const progressWidth = useMemo(() => {
+    if (totalSteps <= 1) return "0%";
+    return `${(activeStep / (totalSteps - 1)) * 100}%`;
+  }, [activeStep, totalSteps]);
 }
