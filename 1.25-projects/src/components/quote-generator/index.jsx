@@ -26,17 +26,13 @@ function RandomQuoteGenerator() {
     fetchQuote();
   }, []);
 
-  function handleRefresh() {
-    fetchQuote();
-  }
-
   if (loading) {
     return <h3>Loading Quote! please wait</h3>;
   }
 
   return (
     <div className="random-quote-generator">
-      <h1>Randon Quote Generator</h1>
+      <h1>Random Quote Generator</h1>
       <div className="wrapper">
         <p>{quote?.quote}</p>
         <p>{quote?.author}</p>
