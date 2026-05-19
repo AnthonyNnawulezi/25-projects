@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import "./style.css";
 
-function RandonQuoteGenerator() {
+function RandomQuoteGenerator() {
   const [loading, setLoading] = useState(false);
   const [quote, setQuote] = useState(null);
 
