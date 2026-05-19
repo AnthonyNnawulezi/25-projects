@@ -36,7 +36,7 @@ function RandomQuoteGenerator() {
       <div className="wrapper">
         <p>{quote?.quote}</p>
         <p>{quote?.author}</p>
-        <button className="refresh" onClick={handleRefresh}>
+        <button className="refresh" onClick={fetchQuote}>
           Refresh
         </button>
       </div>
@@ -44,4 +44,4 @@ function RandomQuoteGenerator() {
   );
 }
 
-export default RandonQuoteGenerator;
+export default RandomQuoteGenerator;

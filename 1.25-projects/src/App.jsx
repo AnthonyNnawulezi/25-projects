@@ -18,7 +18,7 @@ import PdfViewer from "./components/PdfViewer";
 import ProgressBar from "./components/progress-bar/test";
 import ProgresBar from "./components/progress_bar";
 import Quiz from "./components/quiz-app";
-import RandonQuoteGenerator from "./components/quote-generator";
+import RandomQuoteGenerator from "./components/quote-generator";
 import TipCalcultator from "./components/tip-calculator";
 import Todo from "./components/todo";
 import TooltipTest from "./components/tooltip/test";
@@ -33,7 +33,7 @@ function App() {
       <DigitalClock />
       <CountDownTimerTest />
       <ProgressBar />
-      <RandonQuoteGenerator />
+      <RandomQuoteGenerator />
       <TooltipTest />
       <CurrencyConverter />
       <FilterProducts />
