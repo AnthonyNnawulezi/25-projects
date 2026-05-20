@@ -1,6 +1,8 @@
-import { useCallback, useRef, useState } from "react";
+import { useState } from "react";
 
-function Tooltip1({ children, content, delay }) {
+function Tooltip({ children, content, delay }) {
+  const [isVisible, setIsVisible] = useState(false);
+
   let timeout;
   function showTooltip() {
     timeout = setTimeout(() => {
@@ -12,7 +14,6 @@ function Tooltip1({ children, content, delay }) {
     setIsVisible(false);
   }
 
-  const [isVisible, setIsVisible] = useState(false);
   return (
     <div>
       <div
