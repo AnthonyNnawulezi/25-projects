@@ -14,7 +14,6 @@ function ProductsList() {
     }
     return productItems;
   }, []);
-  console.log(PRODUCTS);
 
   const [currentPage, setCurrentPage] = useState(1);
   const ITEMS_PER_PAGE = 12;
