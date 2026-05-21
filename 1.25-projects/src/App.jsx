@@ -44,7 +44,6 @@ function App() {
       <ButtonRippleEffect />
       <DragAndDrop />
       <FormValidation />
-      {/* <FileUpload /> */}
       <FileUpload1 />
       <Quiz />
       <NestedComments />

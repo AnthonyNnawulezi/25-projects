@@ -16,7 +16,7 @@ function CurrencyConverter() {
     const calculatedRate = result?.rates[toCurrency];
     setExchangeRate(calculatedRate);
     setConvertedAmount((amount * calculatedRate).toFixed(2));
-    console.log(result);
+    console.log("Exchange Currencies", result);
   }
 
   useEffect(() => {
