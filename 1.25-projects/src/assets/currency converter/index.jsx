@@ -16,7 +16,6 @@ function CurrencyConverter() {
     const calculatedRate = result?.rates[toCurrency];
     setExchangeRate(calculatedRate);
     setConvertedAmount((amount * calculatedRate).toFixed(2));
-    console.log("Exchange Currencies", result);
   }
 
   useEffect(() => {
@@ -45,13 +44,11 @@ function CurrencyConverter() {
           type="number"
           name="amount"
           placeholder="Enter Amount"
-          id=""
         />
         <select
           name=""
           value={fromCurrency}
           onChange={handleFromCurrencyChange}
-          id=""
         >
           <option value={"USD"}>USD</option>
           <option value={"GBP"}>GBP</option>
@@ -61,13 +58,8 @@ function CurrencyConverter() {
       </div>
       <p>To</p>
       <div className="input-container">
-        <input type="text" name="" value={convertedAmount} readOnly id="" />
-        <select
-          name=""
-          value={toCurrency}
-          id=""
-          onChange={handleToCurrencyChange}
-        >
+        <input type="text" name="" value={convertedAmount} readOnly />
+        <select name="" value={toCurrency} onChange={handleToCurrencyChange}>
           <option value={"USD"}>USD</option>
           <option value={"GBP"}>GBP</option>
           <option value={"EUR"}>EUR</option>
