@@ -4,6 +4,7 @@ import DigitalClock from "./Components/Digital Clock";
 import ProductsList from "./Components/Pagination";
 import ProgressStep from "./Components/Progress Step";
 import RandomQuoteGenerator from "./Components/Random Quote Generator";
+import Tooltip from "./Components/Tooltip";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
       <CountDownTimer />
       <ProgressStep />
       <RandomQuoteGenerator />
+      <Tooltip />
     </div>
   );
 }
