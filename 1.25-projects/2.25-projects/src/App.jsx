@@ -1,5 +1,6 @@
 import "./App.css";
 import CountDownTimer from "./Components/Countdown Timer";
+import CurrencyConverter from "./Components/Currency Converter";
 import DigitalClock from "./Components/Digital Clock";
 import ProductsList from "./Components/Pagination";
 import ProgressStep from "./Components/Progress Step";
@@ -16,6 +17,7 @@ function App() {
       <ProgressStep />
       <RandomQuoteGenerator />
       <Tooltip />
+      <CurrencyConverter />
     </div>
   );
 }
