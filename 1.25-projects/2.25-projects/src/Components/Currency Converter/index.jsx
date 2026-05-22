@@ -53,7 +53,7 @@ function CurrencyConverter() {
   }, []);
 
   const convertedRate = useMemo(() => {
-    return Number(amount * rates).toFixed(2, 0);
+    return Number(amount * rates).toFixed(2);
   }, [rates, amount]);
 
   useEffect(() => {
