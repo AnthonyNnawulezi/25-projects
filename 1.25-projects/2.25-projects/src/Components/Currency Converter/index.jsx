@@ -31,7 +31,7 @@ function CurrencyConverter() {
       setRates(result);
       console.log("Rates", result);
     } catch (error) {
-      console.error(error.message);
+      console.error(setErrorMessage(error));
     } finally {
       setIsLoading(false);
     }
