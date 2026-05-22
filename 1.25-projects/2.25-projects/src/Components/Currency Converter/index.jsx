@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import "./style.css";
 
 const CURRENCIES = ["NGN", "GBP", "USD", "EUR"];
+const API_KEY = "59de04be7fd07d0a405808f9";
 
 function CurrencyConverter() {
   const [fromCurrency, setFromCurrency] = useState("GBP");
@@ -16,7 +17,7 @@ function CurrencyConverter() {
       setIsLoading(true);
       setErrorMessage(null);
       const response = await fetch(
-        `https://v6.exchangerate-api.com/v6/59de04be7fd07d0a405808f9/latest/${fromCurrency}`,
+        `https://v6.exchangerate-api.com/v6/${API_KEY}/latest/${fromCurrency}`,
       );
 
       if (!response.ok) throw new Error("Error fetching currencies");
