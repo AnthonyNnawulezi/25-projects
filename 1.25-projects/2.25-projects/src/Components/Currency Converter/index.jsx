@@ -33,7 +33,7 @@ function CurrencyConverter() {
     } finally {
       setIsLoading(false);
     }
-  }, []);
+  }, [fromCurrency, toCurrency]);
 
   const currencyValue = useCallback(
     (e) => {
