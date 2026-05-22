@@ -39,24 +39,18 @@ function CurrencyConverter() {
 
   const currencyValue = useCallback(
     (e) => {
-      setAmount(Number(e.target.value));
+      setAmount(e.target.value);
     },
     [amount],
   );
 
-  const handleFromCurrency = useCallback(
-    (e) => {
-      setFromCurrency(e.target.value);
-    },
-    [amount],
-  );
+  const handleFromCurrency = useCallback((e) => {
+    setFromCurrency(e.target.value);
+  }, []);
 
-  const handleToCurrency = useCallback(
-    (e) => {
-      setToCurrency(e.target.value);
-    },
-    [amount],
-  );
+  const handleToCurrency = useCallback((e) => {
+    setToCurrency(e.target.value);
+  }, []);
 
   const convertedRate = useMemo(() => {
     return Number(amount * rates).toFixed(2, 0);
