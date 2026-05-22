@@ -20,7 +20,7 @@ function CurrencyConverter() {
 
   useEffect(() => {
     fetchExchangeRate();
-  }, [fromCurrency, toCurrency, amount]);
+  }, [fromCurrency, toCurrency, fetchExchangeRate]);
 
   function handleAmountChange(event) {
     setAmount(event.target.value);
