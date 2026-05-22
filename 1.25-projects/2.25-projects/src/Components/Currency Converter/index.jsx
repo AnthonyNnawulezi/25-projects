@@ -5,7 +5,7 @@ const CURRENCIES = ["NGN", "GBP", "USD", "EUR"];
 function CurrencyConverter() {
   const [fromCurrency, setFromCurrency] = useState("GBP");
   const [toCurrency, setToCurrency] = useState("NGN");
-  const [rates, setRates] = useState(0);
+  const [rates, setRates] = useState(null);
   const [amount, setAmount] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
@@ -62,7 +62,7 @@ function CurrencyConverter() {
 
   useEffect(() => {
     fetchCurrencies();
-  }, [fetchCurrencies, fromCurrency, toCurrency]);
+  }, [fetchCurrencies]);
 
   return (
     <section>
