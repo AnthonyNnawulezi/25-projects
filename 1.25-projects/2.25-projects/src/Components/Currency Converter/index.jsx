@@ -5,7 +5,7 @@ const CURRENCIES = ["NGN", "GBP", "USD", "EUR"];
 function CurrencyConverter() {
   const [fromCurrency, setFromCurrency] = useState("GBP");
   const [toCurrency, setToCurrency] = useState("NGN");
-  const [currencies, setCurrencies] = useState("NGN");
+  const [rates, setRates] = useState(0);
   const [amount, setAmount] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
@@ -21,12 +21,13 @@ function CurrencyConverter() {
       if (!response.ok) throw new Error("Error fetching currencies");
 
       const data = await response.json();
-      const result = data?.conversion_rates?.[currencies];
-      console.log(result);
+      console.log(data);
 
-      if (!result) throw new Error("No matching currency found");
+      const result = data?.conversion_rates?.[toCurrency];
+      if (!result) throw new Error("No matching rate found");
 
-      setCurrencies(result);
+      setRates(result);
+      console.log("Rates", result);
     } catch (error) {
       console.error(error.message);
     } finally {
@@ -43,22 +44,21 @@ function CurrencyConverter() {
 
   const handleFromCurrency = useCallback(
     (e) => {
-      setFromCurrency(Number(e.target.value));
+      setFromCurrency(e.target.value);
     },
     [amount],
   );
 
   const handleToCurrency = useCallback(
     (e) => {
-      setToCurrency(Number(e.target.value));
+      setToCurrency(e.target.value);
     },
     [amount],
   );
 
   const convertedRate = useMemo(() => {
-    const calculatedRate = Number(amount * currencyValue);
-    return calculatedRate;
-  }, [currencyValue]);
+    return Number(amount * rates);
+  }, [rates, amount]);
 
   useEffect(() => {
     fetchCurrencies();
@@ -70,25 +70,24 @@ function CurrencyConverter() {
       {isLoading && <p>Loading please wait...</p>}
       {errorMessage && <p className="error">{errorMessage}</p>}
       <div className="exchange-wrapper">
-        <input type="text" value={currencyValue} placeholder="Enter Currency" />
-        <select>
+        <input
+          type="number"
+          value={amount}
+          placeholder="Enter Currency"
+          onChange={currencyValue}
+        />
+        <select value={fromCurrency} onChange={handleFromCurrency}>
           {CURRENCIES.map((currency) => (
-            <option
-              key={currency}
-              value={currency}
-              onChange={handleFromCurrency}
-            ></option>
+            <option key={currency}>{currency}</option>
           ))}
         </select>
         <p>To</p>
-        <input type="text" value={currencyValue} readOnly />
-        <select>
+        <input type="number" value={convertedRate} readOnly />
+        <select onChange={handleToCurrency} value={toCurrency}>
           {CURRENCIES.map((currency) => (
-            <option
-              key={currency}
-              value={currency}
-              onChange={handleToCurrency}
-            ></option>
+            <option key={currency} value={currency}>
+              {currency}
+            </option>
           ))}
         </select>
       </div>
