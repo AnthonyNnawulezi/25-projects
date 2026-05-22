@@ -1,0 +1,27 @@
+input {
+  padding: 12px 15px;
+  outline: none;
+  border: none;
+  border-radius: 9px;
+  font-size: 19px;
+  font-weight: bolder;
+}
+
+select {
+  padding: 12px 15px;
+  outline: none;
+  border: none;
+  border-radius: 9px;
+  font-size: 19px;
+  font-weight: bolder;
+}
+
+.rate-wrapper {
+  font-size: 17px;
+  font-weight: bolder;
+  margin-top: 10px;
+}
+
+.divider {
+  margin: 12px 0;
+}

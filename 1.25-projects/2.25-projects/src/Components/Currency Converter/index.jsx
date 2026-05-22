@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
+import "./style.css";
 
 const CURRENCIES = ["NGN", "GBP", "USD", "EUR"];
 
@@ -6,14 +7,14 @@ function CurrencyConverter() {
   const [fromCurrency, setFromCurrency] = useState("GBP");
   const [toCurrency, setToCurrency] = useState("NGN");
   const [rates, setRates] = useState(null);
-  const [amount, setAmount] = useState(1);
+  const [amount, setAmount] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
 
   const fetchCurrencies = useCallback(async () => {
     try {
       setIsLoading(true);
-      setErrorMessage("");
+      setErrorMessage(null);
       const response = await fetch(
         `https://v6.exchangerate-api.com/v6/59de04be7fd07d0a405808f9/latest/${fromCurrency}`,
       );
@@ -57,7 +58,7 @@ function CurrencyConverter() {
   );
 
   const convertedRate = useMemo(() => {
-    return Number(amount * rates);
+    return Number(amount * rates).toFixed(2, 0);
   }, [rates, amount]);
 
   useEffect(() => {
@@ -81,7 +82,7 @@ function CurrencyConverter() {
             <option key={currency}>{currency}</option>
           ))}
         </select>
-        <p>To</p>
+        <p className="divider">To</p>
         <input type="number" value={convertedRate} readOnly />
         <select onChange={handleToCurrency} value={toCurrency}>
           {CURRENCIES.map((currency) => (
@@ -92,7 +93,7 @@ function CurrencyConverter() {
         </select>
       </div>
       <div className="rate-wrapper">
-        Exchange Rate: 1 {fromCurrency} = {convertedRate} {toCurrency}
+        Exchange Rate: {amount} {fromCurrency} = {convertedRate} {toCurrency}
       </div>
     </section>
   );
