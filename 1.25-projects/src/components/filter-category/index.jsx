@@ -12,29 +12,13 @@ function FilterProducts() {
       setLoading(true);
       const response = await fetch("https://dummyjson.com/products");
       const result = await response.json();
-      console.log(result);
 
       if (result && result.products && result.products.length > 0) {
         setLoading(false);
         setProducts(result.products);
         setFilteredItems(result.products);
       }
-
-      //or
-      // if (result?.products?.length) {
-      //   setLoading(false);
-      //   setProducts(result.products);
-      //   setFilteredItems(result.products);
-      // }
-
-      //or
-      // if (result?.products?.length > 0) {
-      //   setLoading(false);
-      //   setProducts(result.products);
-      //   setFilteredItems(result.products);
-      // }
     } catch (error) {
-      console.log(error);
     } finally {
       setLoading(false);
     }
@@ -47,12 +31,12 @@ function FilterProducts() {
   useEffect(() => {
     const copiedProducts = [...products];
     setFilteredItems(
-      currCategory !== "" //empty & no category has been clicked
+      currCategory !== ""
         ? copiedProducts.filter(
             (product) =>
-              product.category.toUpperCase() === currCategory.toUpperCase() //show products according to category
+              product.category.toUpperCase() === currCategory.toUpperCase(), //show products according to category
           )
-        : copiedProducts //show all products when no category btn has been clicked
+        : copiedProducts,
     );
   }, [currCategory, products]);
 
@@ -63,8 +47,6 @@ function FilterProducts() {
 
   //or
   // const uniqueCategories = [...new Set(products.map((product) => product.category))];
-
-  console.log(uniqueCategories, "uniqueCategories");
 
   if (loading) {
     return <h3>Fetching Products. Please wait!</h3>;
@@ -78,9 +60,8 @@ function FilterProducts() {
           <button
             key={category}
             onClick={() =>
-              //If the currently selected category (prevCategory) is the same as the clicked category, clear the filter (""). Otherwise, set it to the clicked category.
               setCurrCategory((prevCategory) =>
-                prevCategory === category ? "" : category
+                prevCategory === category ? "" : category,
               )
             }
             className={`${currCategory === category ? "active" : ""}`}
@@ -98,14 +79,6 @@ function FilterProducts() {
               </li>
             ))
           : null}
-
-        {/* {filteredItems.length > 0 &&
-          filteredItems.map((product) => (
-            <li key={product.id}>
-              <p>{product.title}</p>
-              <button>{product.category}</button>
-            </li>
-          ))} */}
       </div>
     </div>
   );
