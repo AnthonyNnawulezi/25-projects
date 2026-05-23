@@ -34,7 +34,7 @@ function FilterProducts() {
       currCategory !== ""
         ? copiedProducts.filter(
             (product) =>
-              product.category.toUpperCase() === currCategory.toUpperCase(), //show products according to category
+              product.category.toUpperCase() === currCategory.toUpperCase(),
           )
         : copiedProducts,
     );
@@ -44,9 +44,6 @@ function FilterProducts() {
     products && products.length > 0
       ? [...new Set(products.map((product) => product.category))]
       : [];
-
-  //or
-  // const uniqueCategories = [...new Set(products.map((product) => product.category))];
 
   if (loading) {
     return <h3>Fetching Products. Please wait!</h3>;
