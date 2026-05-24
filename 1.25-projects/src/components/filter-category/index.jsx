@@ -35,7 +35,7 @@ function FilterProducts() {
       currCategory !== ""
         ? copiedProducts.filter(
             (product) =>
-              product.category.toUpperCase() === currCategory.toUpperCase(),
+              product.category.toLowerCase() === currCategory.toLowerCase(),
           )
         : copiedProducts,
     );
