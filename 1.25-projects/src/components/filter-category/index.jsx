@@ -19,6 +19,7 @@ function FilterProducts() {
         setFilteredItems(result.products);
       }
     } catch (error) {
+      `Error fetching Products, ${error}`;
     } finally {
       setLoading(false);
     }
