@@ -62,14 +62,14 @@ function FilterProducts() {
                 prevCategory === category ? "" : category,
               )
             }
-            className={`${currCategory === category ? "active" : ""}`}
+            className={currCategory === category ? "active" : ""}
           >
             {category}
           </button>
         ))}
       </div>
       <div className="list-of-products">
-        {filteredItems && filteredItems.length > 0
+        {filteredItems.length > 0
           ? filteredItems.map((product) => (
               <li key={product.id}>
                 <p>{product.title}</p>
