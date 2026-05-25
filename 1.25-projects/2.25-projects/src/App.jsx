@@ -2,6 +2,7 @@ import "./App.css";
 import CountDownTimer from "./Components/Countdown Timer";
 import CurrencyConverter from "./Components/Currency Converter";
 import DigitalClock from "./Components/Digital Clock";
+import FilterProducts from "./Components/Filter Products";
 import ProductsList from "./Components/Pagination";
 import ProgressStep from "./Components/Progress Step";
 import RandomQuoteGenerator from "./Components/Random Quote Generator";
@@ -18,6 +19,7 @@ function App() {
       <RandomQuoteGenerator />
       <Tooltip />
       <CurrencyConverter />
+      <FilterProducts />
     </div>
   );
 }
