@@ -14,7 +14,6 @@ function FilterProducts() {
       const result = await response.json();
 
       if (result && result.products && result.products.length > 0) {
-        setLoading(false);
         setProducts(result.products);
         setFilteredItems(result.products);
       }
