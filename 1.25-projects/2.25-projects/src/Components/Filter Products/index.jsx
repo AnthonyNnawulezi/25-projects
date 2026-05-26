@@ -138,6 +138,9 @@ function FilterProducts() {
     setSelectedCategory((prev) => (prev === category ? "" : category));
   }, []);
 
+  if (isLoading) return <h3>Fetching products, please wait...</h3>;
+  if (error) return <p className="error">{error}</p>;
+
   return (
     <section className="filter-products-container">
       <h1>Filter Products By Category</h1>
@@ -148,7 +151,7 @@ function FilterProducts() {
           <button
             key={category}
             type="button"
-            onClick={() => setSelectedCategory(handleCategoryToggle)}
+            onClick={() => handleCategoryToggle(category)}
             className={`filter-button ${selectedCategory === category ? "active" : ""}`}
           >
             {category}
