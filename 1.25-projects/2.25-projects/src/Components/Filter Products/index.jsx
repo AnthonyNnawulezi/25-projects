@@ -64,9 +64,9 @@ function FilterProducts() {
       </div>
 
       <ul className="filter-products-list">
-        {filteredProducts.map(({ id, category, images, brand, title }) => (
+        {filteredProducts.map(({ id, thumbnail, category, brand, title }) => (
           <li className="filter-list" key={id}>
-            <img src={images} alt="" />
+            <img src={thumbnail} alt="" />
             <h3>{title}</h3>
             <h4>{category}</h4>
             <h5>Brand:{brand}</h5>
