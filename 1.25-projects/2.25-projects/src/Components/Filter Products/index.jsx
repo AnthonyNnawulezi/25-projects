@@ -32,25 +32,31 @@ function FilterProducts() {
   }, []);
 
   const categories = useMemo(() => {
-    return [...new Set(products.map((product) => product.category.toLowerCase === selectedCategory.toLowerCase))]
+    return [...new Set(products.map((product) => product.category))]
   }, [products])
+  
 
   const filteredProducts = useMemo(() => {
     if(!selectedCategory) return products;
-
+    
+  console.log(selectedCategory);
+    
     return products.map((product) => product.category.toLowerCase === selectedCategory.toLowerCase)
   }, [products, selectedCategory])
+
 
   return (
     <section className="filter-products-container">
       <h1>Filter Products By Category</h1>
       {isLoading && <p>Loading Please wait...</p>}
       {error && <p>Error Fetching Products</p>}
-      {
+     <div className="filter-button-wrapper">
+         {
         categories.map((category) => (
-            <button key={category} type="button" onClick={() => setSelectedCategory((prev) => prev === category ? "" : category)} className={`filter-button ${selectedCategory === category ? 'active' : ""}`} ></button>
+            <button key={category} type="button" onClick={() => setSelectedCategory((prev) => prev === category ? "" : category)} className={`filter-button ${selectedCategory === category ? 'active' : ""}`} >{category}</button>
         ))
       }
+     </div>
 
 <ul  className="filter-products-list">
       {
