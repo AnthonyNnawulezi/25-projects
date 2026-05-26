@@ -28,7 +28,7 @@ function FilterProducts() {
 
   useEffect(() => {
     fetchProducts();
-  }, []);
+  }, [fetchProducts]);
 
   const categories = useMemo(() => {
     return [...new Set(products.map((product) => product.category))];
