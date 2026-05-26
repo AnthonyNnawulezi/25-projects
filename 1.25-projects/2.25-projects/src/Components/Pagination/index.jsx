@@ -31,7 +31,7 @@ function ProductsList() {
   }, [PRODUCTS, currentPage]);
 
   return (
-    <section>
+    <section className="pagination-container">
       <h1 className="pagination-title">Pagination</h1>
       <div className="list-container">
         {currentItems.map((item) => (

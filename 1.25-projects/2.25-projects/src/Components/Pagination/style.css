@@ -6,7 +6,7 @@
   box-sizing: border-box;
 }
 
-section {
+.pagination-container {
   text-align: center;
   background-color: #deb887;
   border-radius: 8px;

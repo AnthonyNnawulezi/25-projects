@@ -42,26 +42,28 @@ function FilterProducts() {
   }, [products, selectedCategory])
 
   return (
-    <section>
+    <section className="filter-products-container">
       <h1>Filter Products By Category</h1>
+      {isLoading && <p>Loading Please wait...</p>}
+      {error && <p>Error Fetching Products</p>}
       {
         categories.map((category) => (
-            <button key={category} type="button" onClick={() => setSelectedCategory((prev) => prev === category ? "" : category)} className={selectedCategory === category ? 'active' : ""}></button>
+            <button key={category} type="button" onClick={() => setSelectedCategory((prev) => prev === category ? "" : category)} className={`filter-button ${selectedCategory === category ? 'active' : ""}`} ></button>
         ))
       }
 
+<ul  className="filter-products-list">
       {
         filteredProducts.map(({id, category, images, brand, title}) => (
-                <ul key={id} className="products-list">
-                <li className="list" >
+                <li className="filter-list" key={id}>
                     <img src={images} alt="" />
                     <h3>{title}</h3>
                     <h4>{category}</h4>
                     <h5>Brand:{brand}</h5>
                 </li>
-            </ul>
         ))
-      }
+    }
+    </ul>
     </section>
   );
 }
