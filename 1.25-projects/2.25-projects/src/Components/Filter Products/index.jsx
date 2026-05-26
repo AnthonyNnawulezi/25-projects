@@ -111,7 +111,7 @@ function FilterProducts() {
 
       setProducts(data.products ?? []);
     } catch (error) {
-      setError(error.message || "Something went wrong while fetching products");
+      setError(error.message ?? "Something went wrong while fetching products");
       setProducts([]);
     } finally {
       setIsLoading(false);
@@ -120,10 +120,9 @@ function FilterProducts() {
 
   useEffect(() => {
     fetchProducts();
-  }, []);
+  }, [fetchProducts]);
 
   const categories = useMemo(() => {
-    if (!products.length) return [];
     return [...new Set(products.map((product) => product.category))];
   }, [products]);
 
@@ -165,7 +164,6 @@ function FilterProducts() {
             <img src={thumbnail} alt={title} />
             <p>{title}</p>
             <span>{category}</span>
-            <span>Brand:{brand}</span>
           </li>
         ))}
       </ul>
