@@ -16,6 +16,8 @@
   width: 300px;
   min-height: 300px;
   margin: 10px;
+  display: flex;
+  flex-direction: column;
 }
 
 .filter-list img {
