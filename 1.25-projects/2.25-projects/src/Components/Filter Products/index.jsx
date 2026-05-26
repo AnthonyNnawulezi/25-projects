@@ -5,7 +5,7 @@ function FilterProducts() {
   const [isLoading, setIsLoading] = useState(false);
   const [products, setProducts] = useState([]);
   const [error, setError] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState("");
 
   const fetchProducts = useCallback(async () => {
     setError("");
