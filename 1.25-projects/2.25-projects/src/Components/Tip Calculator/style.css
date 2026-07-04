@@ -1,0 +1,26 @@
+.tip-calculator-container {
+  background-color: #c9aa80;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  justify-content: center;
+  align-items: center;
+  max-width: 500px;
+  margin: 15px auto;
+  border-radius: 12px;
+}
+
+.input-wrapper {
+  display: flex;
+  width: 450px;
+  align-items: center;
+}
+
+.input-wrapper label {
+  flex: 1;
+  text-align: left;
+}
+.input-wrapper input {
+  flex: 1;
+  text-align: left;
+}

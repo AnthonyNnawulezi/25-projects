@@ -6,6 +6,7 @@ import FilterProducts from "./Components/Filter Products";
 import ProductsList from "./Components/Pagination";
 import ProgressStep from "./Components/Progress Step";
 import RandomQuoteGenerator from "./Components/Random Quote Generator";
+import TipCalculator from "./Components/Tip Calculator";
 import Tooltip from "./Components/Tooltip";
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
       <Tooltip />
       <CurrencyConverter />
       <FilterProducts />
+      <TipCalculator />
     </div>
   );
 }
