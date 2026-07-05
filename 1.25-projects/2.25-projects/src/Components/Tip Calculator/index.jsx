@@ -23,7 +23,7 @@ function TipCalculator() {
     if (tipPercent < 0 || tipPercent > 100) {
       setError("Tip percentage must be between 0 and 100.");
       setResult(null);
-      return;
+      return false;
     }
     return true;
   }
