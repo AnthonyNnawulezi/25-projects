@@ -1,6 +1,9 @@
 import { useState } from "react";
 import "./style.css";
 
+const DEFAULT_TIP_PERCENTAGE = 10;
+const DEFAULT_PEOPLE_COUNT = 1;
+
 function TipCalculator() {
   const [billInput, setBillInput] = useState(0.0);
   const [tipInput, setTipInput] = useState(10.0);
