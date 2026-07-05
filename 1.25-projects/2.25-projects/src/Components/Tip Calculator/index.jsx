@@ -26,6 +26,7 @@ function TipCalculator() {
       tipPerPerson: tipPerPerson.toFixed(2),
       totalPerPerson: totalPerPerson.toFixed(2),
     });
+    setError("");
   }
 
   return (
@@ -58,12 +59,13 @@ function TipCalculator() {
       <button onClick={calculateTip}>Calculate Tip</button>
 
       {error && <p className="error">Please enter a valid credential</p>}
-      {amountInfo &&
-        `
-            <p>Total Amount: ${amountInfo.totalAmount}</p>
-            <p>Tip Per Person: ${amountInfo.tipPerPerson}</p>
-            <p>Total Amount Per Person: ${amountInfo.totalPerPerson}</p>
-        `}
+      {amountInfo && (
+        <div className="result">
+          <p>Total Amount: {amountInfo.totalAmount}</p>
+          <p>Tip Per Person: {amountInfo.tipPerPerson}</p>
+          <p>Total Amount Per Person: {amountInfo.totalPerPerson}</p>
+        </div>
+      )}
     </div>
   );
 }
