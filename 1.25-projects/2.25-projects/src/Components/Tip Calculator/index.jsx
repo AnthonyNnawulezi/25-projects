@@ -1,75 +1,6 @@
 import { useState } from "react";
 import "./style.css";
 
-// function TipCalculator() {
-//   const [billInput, setBillInput] = useState(0.0);
-//   const [tipInput, setTipInput] = useState(10.0);
-//   const [peopleCount, setPeopleCount] = useState(0);
-//   const [amountInfo, setAmountInfo] = useState("");
-//   const [error, setError] = useState("");
-
-//   function calculateTip() {
-//     if (!billInput || !tipInput || !peopleCount) {
-//       setError(<p className="error">Please enter a valid credential</p>);
-//       setAmountInfo("");
-//       return;
-//     }
-
-//     const tip = billInput * (tipInput / 100);
-//     const totalAmount = billInput + tip;
-//     const tipPerPerson = tip / peopleCount;
-//     const totalPerPerson = billInput / peopleCount;
-
-//     setAmountInfo({
-//       totalAmount: totalAmount.toFixed(2),
-//       tip: tip.toFixed(2),
-//       tipPerPerson: tipPerPerson.toFixed(2),
-//       totalPerPerson: totalPerPerson.toFixed(2),
-//     });
-//     setError("");
-//   }
-
-//   return (
-//     <div className="tip-calculator-container">
-//       <h1>Tip Calculator</h1>
-//       <div className="input-wrapper">
-//         <label htmlFor="">Bill Amount:</label>
-//         <input
-//           type="number"
-//           value={billInput}
-//           onChange={(event) => setBillInput(Number(event.target.value))}
-//         />
-//       </div>
-//       <div className="input-wrapper">
-//         <label htmlFor="">Tip Percentage:</label>
-//         <input
-//           type="number"
-//           value={tipInput}
-//           onChange={(event) => setTipInput(Number(event.target.value))}
-//         />
-//       </div>
-//       <div className="input-wrapper">
-//         <label htmlFor="">Number of People:</label>
-//         <input
-//           type="number"
-//           value={peopleCount}
-//           onChange={(event) => setPeopleCount(Number(event.target.value))}
-//         />
-//       </div>
-//       <button onClick={calculateTip}>Calculate Tip</button>
-
-//       {error && <p className="error">Please enter a valid credential</p>}
-//       {amountInfo && (
-//         <div className="result">
-//           <p>Total Amount: {amountInfo.totalAmount}</p>
-//           <p>Tip Per Person: {amountInfo.tipPerPerson}</p>
-//           <p>Total Amount Per Person: {amountInfo.totalPerPerson}</p>
-//         </div>
-//       )}
-//     </div>
-//   );
-// }
-
 const DEFAULT_TIP_PERCENTAGE = 10;
 const DEFAULT_PEOPLE_COUNT = 1;
 
@@ -91,6 +22,81 @@ function TipCalculator() {
     }
     return true;
   }
+
+  function handleCalculate() {
+    setError("");
+    setResult(null);
+
+    if (!isValidInput()) return;
+
+    const billAmount = Number(bill);
+    const tipAmount = billAmount * (tipPercent / 100);
+    const totalAmount = billAmount + tipAmount;
+    const tipPerPerson = tipAmount / peopleCount;
+    const totalPerPerson = totalAmount / peopleCount;
+
+    setResult({
+      tipAmount: tipAmount.toFixed(2),
+      totalAmount: totalAmount.toFixed(2),
+      tipPerPerson: tipPerPerson.toFixed(2),
+      totalPerPerson: totalPerPerson.toFixed(2),
+    });
+  }
+
+  return (
+    <div className="tip-calculator-container">
+      <h1>Tip Calculator</h1>
+
+      <div className="input-wrapper">
+        <label htmlFor="bill-amount">Bill Amount:</label>
+        <input
+          id="bill-amount"
+          type="number"
+          min="0"
+          step="0.01"
+          placeholder="0.00"
+          value={bill}
+          onChange={(e) => setBill(e.target.value)}
+        />
+      </div>
+
+      <div className="input-wrapper">
+        <label htmlFor="tip-percent">Tip Percentage:</label>
+        <input
+          id="tip-percent"
+          type="number"
+          min="0"
+          max="100"
+          value={tipPercent}
+          onChange={(e) => setTipPercent(Number(e.target.value))}
+        />
+      </div>
+
+      <div className="input-wrapper">
+        <label htmlFor="people-count">Number of People:</label>
+        <input
+          id="people-count"
+          type="number"
+          min="1"
+          value={peopleCount}
+          onChange={(e) => setPeopleCount(Number(e.target.value))}
+        />
+      </div>
+
+      <button onClick={handleCalculate}>Calculate Tip</button>
+
+      {error && <p className="error">{error}</p>}
+
+      {result && (
+        <div className="result">
+          <p>Total Tip: ${result.tipAmount}</p>
+          <p>Total Amount: ${result.totalAmount}</p>
+          <p>Tip Per Person: ${result.tipPerPerson}</p>
+          <p>Total Per Person: ${result.totalPerPerson}</p>
+        </div>
+      )}
+    </div>
+  );
 }
 
 export default TipCalculator;
