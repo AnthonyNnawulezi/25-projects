@@ -20,6 +20,11 @@ function TipCalculator() {
       setError("There must be at least one person.");
       return false;
     }
+    if (tipPercent < 0 || tipPercent > 100) {
+      setError("Tip percentage must be between 0 and 100.");
+      setResult(null);
+      return;
+    }
     return true;
   }
 
@@ -57,6 +62,7 @@ function TipCalculator() {
           placeholder="0.00"
           value={bill}
           onChange={(e) => setBill(e.target.value)}
+          aria-describedby={error ? "error-message" : undefined}
         />
       </div>
 
@@ -69,6 +75,7 @@ function TipCalculator() {
           max="100"
           value={tipPercent}
           onChange={(e) => setTipPercent(Number(e.target.value))}
+          aria-describedby={error ? "error-message" : undefined}
         />
       </div>
 
@@ -80,6 +87,7 @@ function TipCalculator() {
           min="1"
           value={peopleCount}
           onChange={(e) => setPeopleCount(Number(e.target.value))}
+          aria-describedby={error ? "error-message" : undefined}
         />
       </div>
 
