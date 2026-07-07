@@ -25,7 +25,7 @@ function MusicPlayer() {
     if (isPlaying) {
       const interval = setInterval(() => {
         setTrackProgress(
-          (audioRef.current.currentTime / audioRef.current.duration) * 100
+          (audioRef.current.currentTime / audioRef.current.duration) * 100,
         );
       }, 1000);
       return () => clearInterval(interval);
@@ -38,7 +38,7 @@ function MusicPlayer() {
     } else {
       audioRef.current.play();
     }
-    setIsPlaying(!isPlaying);
+    // setIsPlaying(!isPlaying);
     setIsPlaying((prev) => !prev);
   }
 
@@ -47,7 +47,7 @@ function MusicPlayer() {
       setCurrMusicTrack((prevTrack) => prevTrack + 1);
     } else if (direction === "backward") {
       setCurrMusicTrack(
-        (prevTrack) => (prevTrack - 1 + tracks.length) % tracks.length
+        (prevTrack) => (prevTrack - 1 + tracks.length) % tracks.length,
       );
     }
     setTrackProgress(0); //on clicking another song
