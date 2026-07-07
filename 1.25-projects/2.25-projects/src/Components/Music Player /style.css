@@ -15,9 +15,4 @@
   overflow: hidden;
 }
 .progress {
-  width: 0;
-  height: 15px;
-  background-color: #674928;
-  border-radius: 12px;
-  overflow: hidden;
 }
