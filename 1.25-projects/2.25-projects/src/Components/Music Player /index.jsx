@@ -1,4 +1,12 @@
+import { useState } from "react";
+import "./style.css";
+
 function MusicPlayer() {
+  const TRACK_INDEX = 0;
+
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [currentTrack, setCurrentTrack] = useState(TRACK_INDEX);
+
   const tracks = [
     {
       title: "Track 1",
@@ -10,15 +18,14 @@ function MusicPlayer() {
       source: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
       image: "https://via.placeholder.com/150",
     },
-    // Add more tracks as needed
   ];
 
   return (
-    <div>
+    <div className="music-player-container">
       <h1>Music Player</h1>
       <div className="music-container">
-        <p className="title"></p>
-        <audio src=""></audio>
+        <p className="title">{tracks[TRACK_INDEX].title}</p>
+        <audio src={tracks[TRACK_INDEX].source} className="player"></audio>
         <div className="track-bar">
           <div className="progress"></div>
         </div>
