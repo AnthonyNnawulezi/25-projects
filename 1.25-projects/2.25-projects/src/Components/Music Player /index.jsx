@@ -24,8 +24,9 @@ function MusicPlayer() {
 
   useEffect(() => {
     const intervalID = setInterval(() => {
-      setProgress(audioRef.current.currentTime / audioRef.current.duration) *
-        100;
+      setProgress(
+        (audioRef.current.currentTime / audioRef.current.duration) * 100,
+      );
     }, 1);
     return () => clearInterval(intervalID);
   }, [isPlaying]);
@@ -39,7 +40,16 @@ function MusicPlayer() {
     setIsPlaying(!isPlaying);
   }
 
-  function skipTo(route) {}
+  function skipTo(route) {
+    if (route === "forward") {
+      setCurrentTrack((prevTrack) => prevTrack + 1);
+    } else if (route === "backward") {
+      setCurrentTrack(
+        (prevTrack) => (prevTrack - 1 + tracks.length) % tracks.length,
+      );
+    }
+    setCurrentTrack(0);
+  }
 
   return (
     <div className="music-player-container">
@@ -63,9 +73,9 @@ function MusicPlayer() {
           ></div>
         </div>
         <div className="controls">
-          <button onClick={skipTo("backward")}>Backward</button>
+          <button onClick={() => skipTo("backward")}>Backward</button>
           <button onClick={handleToggle}>{isPlaying ? "Pause" : "Play"}</button>
-          <button onClick={skipTo("forward")}>Forward</button>
+          <button onClick={() => skipTo("forward")}>Forward</button>
         </div>
       </div>
     </div>
