@@ -42,13 +42,12 @@ function MusicPlayer() {
 
   function skipTo(route) {
     if (route === "forward") {
-      setCurrentTrack((prevTrack) => prevTrack + 1);
+      setCurrentTrack((prevTrack) => (prevTrack + 1) % tracks.length);
     } else if (route === "backward") {
       setCurrentTrack(
         (prevTrack) => (prevTrack - 1 + tracks.length) % tracks.length,
       );
     }
-    setCurrentTrack(0);
   }
 
   return (
