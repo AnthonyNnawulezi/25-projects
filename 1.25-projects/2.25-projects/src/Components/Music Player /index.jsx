@@ -55,9 +55,12 @@ function MusicPlayer() {
       <h1>Music Player</h1>
       <div className="music-container">
         <p className="title">{tracks[TRACK_INDEX].title}</p>
-        <img src={tracks[TRACK_INDEX].image} alt={tracks[TRACK_INDEX].image} />
+        <img
+          src={tracks[currentTrack].image}
+          alt={tracks[currentTrack].image}
+        />
         <audio
-          src={tracks[TRACK_INDEX].source}
+          src={tracks[currentTrack].source}
           className="player"
           ref={audioRef}
         ></audio>
