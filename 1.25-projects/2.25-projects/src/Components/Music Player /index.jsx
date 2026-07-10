@@ -42,7 +42,7 @@ function MusicPlayer() {
 
   function skipTo(route) {
     if (route === "forward") {
-      setCurrentTrack((prevTrack) => (prevTrack + 1) % tracks.length);
+      setCurrentTrack((prevTrack) => prevTrack + 1);
     } else if (route === "backward") {
       setCurrentTrack(
         (prevTrack) => (prevTrack - 1 + tracks.length) % tracks.length,
@@ -54,7 +54,7 @@ function MusicPlayer() {
     <div className="music-player-container">
       <h1>Music Player</h1>
       <div className="music-container">
-        <p className="title">{tracks[TRACK_INDEX].title}</p>
+        <p className="title">{tracks[currentTrack].title}</p>
         <img
           src={tracks[currentTrack].image}
           alt={tracks[currentTrack].image}
