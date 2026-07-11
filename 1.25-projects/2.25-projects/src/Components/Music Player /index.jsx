@@ -34,14 +34,10 @@ function MusicPlayer() {
   }, []);
 
   useEffect(() => {
-    const audioElement = audioRef.current;
-    if (!audioElement) return;
-
-    audioElement.load();
-    if (isPlaying) {
-      audioElement.play().catch((error) => {
-        console.error("Playback failed:", error);
-      });
+    if (isPlaying && audioRef.current) {
+      audioRef.current
+        .play()
+        .catch((err) => console.error("Playback prevented:", err));
     }
-  }, [currentTrackIndex]);
+  }, [trackIndex, isPlaying]);
 }
