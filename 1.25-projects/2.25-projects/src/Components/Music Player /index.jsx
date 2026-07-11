@@ -57,5 +57,19 @@ function MusicPlayer() {
     );
   }, []);
 
+  function handleTogglePlay() {
+    const audioElement = audioRef.current;
+    if (!audioElement) return;
+
+    if (isPlaying) {
+      audioElement.pause();
+    } else {
+      audioElement.play().catch((error) => {
+        console.error("Playback failed:", error);
+      });
+    }
+    setIsPlaying((prevIsPlaying) => !prevIsPlaying);
+  }
+
   return <div className="music-player-container"></div>;
 }
