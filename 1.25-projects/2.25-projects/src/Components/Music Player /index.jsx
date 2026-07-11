@@ -10,3 +10,10 @@ const TRACKS = [
     image: "https://via.placeholder.com/150",
   },
 ];
+
+function MusicPlayer() {
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [trackIndex, setTrackIndex] = useState(0);
+  const [progressPercentage, setProgressPercentage] = useState(0);
+  const audioRef = useRef(null);
+}
