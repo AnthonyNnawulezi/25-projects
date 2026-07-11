@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 
 const TRACKS = [
   {
@@ -46,4 +46,16 @@ function MusicPlayer() {
   const handleTrackEnded = () => {
     handleNextTrack();
   };
+
+  const handleNextTrack = useCallback(() => {
+    setTrackIndex((trackIndex) => (trackIndex + 1) % TRACKS.length);
+  }, []);
+
+  const handlePreviousTrack = useCallback(() => {
+    setTrackIndex(
+      (trackIndex) => (trackIndex - 1 + TRACKS.length) % TRACKS.length,
+    );
+  }, []);
+
+  return <div className="music-player-container"></div>;
 }
