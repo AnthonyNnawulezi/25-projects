@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 const TRACKS = [
   {
@@ -73,3 +73,5 @@ function MusicPlayer() {
 
   return <div className="music-player-container"></div>;
 }
+
+export default MusicPlayer;
