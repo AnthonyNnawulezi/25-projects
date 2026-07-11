@@ -32,4 +32,16 @@ function MusicPlayer() {
     return () =>
       audioElement.removeEventListener("timeupdate", handleTimeUpdate);
   }, []);
+
+  useEffect(() => {
+    const audioElement = audioRef.current;
+    if (!audioElement) return;
+
+    audioElement.load();
+    if (isPlaying) {
+      audioElement.play().catch((error) => {
+        console.error("Playback failed:", error);
+      });
+    }
+  }, [currentTrackIndex]);
 }
