@@ -28,16 +28,16 @@ function MusicPlayer() {
 
   // If we change tracks while playing, tell the new track to play
   useEffect(() => {
-    if (isPlaying && audioRef.current) {
-      audioRef.current
-        .play()
-        .catch((err) => console.error("Playback prevented:", err));
-    }
-  }, [trackIndex, isPlaying]);
+    const audioElement = audioRef.current;
+    if (!audioElement) return;
 
-  const handleNextTrack = useCallback(() => {
-    setTrackIndex((trackIndex) => (trackIndex + 1) % TRACKS.length);
-  }, []);
+    audioElement.load();
+    if (isPlaying) {
+      audioElement.play().catch((error) => {
+        console.error("Playback prevented:", error);
+      });
+    }
+  }, [trackIndex]);
 
   const handlePreviousTrack = useCallback(() => {
     setTrackIndex(
