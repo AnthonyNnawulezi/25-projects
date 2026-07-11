@@ -33,6 +33,7 @@ function MusicPlayer() {
       audioElement.removeEventListener("timeupdate", handleTimeUpdate);
   }, []);
 
+  // If we change tracks while playing, tell the new track to play
   useEffect(() => {
     if (isPlaying && audioRef.current) {
       audioRef.current
@@ -40,4 +41,9 @@ function MusicPlayer() {
         .catch((err) => console.error("Playback prevented:", err));
     }
   }, [trackIndex, isPlaying]);
+
+  // Auto-play next track when current one finishes
+  const handleTrackEnded = () => {
+    handleNextTrack();
+  };
 }
