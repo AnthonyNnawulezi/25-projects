@@ -35,11 +35,6 @@ function MusicPlayer() {
     }
   }, [trackIndex, isPlaying]);
 
-  // Auto-play next track when current one finishes
-  const handleTrackEnded = () => {
-    handleNextTrack();
-  };
-
   const handleNextTrack = useCallback(() => {
     setTrackIndex((trackIndex) => (trackIndex + 1) % TRACKS.length);
   }, []);
@@ -78,7 +73,7 @@ function MusicPlayer() {
         ref={audioRef}
         className="player"
         onTimeUpdate={handleTimeUpdate}
-        onEnded={handleTrackEnded}
+        onEnded={handleNextTrack}
       />
       <div className="track-bar">
         <div
