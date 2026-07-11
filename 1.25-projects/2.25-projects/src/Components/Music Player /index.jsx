@@ -19,19 +19,12 @@ function MusicPlayer() {
   const [progress, setProgress] = useState(0);
   const audioRef = useRef(null);
 
-  useEffect(() => {
+  const handleTimeUpdate = () => {
     const audioElement = audioRef.current;
-    if (!audioElement) return undefined;
+    const { currentTime, duration } = audioElement;
 
-    function handleTimeUpdate() {
-      const { currentTime, duration } = audioElement;
-      setProgress(duration ? (currentTime / duration) * 100 : 0);
-    }
-
-    audioElement.addEventListener("timeupdate", handleTimeUpdate);
-    return () =>
-      audioElement.removeEventListener("timeupdate", handleTimeUpdate);
-  }, []);
+    setProgress(duration ? (currentTime / duration) * 100 : 0);
+  };
 
   // If we change tracks while playing, tell the new track to play
   useEffect(() => {
@@ -71,7 +64,38 @@ function MusicPlayer() {
     setIsPlaying((prevIsPlaying) => !prevIsPlaying);
   }
 
-  return <div className="music-player-container"></div>;
+  const currentTrack = TRACKS[trackIndex];
+
+  return (
+    <div className="music-player-container">
+      <h1>Music Player</h1>
+      <div className="music-container">
+        <p className="title">{currentTrack.title}</p>
+      </div>
+      <img src={currentTrack.image} alt={`${currentTrack.title}`} />
+      <audio
+        src={currentTrack.source}
+        ref={audioRef}
+        className="player"
+        onTimeUpdate={handleTimeUpdate}
+        onEnded={handleTrackEnded}
+      />
+      <div className="track-bar">
+        <div
+          className={`progress ${isPlaying ? "is-playing" : "is-paused"}`}
+          style={{ width: `${progress}%` }}
+        />
+      </div>
+
+      <div className="controls">
+        <button onClick={handlePreviousTrack}>Backward</button>
+        <button onClick={handleTogglePlay}>
+          {isPlaying ? "Pause" : "Play"}
+        </button>
+        <button onClick={handleNextTrack}>Forward</button>
+      </div>
+    </div>
+  );
 }
 
 export default MusicPlayer;
