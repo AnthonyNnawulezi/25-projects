@@ -1,11 +1,10 @@
-.player {
-  width: 100px;
-  height: 100px;
-}
-
 .music-player-container {
   width: 500px;
   background-color: #c19a6b;
+}
+.player {
+  width: 100px;
+  height: 100px;
 }
 .track-bar {
   width: 100%;
@@ -14,5 +13,13 @@
   border-radius: 12px;
   overflow: hidden;
 }
+
 .progress {
+  height: 15px;
+}
+.is-playing {
+  background: #3498db " : " #a43636;
+}
+.is-paused {
+  background: #a43636;
 }
