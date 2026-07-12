@@ -43,6 +43,14 @@ function MusicPlayer() {
     setTrackIndex(
       (trackIndex) => (trackIndex - 1 + TRACKS.length) % TRACKS.length,
     );
+    setProgress(0);
+  }, []);
+
+  const handleNextTrack = useCallback(() => {
+    setTrackIndex(
+      (currentTrackIndex) => (currentTrackIndex + 1) % TRACKS.length,
+    );
+    setProgress(0);
   }, []);
 
   function handleTogglePlay() {
