@@ -37,7 +37,7 @@ function MusicPlayer() {
         console.error("Playback prevented:", error);
       });
     }
-  }, [trackIndex]);
+  }, [trackIndex, isPlaying]);
 
   const handlePreviousTrack = useCallback(() => {
     setTrackIndex(
