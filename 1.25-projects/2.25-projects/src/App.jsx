@@ -1,6 +1,7 @@
 import "./App.css";
 import CountDownTimer from "./Components/Countdown Timer";
 import CurrencyConverter from "./Components/Currency Converter";
+import ProgressBar from "./Components/Custom Progress Bar";
 import DigitalClock from "./Components/Digital Clock";
 import FilterProducts from "./Components/Filter Products";
 import MusicPlayer from "./Components/Music Player ";
@@ -24,6 +25,7 @@ function App() {
       <FilterProducts />
       <TipCalculator />
       <MusicPlayer />
+      <ProgressBar />
     </div>
   );
 }
