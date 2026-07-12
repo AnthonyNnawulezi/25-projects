@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import "./style.css";
 
 const TRACKS = [
   {
@@ -37,7 +38,7 @@ function MusicPlayer() {
         console.error("Playback prevented:", error);
       });
     }
-  }, [trackIndex, isPlaying]);
+  }, [trackIndex]);
 
   const handlePreviousTrack = useCallback(() => {
     setTrackIndex(
@@ -84,10 +85,7 @@ function MusicPlayer() {
         onEnded={handleNextTrack}
       />
       <div className="track-bar">
-        <div
-          className={`progress ${isPlaying ? "is-playing" : "is-paused"}`}
-          style={{ width: `${progress}%` }}
-        />
+        <div className="progress" style={{ width: `${progress}%` }} />
       </div>
 
       <div className="controls">

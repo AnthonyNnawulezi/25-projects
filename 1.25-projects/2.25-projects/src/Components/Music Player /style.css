@@ -15,11 +15,7 @@
 }
 
 .progress {
-  height: 15px;
-}
-.is-playing {
-  background: #3498db " : " #a43636;
-}
-.is-paused {
-  background: #a43636;
+  height: 100%;
+  transition: width 0.2s linear;
+  background: #3498db;
 }
