@@ -5,6 +5,8 @@ function ProgressBar() {
 
   function handlePercentageChange(event) {
     const value = Number(event.target.value);
+
+    const clampedValue = Math.min(Math.max(value, 0), 100);
   }
 }
 
