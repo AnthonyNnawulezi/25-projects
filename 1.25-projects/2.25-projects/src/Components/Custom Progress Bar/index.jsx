@@ -17,7 +17,14 @@ function ProgressBar() {
       <h1>Custom Progress Bar</h1>
 
       <div className="progress-bar-wrapper">
-        <div className="progress-bar">
+        <div
+          className="progress-bar"
+          role="progressbar"
+          aria-valuenow={progressPercentage}
+          aria-valuemin={0}
+          aria-valuemax={100}
+          aria-label={`Progress: ${progressPercentage}%`}
+        >
           <div
             className="custom-progress"
             style={{ width: `${progressPercentage}%` }}
