@@ -1,3 +1,4 @@
+import { useState } from "react";
 import "./style.css";
 
 function ProgressBar() {
@@ -7,6 +8,8 @@ function ProgressBar() {
     const value = Number(event.target.value);
 
     const clampedValue = Math.min(Math.max(value, 0), 100);
+
+    setProgressPercentage(clampedValue);
   }
 
   return (
