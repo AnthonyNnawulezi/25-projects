@@ -1,4 +1,5 @@
 import "./App.css";
+import BMICalculator from "./Components/BMI Calculator";
 import CountDownTimer from "./Components/Countdown Timer";
 import CurrencyConverter from "./Components/Currency Converter";
 import ProgressBar from "./Components/Custom Progress Bar";
@@ -26,6 +27,7 @@ function App() {
       <TipCalculator />
       <MusicPlayer />
       <ProgressBar />
+      <BMICalculator />
     </div>
   );
 }
