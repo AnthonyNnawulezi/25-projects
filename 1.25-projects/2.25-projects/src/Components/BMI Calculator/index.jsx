@@ -19,6 +19,16 @@ function BMICalculator() {
   const [weight, setWeight] = useState("");
   const [bmi, setBMI] = useState(null);
   const [error, setError] = useState("");
+
+  function handleHeightChange(e) {
+    setHeight(e.target.value);
+    setError("");
+  }
+
+  function handleWeightChange(e) {
+    setWeight(e.target.value);
+    setError("");
+  }
 }
 
 export default BMICalculator;
