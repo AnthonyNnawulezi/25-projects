@@ -31,6 +31,7 @@ function BMICalculator() {
             type="number"
             id="height"
             onChange={(e) => setHeight(e.target.value)}
+            value={height}
           />
         </div>
         <div className="bmi-wrapper">
@@ -39,6 +40,7 @@ function BMICalculator() {
             type="number"
             id="weight"
             onChange={(e) => setWeight(e.target.value)}
+            value={weight}
           />
         </div>
         <button onClick={calculateBMI}>Calculate BMI</button>
