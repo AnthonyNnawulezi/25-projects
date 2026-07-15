@@ -8,7 +8,7 @@ function BMICalculator() {
   const [error, setError] = useState(null);
 
   function calculateBMI() {
-    const bmiHeight = Number(height) ** 2;
+    const bmiHeight = Number(height) / 100;
     const bmiWeight = Number(weight);
 
     if (!bmiHeight || !bmiWeight) {
@@ -16,7 +16,7 @@ function BMICalculator() {
       return;
     }
 
-    const bmiValue = (bmiWeight / (bmiHeight * bmiHeight)) * 10000;
+    const bmiValue = bmiWeight / bmiHeight ** 2;
     setBMI(bmiValue);
     console.log(bmiValue);
   }
