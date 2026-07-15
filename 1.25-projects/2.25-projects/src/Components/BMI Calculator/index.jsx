@@ -9,16 +9,16 @@ function BMICalculator() {
 
   function calculateBMI() {
     const bmiHeight = Number(height) ** 2;
-    const bmiWeight = Number(weight * weight);
+    const bmiWeight = Number(weight);
 
     if (!bmiHeight || !bmiWeight) {
       setError("Please enter the height and weight");
       return;
     }
 
-    const bmiValue = (Number(bmiWeight) / bmiHeight) * 10000;
+    const bmiValue = (bmiWeight / (bmiHeight * bmiHeight)) * 10000;
     setBMI(bmiValue);
-    console.log(bmi);
+    console.log(bmiValue);
   }
 
   return (
