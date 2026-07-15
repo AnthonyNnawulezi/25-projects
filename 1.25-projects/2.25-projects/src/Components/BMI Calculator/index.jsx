@@ -29,6 +29,10 @@ function BMICalculator() {
     setWeight(e.target.value);
     setError("");
   }
+
+  const calculateBMI = useCallback(() => {
+    setError(null);
+  }, [height, weight]);
 }
 
 export default BMICalculator;
