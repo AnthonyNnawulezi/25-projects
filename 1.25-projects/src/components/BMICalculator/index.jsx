@@ -33,8 +33,6 @@ function BMICalculator() {
     setErrorMessage("");
   }
 
-  // console.log(bmi);
-
   return (
     <div className="bmi-container">
       <h1>BMI Calculator</h1>
@@ -61,10 +59,10 @@ function BMICalculator() {
           {bmi < 18.5
             ? "Underweight"
             : bmi >= 18.5 && bmi < 24.9
-            ? "Normal weight"
-            : bmi >= 25 && bmi < 29.9
-            ? "Overweight"
-            : "Obese"}
+              ? "Normal weight"
+              : bmi >= 25 && bmi < 29.9
+                ? "Overweight"
+                : "Obese"}
         </p>
       )}
     </div>

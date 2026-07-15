@@ -4,10 +4,15 @@ import "./style.css";
 function BMICalculator() {
   const [height, setHeight] = useState(null);
   const [weight, setWeight] = useState(null);
+  const [bmi, setBMI] = useState(null);
 
   function calculateBMI() {
-    const bmiHeight = Number(height);
-    const bmiWeight = Number(weight);
+    const bmiHeight = Number(height / 100);
+    const bmiWeight = Number(weight * weight);
+
+    const bmiValue = bmiWeight / bmiHeight;
+    setBMI(bmiValue);
+    console.log(bmi);
   }
 
   return (
@@ -31,6 +36,17 @@ function BMICalculator() {
           />
         </div>
         <button onClick={calculateBMI}>Calculate BMI</button>
+        {
+          <p>
+            {bmi <= 18.5
+              ? "You are underweight"
+              : bmi > 18.5 && bmi <= 24.9
+                ? "You are normal"
+                : bmi >= 25 && bmi <= 29.9
+                  ? "You are overweight"
+                  : "You are obesed"}
+          </p>
+        }
       </div>
     </div>
   );
