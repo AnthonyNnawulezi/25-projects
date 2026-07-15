@@ -35,6 +35,12 @@ function BMICalculator() {
 
     const heightCm = Number(height);
     const weightKg = Number(weight);
+
+    if (!heightCm || !weightKg || heightCm < 0 || weightKg < 0) {
+      setError("Please enter a valid positive height and weight");
+      setBMI(null);
+      return;
+    }
   }, [height, weight]);
 }
 
