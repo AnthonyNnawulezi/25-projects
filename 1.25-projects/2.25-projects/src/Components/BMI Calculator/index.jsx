@@ -1,13 +1,24 @@
 import { useState } from "react";
 import "./style.css";
 
+const BMI_CATEGORIES = {
+  UNDERWEIGHT: 18.5,
+  NORMAL: 25,
+  OVERWEIGHT: 30,
+};
+
+function getBMICategory(bmiValue) {
+  if (bmiValue < BMI_CATEGORIES.UNDERWEIGHT) return "You are underweight";
+  if (bmiValue < BMI_CATEGORIES.NORMAL) return "You are normal";
+  if (bmiValue < BMI_CATEGORIES.OVERWEIGHT) return "You are overweight";
+  return "You are obese";
+}
+
 function BMICalculator() {
-  function getBMICategory(bmiValue) {
-    if (bmiValue < 18.5) return "You are underweight";
-    if (bmiValue < 25) return "You are normal";
-    if (bmiValue < 30) return "You are overweight";
-    return "You are obese";
-  }
+  const [height, setHeight] = useState("");
+  const [weight, setWeight] = useState("");
+  const [bmi, setBMI] = useState(null);
+  const [error, setError] = useState("");
 }
 
 export default BMICalculator;
