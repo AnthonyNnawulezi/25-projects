@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import "./style.css";
 
 const BMI_CATEGORIES = {
@@ -32,6 +32,9 @@ function BMICalculator() {
 
   const calculateBMI = useCallback(() => {
     setError(null);
+
+    const heightCm = Number(height);
+    const weightKg = Number(weight);
   }, [height, weight]);
 }
 
