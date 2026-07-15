@@ -5,12 +5,18 @@ function BMICalculator() {
   const [height, setHeight] = useState(null);
   const [weight, setWeight] = useState(null);
   const [bmi, setBMI] = useState(null);
+  const [error, setError] = useState(null);
 
   function calculateBMI() {
-    const bmiHeight = Number(height / 100);
+    const bmiHeight = Number(height) ** 2;
     const bmiWeight = Number(weight * weight);
 
-    const bmiValue = bmiWeight / bmiHeight;
+    if (!bmiHeight || !bmiWeight) {
+      setError("Please enter the height and weight");
+      return;
+    }
+
+    const bmiValue = (Number(bmiWeight) / bmiHeight) * 10000;
     setBMI(bmiValue);
     console.log(bmi);
   }
@@ -36,17 +42,19 @@ function BMICalculator() {
           />
         </div>
         <button onClick={calculateBMI}>Calculate BMI</button>
-        {
+        {error ? (
+          <p>{error}</p>
+        ) : (
           <p>
-            {bmi <= 18.5
+            {bmi < 18.5
               ? "You are underweight"
-              : bmi > 18.5 && bmi <= 24.9
+              : bmi < 25
                 ? "You are normal"
-                : bmi >= 25 && bmi <= 29.9
+                : bmi < 30
                   ? "You are overweight"
-                  : "You are obesed"}
+                  : "You are obese"}
           </p>
-        }
+        )}
       </div>
     </div>
   );
