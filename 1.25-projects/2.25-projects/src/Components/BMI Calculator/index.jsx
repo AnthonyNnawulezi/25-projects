@@ -14,6 +14,11 @@ function getBMICategory(bmiValue) {
   return "You are obese";
 }
 
+function calculateBMIValue(weightKg, heightCm) {
+  const heightM = heightCm / 100;
+  return weightKg / heightM ** 2;
+}
+
 function BMICalculator() {
   const [height, setHeight] = useState("");
   const [weight, setWeight] = useState("");
