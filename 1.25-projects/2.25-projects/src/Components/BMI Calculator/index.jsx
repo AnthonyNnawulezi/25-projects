@@ -36,7 +36,7 @@ function BMICalculator() {
   }
 
   const calculateBMI = useCallback(() => {
-    setError(null);
+    setError("");
 
     const heightCm = Number(height);
     const weightKg = Number(weight);
