@@ -46,7 +46,53 @@ function BMICalculator() {
       setBMI(null);
       return;
     }
+
+    const newBMI = calculateBMIValue(weightKg, heightCm);
+    setBMI(newBMI);
+    setError(null);
   }, [height, weight]);
+
+  return (
+    <div>
+      <h1>BMI Calculator</h1>
+      <div className="bmi-container">
+        <div className="bmi-wrapper">
+          <label htmlFor="height">Height (cm):</label>
+          <input
+            type="number"
+            id="height"
+            value={height}
+            onChange={handleHeightChange}
+            min="0"
+            step="any"
+          />
+        </div>
+        <div className="bmi-wrapper">
+          <label htmlFor="weight">Weight (kg):</label>
+          <input
+            type="number"
+            id="weight"
+            value={weight}
+            onChange={handleWeightChange}
+            min="0"
+            step="any"
+          />
+        </div>
+        <button onClick={calculateBMI}>Calculate BMI</button>
+        {error ? (
+          <p role="alert" style={{ color: "red" }}>
+            {error}
+          </p>
+        ) : bmi !== null ? (
+          <p>
+            Your BMI is <strong>{bmi.toFixed(1)}</strong> {getBMICategory(bmi)}.
+          </p>
+        ) : (
+          <p>Enter your height and weight, then click Calculate.</p>
+        )}
+      </div>
+    </div>
+  );
 }
 
 export default BMICalculator;
