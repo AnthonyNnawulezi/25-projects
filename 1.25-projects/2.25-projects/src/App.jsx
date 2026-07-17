@@ -1,5 +1,6 @@
 import "./App.css";
 import BMICalculator from "./Components/BMI Calculator";
+import RippleEffect from "./Components/Button Ripple Effect";
 import CountDownTimer from "./Components/Countdown Timer";
 import CurrencyConverter from "./Components/Currency Converter";
 import ProgressBar from "./Components/Custom Progress Bar";
@@ -28,6 +29,7 @@ function App() {
       <MusicPlayer />
       <ProgressBar />
       <BMICalculator />
+      <RippleEffect />
     </div>
   );
 }
