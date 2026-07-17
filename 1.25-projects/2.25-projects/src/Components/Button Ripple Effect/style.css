@@ -1,9 +1,11 @@
 .ripple-btn {
   position: relative;
+  overflow: hidden;
 }
-.span {
-  position: absolute;
+
+.ripple {
   animation: 1s ease 1 forwards ripple-effect-keyframe;
+  position: absolute;
   background-color: brown;
   content: "";
   width: 100%;
