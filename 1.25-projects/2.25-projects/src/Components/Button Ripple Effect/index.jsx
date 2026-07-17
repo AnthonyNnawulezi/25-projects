@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "./style.css";
 
 function RippleEffect() {
   const [coordinates, setCoordinates] = useState({
@@ -14,18 +15,21 @@ function RippleEffect() {
     const Y = e.clientY - rect.top;
     setIsRippling(true);
 
-    if (isRippling) {
-      setCoordinates({
-        x: X,
-        y: Y,
-      });
+    if (coordinates.x !== -1 && coordinates.y !== -1) {
+      setTimeout(() => {
+        if (isRippling) {
+          setCoordinates({ x: X, y: Y });
+        }
+      }, 500);
     }
   }
 
   return (
     <div>
       <h1>Button Ripple Effect</h1>
-      <button onClick={handleRipple}>Click to Activate Ripple Effect</button>
+      <button className="ripple-btn" onClick={handleRipple}>
+        Click to Activate Ripple Effect<span></span>
+      </button>
     </div>
   );
 }

@@ -1,0 +1,23 @@
+.ripple-btn {
+  position: relative;
+}
+.span {
+  position: absolute;
+  animation: 1s ease 1 forwards ripple-effect-keyframe;
+  background-color: brown;
+  content: "";
+  width: 100%;
+  height: 15px;
+}
+
+@keyframes ripple-effect-keyframe {
+  from 0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 0;
+  }
+}
