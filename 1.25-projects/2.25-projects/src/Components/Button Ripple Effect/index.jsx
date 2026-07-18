@@ -16,12 +16,13 @@ function RippleEffect() {
     setIsRippling(true);
 
     if (coordinates.x !== -1 && coordinates.y !== -1) {
-      setTimeout(() => {
-        if (isRippling) {
-          setCoordinates({ x: X, y: Y });
-        }
-      }, 500);
+      if (isRippling) {
+        setCoordinates({ x: X, y: Y });
+      }
     }
+    setTimeout(() => {
+      setIsRippling(false);
+    }, 500);
   }
 
   return (
@@ -32,10 +33,9 @@ function RippleEffect() {
           <span
             className="ripple"
             style={{ left: coordinates.x, top: coordinates.y }}
-          >
-            Click to Activate Ripple Effect
-          </span>
+          ></span>
         )}
+        Click to Activate Ripple Effect
       </button>
     </div>
   );
