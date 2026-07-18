@@ -9,14 +9,12 @@ function RippleEffect() {
   const [isRippling, setIsRippling] = useState(false);
 
   function handleRipple(e) {
-    console.log(e.target.getBoundingClientRect(), e.clientX, e.clientY);
-    const rect = e.target.getBoundingClientRect();
+    console.log(e.currentTarget.getBoundingClientRect(), e.clientX, e.clientY);
 
+    const rect = e.currentTarget.getBoundingClientRect();
     setCoordinates({ x: e.clientX - rect.left, y: e.clientY - rect.top });
-
-    setTimeout(() => {
-      setIsRippling(true);
-    }, 1000);
+    setIsRippling(true);
+    setTimeout(() => setIsRippling(false), 1000);
   }
 
   return (
