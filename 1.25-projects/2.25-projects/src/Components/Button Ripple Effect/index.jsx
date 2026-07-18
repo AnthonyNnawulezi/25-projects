@@ -16,7 +16,7 @@ function RippleEffect() {
 
     setTimeout(() => {
       setIsRippling(true);
-    }, 500);
+    }, 1000);
   }
 
   return (
