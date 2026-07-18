@@ -11,17 +11,11 @@ function RippleEffect() {
   function handleRipple(e) {
     console.log(e.target.getBoundingClientRect(), e.clientX, e.clientY);
     const rect = e.target.getBoundingClientRect();
-    const X = e.clientX - rect.left;
-    const Y = e.clientY - rect.top;
-    setIsRippling(true);
 
-    if (coordinates.x !== -1 && coordinates.y !== -1) {
-      if (isRippling) {
-        setCoordinates({ x: X, y: Y });
-      }
-    }
+    setCoordinates({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+
     setTimeout(() => {
-      setIsRippling(false);
+      setIsRippling(true);
     }, 500);
   }
 
