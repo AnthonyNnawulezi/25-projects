@@ -13,13 +13,16 @@
 }
 
 @keyframes ripple-effect-keyframe {
-  from 0% {
+  0% {
     opacity: 1;
+    transform: scale(1);
   }
   50% {
     opacity: 0.5;
+    transform: scale(10);
   }
   100% {
     opacity: 0;
+    transform: scale(20);
   }
 }
