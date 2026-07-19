@@ -1,29 +1,12 @@
-.ripple-btn {
-  position: relative;
-  overflow: hidden;
+.drag-and-drop-container {
+  margin-top: 20px;
+  border: 1px solid #c8a97e;
 }
 
-.ripple {
-  animation: 1s ease 1 forwards ripple-effect-keyframe;
-  position: absolute;
-  background-color: brown;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  pointer-events: none;
-}
-
-@keyframes ripple-effect-keyframe {
-  0% {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
-  }
-  50% {
-    opacity: 0.5;
-    transform: translate(-50%, -50%) scale(8);
-  }
-  100% {
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(12);
-  }
+.drag-and-drop-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  background-color: #c8a97e;
 }
