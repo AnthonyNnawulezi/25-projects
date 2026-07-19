@@ -12,7 +12,7 @@ function RippleEffect() {
     // A new unique key forces React to unmount the old <span> and mount a new one,
     // restarting the CSS animation.
     setRipple({ x, y, id: Date.now() + Math.random() }); //handling a single riple at once
-    // setRipples((prev) => [...prev, { id, x, y }]); when handling many ripples appearing once
+    // setRipples((prev) => [...prev, { x, y, id: Date.now() + Math.random() }]); when handling many ripples appearing once
   }, []);
 
   // When animation ends, remove the ripple from state,
