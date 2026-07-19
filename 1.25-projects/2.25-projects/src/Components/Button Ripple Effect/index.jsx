@@ -16,9 +16,9 @@ function RippleEffect() {
 
   // When the CSS animation ends, remove the ripple from state,
   // which unmounts the <span> cleanly.
-  //   const handleAnimationEnd = useCallback(() => {
-  //     setRipple(null);
-  //   }, []);
+  const handleAnimationEnd = useCallback(() => {
+    setRipple(null);
+  }, []);
 
   return (
     <div>
