@@ -2,21 +2,6 @@ import { useState } from "react";
 import "./style.css";
 
 function RippleEffect() {
-  const [coordinates, setCoordinates] = useState({
-    x: -1,
-    y: -1,
-  });
-  const [isRippling, setIsRippling] = useState(false);
-
-  function handleRipple(e) {
-    console.log(e.currentTarget.getBoundingClientRect(), e.clientX, e.clientY);
-
-    const rect = e.currentTarget.getBoundingClientRect();
-    setCoordinates({ x: e.clientX - rect.left, y: e.clientY - rect.top });
-    setIsRippling(true);
-    setTimeout(() => setIsRippling(false), 1000);
-  }
-
   return (
     <div>
       <h1>Button Ripple Effect</h1>
