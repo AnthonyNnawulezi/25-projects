@@ -30,23 +30,27 @@ function DragAndDrop() {
     fetchTodos();
   }, []);
 
-  //   function completedTodo() {
-  //     for (let i = 0; i < todos.length; i++) {
-  //       const listOfTodos = todos[i].completed.true;
+  const inProgressTodos = todos.filter(
+    (todo) => (todo !== todos.completed) === false,
+  );
+  const completedTodos = todos.filter(
+    (todo) => (todo !== todos.completed) === true,
+  );
 
-  //       return listOfTodos;
-  //     }
-  //   }
-  //   function inProgressTodo() {
-  //     for (let i = 0; i < todos.length; i++) {
-  //       const listOfTodos = todos[i].completed.false;
-
-  //       return listOfTodos;
-  //     }
-  //   }
-
-  function onMouseOver(todo) {
-    const listOfTodos = [...todos, todos.push()];
+  function onDrag(event) {
+    event.preventDefault();
+    const filteredtodo = todos.filter((item) => item !== todo);
+    setTodos(filteredtodo);
+  }
+  function onDrop(event) {
+    event.preventDefault();
+    const listOfTodos = [
+      ...todos,
+      todos.push({
+        completed: false,
+      }),
+    ];
+    setTodos(listOfTodos);
   }
 
   return (
@@ -55,16 +59,32 @@ function DragAndDrop() {
       <div className="drag-and-drop-wrapper">
         <div className="todo-wrapper-">
           <p>In Progress</p>
-          {todos &&
-            todos.map((todo) => (
-              <ul onMouseOver={(todo) => onMouseOver(todo)} onDrop={onDrop}>
+          {inProgressTodos &&
+            inProgressTodos.map((todo) => (
+              <ul
+                onDragStart={(event) => onDrag(event.dataTransfer)}
+                onDrop={(event) => onDrop(event.dataTransfer.setData())}
+              >
                 <li key={todo.id} draggable>
                   {todo.todo}
                 </li>
               </ul>
             ))}
         </div>
-        <div className="todo-wrapper">Completed</div>
+        <div className="todo-wrapper">
+          <p>Completed</p>
+          {completedTodos &&
+            completedTodos.map((todo) => (
+              <ul
+                onDragStart={(event) => onDrag(event.dataTransfer)}
+                onDrop={(event) => onDrop(event.dataTransfer.setData())}
+              >
+                <li key={todo.id} draggable>
+                  {todo.todo}
+                </li>
+              </ul>
+            ))}
+        </div>
       </div>
     </div>
   );
