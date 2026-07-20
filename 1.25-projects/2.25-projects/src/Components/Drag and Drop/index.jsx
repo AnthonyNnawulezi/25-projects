@@ -1,12 +1,13 @@
 import { useCallback, useState } from "react";
 import "./style.css";
+import { useEffect } from "react";
 
 function DragAndDrop() {
   const [todos, setTodos] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  try {
-    const fetchTodos = useCallback(async () => {
+  const fetchTodos = useCallback(async () => {
+    try {
       setIsLoading(true);
 
       const response = await fetch("https://dummyjson.com/todos");
@@ -14,17 +15,20 @@ function DragAndDrop() {
       if (!response.ok) throw new Error("Error fetching todo");
 
       const data = await response.json();
+
+      setTodos(data.todos);
       console.log(data);
 
-      //   setTodos(data.todos);
       setIsLoading(false);
-    }, []);
+    } catch (error) {
+      console.error("Error fetching data, Check your network", error);
+      setIsLoading(false);
+    }
+  }, []);
 
+  useEffect(() => {
     fetchTodos();
-  } catch (error) {
-    console.error("Error fetching data, Check your network", error);
-    setIsLoading(false);
-  }
+  }, []);
 
   return (
     <div className="drag-and-drop-container">
