@@ -42,10 +42,19 @@ function DragAndDrop() {
   function handleDragStart(todoId) {
     setDraggedTodoId(todoId);
   }
-  function onDrop(event) {
-    event.preventDefault();
 
-    setTodos(completedTodos);
+  function handleDrop(completedStatus) {
+    const updatedTodos = todos.map((todo) => {
+      if (todo.id === draggedTodoId) {
+        return {
+          ...todo,
+          completed: completedStatus,
+        };
+      }
+      return todo;
+    });
+    setTodos(updatedTodos);
+    setDraggedTodoId(null);
   }
 
   return (
@@ -58,7 +67,7 @@ function DragAndDrop() {
             inProgressTodos.map((todo) => (
               <ul
                 onDragStart={() => handleDragStart(todo.id)}
-                onDrop={(event) => onDrop(event.dataTransfer.setData())}
+                onDrop={() => handleDrop(false)}
                 onDragOver={(event) => event.preventDefault()}
               >
                 <li key={todo.id} draggable>
@@ -73,7 +82,7 @@ function DragAndDrop() {
             completedTodos.map((todo) => (
               <ul
                 onDragStart={() => handleDragStart(todo.id)}
-                onDrop={(event) => onDrop(event.dataTransfer.setData())}
+                onDrop={() => handleDrop(true)}
                 onDragOver={(event) => event.preventDefault()}
               >
                 <li key={todo.id} draggable>
