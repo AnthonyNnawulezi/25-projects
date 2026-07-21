@@ -5,6 +5,7 @@ import { useEffect } from "react";
 function DragAndDrop() {
   const [todos, setTodos] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [draggedTodoId, setDraggedTodoId] = useState(null);
 
   const fetchTodos = useCallback(async () => {
     try {
@@ -30,15 +31,16 @@ function DragAndDrop() {
     fetchTodos();
   }, []);
 
-  const inProgressTodos = todos.filter(
-    (todo) => todo.completed === false,
-    // (todo) => !todo.completed,
-  );
-  const completedTodos = todos.filter((todo) => todo.completed === true);
+  //   const inProgressTodos = todos.filter(
+  //     (todo) => todo.completed === false,
+  //   );
+  //   const completedTodos = todos.filter((todo) => todo.completed === true);
 
-  function onDrag(event) {
-    event.preventDefault();
-    setTodos(inProgressTodos);
+  const inProgressTodos = todos.filter((todo) => !todo.completed);
+  const completedTodos = todos.filter((todo) => todo.completed);
+
+  function handleDragStart(todoId) {
+    setDraggedTodoId(todoId);
   }
   function onDrop(event) {
     event.preventDefault();
@@ -55,7 +57,7 @@ function DragAndDrop() {
           {inProgressTodos &&
             inProgressTodos.map((todo) => (
               <ul
-                onDragStart={(event) => onDrag(event.dataTransfer)}
+                onDragStart={() => handleDragStart(todo.id)}
                 onDrop={(event) => onDrop(event.dataTransfer.setData())}
               >
                 <li key={todo.id} draggable>
@@ -69,7 +71,7 @@ function DragAndDrop() {
           {completedTodos &&
             completedTodos.map((todo) => (
               <ul
-                onDragStart={(event) => onDrag(event.dataTransfer)}
+                onDragStart={() => handleDragStart(todo.id)}
                 onDrop={(event) => onDrop(event.dataTransfer.setData())}
               >
                 <li key={todo.id} draggable>
