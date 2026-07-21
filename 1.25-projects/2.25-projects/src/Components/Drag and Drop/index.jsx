@@ -31,26 +31,19 @@ function DragAndDrop() {
   }, []);
 
   const inProgressTodos = todos.filter(
-    (todo) => (todo !== todos.completed) === false,
+    (todo) => todo.completed === false,
+    // (todo) => !todo.completed,
   );
-  const completedTodos = todos.filter(
-    (todo) => (todo !== todos.completed) === true,
-  );
+  const completedTodos = todos.filter((todo) => todo.completed === true);
 
   function onDrag(event) {
     event.preventDefault();
-    const filteredtodo = todos.filter((item) => item !== todo);
-    setTodos(filteredtodo);
+    setTodos(inProgressTodos);
   }
   function onDrop(event) {
     event.preventDefault();
-    const listOfTodos = [
-      ...todos,
-      todos.push({
-        completed: false,
-      }),
-    ];
-    setTodos(listOfTodos);
+
+    setTodos(completedTodos);
   }
 
   return (
