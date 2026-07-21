@@ -61,30 +61,28 @@ function DragAndDrop() {
     <div className="drag-and-drop-container">
       <h1>Drag And Drop</h1>
       <div className="drag-and-drop-wrapper">
-        <div className="todo-wrapper-">
+        <div
+          className="todo-wrapper-"
+          onDrop={() => handleDrop(false)}
+          onDragOver={(event) => event.preventDefault()}
+        >
           <p>In Progress</p>
           {inProgressTodos &&
             inProgressTodos.map((todo) => (
-              <ul
-                onDragStart={() => handleDragStart(todo.id)}
-                onDrop={() => handleDrop(false)}
-                onDragOver={(event) => event.preventDefault()}
-              >
-                <li key={todo.id} draggable>
-                  {todo.todo}
-                </li>
+              <ul onDragStart={() => handleDragStart(todo.id)} draggable>
+                <li key={todo.id}>{todo.todo}</li>
               </ul>
             ))}
         </div>
-        <div className="todo-wrapper">
+        <div
+          className="todo-wrapper"
+          onDrop={() => handleDrop(true)}
+          onDragOver={(event) => event.preventDefault()}
+        >
           <p>Completed</p>
           {completedTodos &&
             completedTodos.map((todo) => (
-              <ul
-                onDragStart={() => handleDragStart(todo.id)}
-                onDrop={() => handleDrop(true)}
-                onDragOver={(event) => event.preventDefault()}
-              >
+              <ul onDragStart={() => handleDragStart(todo.id)} draggable>
                 <li key={todo.id} draggable>
                   {todo.todo}
                 </li>
