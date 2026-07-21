@@ -31,11 +31,6 @@ function DragAndDrop() {
     fetchTodos();
   }, []);
 
-  //   const inProgressTodos = todos.filter(
-  //     (todo) => todo.completed === false,
-  //   );
-  //   const completedTodos = todos.filter((todo) => todo.completed === true);
-
   const inProgressTodos = todos.filter((todo) => !todo.completed);
   const completedTodos = todos.filter((todo) => todo.completed);
 
