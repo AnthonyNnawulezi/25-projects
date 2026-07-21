@@ -59,6 +59,7 @@ function DragAndDrop() {
               <ul
                 onDragStart={() => handleDragStart(todo.id)}
                 onDrop={(event) => onDrop(event.dataTransfer.setData())}
+                onDragOver={(event) => event.preventDefault()}
               >
                 <li key={todo.id} draggable>
                   {todo.todo}
@@ -73,6 +74,7 @@ function DragAndDrop() {
               <ul
                 onDragStart={() => handleDragStart(todo.id)}
                 onDrop={(event) => onDrop(event.dataTransfer.setData())}
+                onDragOver={(event) => event.preventDefault()}
               >
                 <li key={todo.id} draggable>
                   {todo.todo}
