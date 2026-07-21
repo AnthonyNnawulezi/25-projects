@@ -69,9 +69,11 @@ function DragAndDrop() {
           <p>In Progress</p>
           {inProgressTodos &&
             inProgressTodos.map((todo) => (
-              <ul onDragStart={() => handleDragStart(todo.id)} draggable>
-                <li key={todo.id}>{todo.todo}</li>
-              </ul>
+              <li onDragStart={() => handleDragStart(todo.id)}>
+                <ul key={todo.id} draggable>
+                  {todo.todo}
+                </ul>
+              </li>
             ))}
         </div>
         <div
@@ -82,11 +84,11 @@ function DragAndDrop() {
           <p>Completed</p>
           {completedTodos &&
             completedTodos.map((todo) => (
-              <ul onDragStart={() => handleDragStart(todo.id)} draggable>
-                <li key={todo.id} draggable>
+              <li onDragStart={() => handleDragStart(todo.id)}>
+                <ul key={todo.id} draggable>
                   {todo.todo}
-                </li>
-              </ul>
+                </ul>
+              </li>
             ))}
         </div>
       </div>
