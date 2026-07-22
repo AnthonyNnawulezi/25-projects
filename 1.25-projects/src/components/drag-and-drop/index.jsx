@@ -127,7 +127,7 @@ function DragAndDrop() {
         }
 
         console.error("Failed to fetch todos:", error);
-        setErrorMessage("Unable to load todos. Please try again.");
+        setError("Unable to load todos. Please try again.");
       } finally {
         setIsLoading(false);
       }
