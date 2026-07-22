@@ -98,3 +98,45 @@ const STATUS = {
   IN_PROGRESS: false,
   COMPLETED: true,
 };
+
+function DragAndDrop() {
+  useEffect(() => {
+    const abortController = new AbortController();
+
+    async function loadTodos() {
+      try {
+        setIsLoading(true);
+        setErrorMessage("");
+
+        const response = await fetch(TODOS_API_URL, {
+          signal: abortController.signal,
+        });
+
+        if (!response.ok) {
+          throw new Error(
+            `Failed to fetch todos. HTTP status: ${response.status}`,
+          );
+        }
+
+        const data = await response.json();
+
+        setTodos(data.todos);
+      } catch (error) {
+        if (error.name === "AbortError") {
+          return;
+        }
+
+        console.error("Failed to fetch todos:", error);
+        setErrorMessage("Unable to load todos. Please try again.");
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    loadTodos();
+
+    return () => {
+      abortController.abort();
+    };
+  }, []);
+}
