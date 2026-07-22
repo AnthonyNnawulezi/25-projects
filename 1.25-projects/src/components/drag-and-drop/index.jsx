@@ -139,4 +139,14 @@ function DragAndDrop() {
       abortController.abort();
     };
   }, []);
+
+  const inProgressTodos = useMemo(
+    () => todos.filter((todo) => !todo.completed),
+    [todos],
+  );
+
+  const completedTodos = useMemo(
+    () => todos.filter((todo) => todo.completed),
+    [todos],
+  );
 }
