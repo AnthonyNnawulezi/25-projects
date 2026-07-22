@@ -150,7 +150,14 @@ function DragAndDrop() {
     [todos],
   );
 
-  if (isLoading) {
-    return <div className="drag-and-drop-container">Loading tasks...</div>;
+  if (error) {
+    return (
+      <div className="drag-and-drop-container">
+        <p role="alert" style={{ color: "red" }}>
+          {error}
+        </p>
+        <button onClick={() => fetchTodos()}>Retry</button>
+      </div>
+    );
   }
 }
