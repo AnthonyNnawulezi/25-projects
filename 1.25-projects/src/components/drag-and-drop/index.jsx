@@ -164,4 +164,48 @@ function DragAndDrop() {
       </div>
     );
   }
+
+  return (
+    <div className="drag-and-drop-container">
+      <h1>Drag And Drop</h1>
+      <div className="drag-and-drop-wrapper">
+        <div
+          className="todo-wrapper"
+          onDrop={(e) => handleDrop(e, false)}
+          onDragOver={(e) => e.preventDefault()}
+        >
+          <p>In Progress</p>
+          <ul>
+            {inProgressTodos.map((todo) => (
+              <li
+                key={todo.id}
+                draggable
+                onDragStart={(e) => handleDragStart(e, todo.id)}
+              >
+                {todo.todo}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div
+          className="todo-wrapper"
+          onDrop={(e) => handleDrop(e, true)}
+          onDragOver={(e) => e.preventDefault()}
+        >
+          <p>Completed</p>
+          <ul>
+            {completedTodos.map((todo) => (
+              <li
+                key={todo.id}
+                draggable
+                onDragStart={(e) => handleDragStart(e, todo.id)}
+              >
+                {todo.todo}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  );
 }
