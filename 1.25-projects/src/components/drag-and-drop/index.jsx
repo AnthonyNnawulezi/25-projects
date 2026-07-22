@@ -149,4 +149,8 @@ function DragAndDrop() {
     () => todos.filter((todo) => todo.completed),
     [todos],
   );
+
+  if (isLoading) {
+    return <div className="drag-and-drop-container">Loading tasks...</div>;
+  }
 }
