@@ -100,7 +100,7 @@ const STATUS = {
 };
 
 function DragAndDrop() {
-  useEffect(() => {
+  const fetchTodos = useCallback(async () => {
     const abortController = new AbortController();
 
     async function loadTodos() {
@@ -133,12 +133,15 @@ function DragAndDrop() {
       }
     }
 
-    loadTodos();
-
-    return () => {
-      abortController.abort();
-    };
+    // return () => {
+    //   abortController.abort();
+    // };
   }, []);
+
+  useEffect(() => {
+    loadTodos();
+    return () => abortController.abort();
+  }, [loadTodos]);
 
   const inProgressTodos = useMemo(
     () => todos.filter((todo) => !todo.completed),
@@ -160,7 +163,7 @@ function DragAndDrop() {
         <p role="alert" style={{ color: "red" }}>
           {error}
         </p>
-        <button onClick={() => fetchTodos()}>Retry</button>
+        <button onClick={() => loadTodos()}>Retry</button>
       </div>
     );
   }
