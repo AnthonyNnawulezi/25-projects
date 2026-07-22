@@ -6,6 +6,7 @@ function DragAndDrop() {
   const [todos, setTodos] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [draggedTodoId, setDraggedTodoId] = useState(null);
+  const [error, setError] = useState("");
 
   const fetchTodos = useCallback(async () => {
     try {

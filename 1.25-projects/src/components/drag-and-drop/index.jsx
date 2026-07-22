@@ -106,7 +106,7 @@ function DragAndDrop() {
     async function loadTodos() {
       try {
         setIsLoading(true);
-        setErrorMessage("");
+        setError("");
 
         const response = await fetch(TODOS_API_URL, {
           signal: abortController.signal,
