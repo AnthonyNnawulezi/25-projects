@@ -160,6 +160,16 @@ function DragAndDrop() {
     const id = Number(e.dataTransfer.getData("id"));
     if (!id) return;
 
+    const handleDragOver = useCallback((e) => {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = "move";
+      e.currentTarget.classList.add("drag-over");
+    }, []);
+
+    const handleDragLeave = useCallback((e) => {
+      e.currentTarget.classList.remove("drag-over");
+    }, []);
+
     setTodos((prev) =>
       prev.map((todo) =>
         todo.id === id ? { ...todo, completed: completedStatus } : todo,
