@@ -10,3 +10,11 @@
   gap: 15px;
   background-color: #c8a97e;
 }
+
+.drop-zone.drag-over {
+  background-color: rgba(0, 150, 255, 0.1);
+  outline: 2px dashed #0096ff;
+}
+.todo-list li.dragging {
+  opacity: 0.5;
+}

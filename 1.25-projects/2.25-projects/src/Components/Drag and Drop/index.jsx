@@ -58,33 +58,33 @@ import { useEffect } from "react";
 //       <h1>Drag And Drop</h1>
 //       <div className="drag-and-drop-wrapper">
 //         <div
-//           className="todo-wrapper-"
+//           className="drop-zone-"
 //           onDrop={() => handleDrop(false)}
 //           onDragOver={(event) => event.preventDefault()}
 //         >
 //           <p>In Progress</p>
 //           {inProgressTodos &&
 //             inProgressTodos.map((todo) => (
+//                 <ul className="todo-list" key={todo.id} draggable>
 //               <li onDragStart={() => handleDragStart(todo.id)}>
-//                 <ul key={todo.id} draggable>
 //                   {todo.todo}
-//                 </ul>
 //               </li>
+//                 </ul>
 //             ))}
 //         </div>
 //         <div
-//           className="todo-wrapper"
+//           className="drop-zone"
 //           onDrop={() => handleDrop(true)}
 //           onDragOver={(event) => event.preventDefault()}
 //         >
 //           <p>Completed</p>
 //           {completedTodos &&
 //             completedTodos.map((todo) => (
+//                 <ul className="todo-list" key={todo.id} draggable>
 //               <li onDragStart={() => handleDragStart(todo.id)}>
-//                 <ul key={todo.id} draggable>
 //                   {todo.todo}
-//                 </ul>
 //               </li>
+//                 </ul>
 //             ))}
 //         </div>
 //       </div>
@@ -209,14 +209,14 @@ function DragAndDrop() {
       <h1>Drag And Drop</h1>
       <div className="drag-and-drop-wrapper">
         <div
-          className="todo-wrapper"
+          className="drop-zone"
           onDrop={(e) => handleDrop(e, STATUS.IN_PROGRESS)}
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
           onDragEnd={handleDragEnd}
         >
           <p>In Progress</p>
-          <ul>
+          <ul className="todo-list">
             {inProgressTodos.map((todo) => (
               <li
                 key={todo.id}
@@ -229,14 +229,14 @@ function DragAndDrop() {
           </ul>
         </div>
         <div
-          className="todo-wrapper"
+          className="drop-zone"
           onDrop={(e) => handleDrop(e, STATUS.COMPLETED)}
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
           onDragEnd={handleDragEnd}
         >
           <p>Completed</p>
-          <ul>
+          <ul className="todo-list">
             {completedTodos.map((todo) => (
               <li
                 key={todo.id}
