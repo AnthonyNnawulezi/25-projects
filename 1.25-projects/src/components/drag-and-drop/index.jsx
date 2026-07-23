@@ -143,6 +143,11 @@ function DragAndDrop() {
     return () => abortController.abort();
   }, [loadTodos]);
 
+  const handleDragStart = (event, todoId) => {
+    event.dataTransfer.setData("text/plain", todoId.toString());
+    event.dataTransfer.effectAllowed = "move";
+  };
+
   const inProgressTodos = useMemo(
     () => todos.filter((todo) => !todo.completed),
     [todos],
