@@ -155,7 +155,7 @@ function DragAndDrop() {
   }, []);
 
   const handleDrop = useCallback((e, completedStatus) => {
-    e.preventDefault();
+    e.preventDefault(); // Good practice to ensure the drop is allowed
     // Retrieve the id from the drag data store
     const id = Number(e.dataTransfer.getData("id"));
     if (!id) return;
