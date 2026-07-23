@@ -209,8 +209,9 @@ function DragAndDrop() {
       <div className="drag-and-drop-wrapper">
         <div
           className="todo-wrapper"
-          onDrop={(e) => handleDrop(e, false)}
-          onDragOver={(e) => e.preventDefault()}
+          onDrop={(e) => handleDrop(e, STATUS.IN_PROGRESS)}
+          onDragOver={handleDragOver}
+          onDragLeave={handleDragLeave}
         >
           <p>In Progress</p>
           <ul>
@@ -227,8 +228,9 @@ function DragAndDrop() {
         </div>
         <div
           className="todo-wrapper"
-          onDrop={(e) => handleDrop(e, true)}
-          onDragOver={(e) => e.preventDefault()}
+          onDrop={(e) => handleDrop(e, STATUS.COMPLETED)}
+          onDragOver={handleDragOver}
+          onDragLeave={handleDragLeave}
         >
           <p>Completed</p>
           <ul>
