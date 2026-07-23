@@ -144,9 +144,15 @@ function DragAndDrop() {
   }, [loadTodos]);
 
   const handleDragStart = (event, todoId) => {
+    // Store the todo id as text data on the drag
     event.dataTransfer.setData("text/plain", todoId.toString());
+    // Tells the browser this is a "move" action, which changes the mouse cursor visually
     event.dataTransfer.effectAllowed = "move";
   };
+
+  const handleDragEnd = useCallback((e) => {
+    e.currentTarget.classList.remove("dragging");
+  }, []);
 
   const inProgressTodos = useMemo(
     () => todos.filter((todo) => !todo.completed),
