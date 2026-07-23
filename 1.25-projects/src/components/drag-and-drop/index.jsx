@@ -145,13 +145,27 @@ function DragAndDrop() {
 
   const handleDragStart = (event, todoId) => {
     // Store the todo id as text data on the drag
-    event.dataTransfer.setData("text/plain", todoId.toString());
+    event.dataTransfer.setData("id", todoId.toString());
     // Tells the browser this is a "move" action, which changes the mouse cursor visually
     event.dataTransfer.effectAllowed = "move";
   };
 
   const handleDragEnd = useCallback((e) => {
     e.currentTarget.classList.remove("dragging");
+  }, []);
+
+  const handleDrop = useCallback((e, completedStatus) => {
+    e.preventDefault();
+    // Retrieve the id from the drag data store
+    const id = Number(e.dataTransfer.getData("id"));
+    if (!id) return;
+
+    setTodos((prev) =>
+      prev.map((todo) =>
+        todo.id === id ? { ...todo, completed: completedStatus } : todo,
+      ),
+    );
+    e.currentTarget.classList.remove("drag-over");
   }, []);
 
   const inProgressTodos = useMemo(
