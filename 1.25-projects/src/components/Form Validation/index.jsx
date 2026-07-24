@@ -8,12 +8,13 @@ function FormValidation() {
   const [username, setUsername] = useState("");
 
   function validateData(event) {
-    const name = event.target;
+    const name = event.target.name;
+    const value = event.target.value;
 
     switch (name) {
       case username:
         username.length < 3
-          ? setError("Username must be at least 3 characters")
+          ? setError("username must be at least 3 characters")
           : "";
 
         break;
@@ -72,7 +73,7 @@ function FormValidation() {
             <input
               type="email"
               id="email"
-              onChange={validateData}
+              onChange={handleEmail}
               placeholder="Enter your email"
               value={email}
               name="email"
@@ -85,7 +86,7 @@ function FormValidation() {
               type="number"
               id="password"
               value={password}
-              onChange={validateData}
+              onChange={handlePassword}
               password="Enter your password"
               name="password"
             />
