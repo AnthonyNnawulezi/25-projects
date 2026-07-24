@@ -7,7 +7,42 @@ function FormValidation() {
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
 
-  function handleValidate(event) {}
+  function validateData(event) {
+    const { name } = event.target;
+
+    switch (name) {
+      case username:
+        username.length < 3
+          ? setError("Username must be at least 3 characters")
+          : "";
+
+        break;
+      case email:
+        email.test("/^[^\s@]+@[^\s@]+\.[^\s@]+$/")
+          ? setError("Invalid email format")
+          : "";
+
+        break;
+      case password:
+        password < 6 ? setError("password must be at least 6 characters") : "";
+
+        break;
+
+      default:
+        break;
+    }
+  }
+
+  function handleUsername(event) {
+    setUsername(event.target.value);
+  }
+  function handleEmail(event) {
+    setUserEmail(event.target.value);
+  }
+  function handlePassword(event) {
+    setUserPassword(event.target.value);
+  }
+
   function onSubmit() {}
 
   return (
@@ -21,8 +56,9 @@ function FormValidation() {
               type="text"
               id="username"
               placeholder="Enter your username"
-              onChange={handleValidation}
+              onChange={handleUsername}
               value={username}
+              name="username"
             />
             <span></span>
           </div>
@@ -31,9 +67,10 @@ function FormValidation() {
             <input
               type="email"
               id="email"
-              onChange={handleValidation}
+              onChange={validateData}
               placeholder="Enter your email"
               value={email}
+              name="email"
             />
             <span></span>
           </div>
@@ -43,8 +80,9 @@ function FormValidation() {
               type="text"
               id="password"
               value={password}
-              onChange={handleValidation}
+              onChange={validateData}
               password="Enter your password"
+              name="password"
             />
             <span></span>
           </div>
