@@ -36,20 +36,18 @@ function FormValidation() {
 
   function handleUsername(event) {
     setUsername(event.target.value);
-    validateData();
+    validateData(event);
   }
   function handleEmail(event) {
     setUserEmail(event.target.value);
-    validateData();
+    validateData(event);
   }
   function handlePassword(event) {
     setUserPassword(event.target.value);
-    validateData();
+    validateData(event);
   }
 
-  function onSubmit() {
-    validateData();
-  }
+  function onSubmit(key, value) {}
 
   return (
     <div>
@@ -92,7 +90,7 @@ function FormValidation() {
             />
             <span>{error}</span>
           </div>
-          <button type="submit">Submit</button>
+          <button type="button">Submit</button>
         </form>
       </div>
     </div>
