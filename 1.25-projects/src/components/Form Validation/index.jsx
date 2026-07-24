@@ -8,7 +8,7 @@ function FormValidation() {
   const [username, setUsername] = useState("");
 
   function validateData(event) {
-    const { name } = event.target;
+    const name = event.target;
 
     switch (name) {
       case username:
@@ -35,15 +35,20 @@ function FormValidation() {
 
   function handleUsername(event) {
     setUsername(event.target.value);
+    validateData();
   }
   function handleEmail(event) {
     setUserEmail(event.target.value);
+    validateData();
   }
   function handlePassword(event) {
     setUserPassword(event.target.value);
+    validateData();
   }
 
-  function onSubmit() {}
+  function onSubmit() {
+    validateData();
+  }
 
   return (
     <div>
@@ -60,7 +65,7 @@ function FormValidation() {
               value={username}
               name="username"
             />
-            <span></span>
+            <span>{error}</span>
           </div>
           <div className="form-wrapper">
             <label htmlFor="email">Email</label>
@@ -72,19 +77,19 @@ function FormValidation() {
               value={email}
               name="email"
             />
-            <span></span>
+            <span>{error}</span>
           </div>
           <div className="form-wrapper">
-            <label htmlFor="username">Password</label>
+            <label htmlFor="password">Password</label>
             <input
-              type="text"
+              type="number"
               id="password"
               value={password}
               onChange={validateData}
               password="Enter your password"
               name="password"
             />
-            <span></span>
+            <span>{error}</span>
           </div>
           <button type="submit">Submit</button>
         </form>
