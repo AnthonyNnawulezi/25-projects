@@ -1,4 +1,13 @@
+import { useState } from "react";
+import "./style.css";
+
 function FormValidation() {
+  const [error, setError] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
+
+  function handleValidate(event) {}
   function onSubmit() {}
 
   return (
@@ -12,15 +21,32 @@ function FormValidation() {
               type="text"
               id="username"
               placeholder="Enter your username"
+              onChange={handleValidation}
+              value={username}
             />
+            <span></span>
           </div>
           <div className="form-wrapper">
-            <label htmlFor="email">User Name</label>
-            <input type="email" id="email" placeholder="Enter your email" />
+            <label htmlFor="email">Email</label>
+            <input
+              type="email"
+              id="email"
+              onChange={handleValidation}
+              placeholder="Enter your email"
+              value={email}
+            />
+            <span></span>
           </div>
           <div className="form-wrapper">
-            <label htmlFor="username">User Name</label>
-            <input type="text" id="password" password="Enter your password" />
+            <label htmlFor="username">Password</label>
+            <input
+              type="text"
+              id="password"
+              value={password}
+              onChange={handleValidation}
+              password="Enter your password"
+            />
+            <span></span>
           </div>
           <button type="submit">Submit</button>
         </form>

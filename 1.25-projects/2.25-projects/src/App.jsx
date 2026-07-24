@@ -1,3 +1,4 @@
+import FormValidation from "../../src/components/Form Validation";
 import "./App.css";
 import BMICalculator from "./Components/BMI Calculator";
 import RippleEffect from "./Components/Button Ripple Effect";
@@ -32,6 +33,7 @@ function App() {
       <BMICalculator />
       <RippleEffect />
       <DragAndDrop />
+      <FormValidation />
     </div>
   );
 }
