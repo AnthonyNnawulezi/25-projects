@@ -84,11 +84,11 @@ function FormValidation() {
           <div className="form-wrapper">
             <label htmlFor="password">Password</label>
             <input
-              type="number"
+              type="password"
               id="password"
               value={password}
               onChange={handlePassword}
-              password="Enter your password"
+              placeholder="Enter your password"
               name="password"
             />
             <span>{error}</span>
