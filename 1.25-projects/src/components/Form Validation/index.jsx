@@ -2,7 +2,7 @@ import { useState } from "react";
 import "./style.css";
 
 function FormValidation() {
-  const [errors, setError] = useState({
+  const [errors, setErrors] = useState({
     username: "",
     email: "",
     password: "",
@@ -12,24 +12,25 @@ function FormValidation() {
   const [username, setUsername] = useState("");
 
   function validateData(event) {
+    const name = event.target.name;
     const value = event.target.value;
 
     switch (name) {
       case "username":
         if (value.length < 3) {
-          setError("Username must be at least 3 characters");
+          setErrors("Username must be at least 3 characters");
         }
 
         break;
       case "email":
         "/^[^\s@]+@[^\s@]+\.[^\s@]+$/".test(value)
-          ? setError("Invalid email format")
+          ? setErrors("Invalid email format")
           : "";
 
         break;
       case "password":
         if (value.length < 6) {
-          setError("Password must be at least 6 characters");
+          setErrors("Password must be at least 6 characters");
         }
 
         break;
