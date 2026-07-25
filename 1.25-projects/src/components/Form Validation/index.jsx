@@ -2,7 +2,11 @@ import { useState } from "react";
 import "./style.css";
 
 function FormValidation() {
-  const [error, setError] = useState("");
+  const [errors, setErrors] = useState({
+    username: "",
+    email: "",
+    password: "",
+  });
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
