@@ -8,7 +8,6 @@ function FormValidation() {
   const [username, setUsername] = useState("");
 
   function validateData(event) {
-    const name = event.target.name;
     const value = event.target.value;
 
     switch (name) {
@@ -19,7 +18,7 @@ function FormValidation() {
 
         break;
       case "email":
-        email.test("/^[^\s@]+@[^\s@]+\.[^\s@]+$/")
+        "/^[^\s@]+@[^\s@]+\.[^\s@]+$/".test(value)
           ? setError("Invalid email format")
           : "";
 
