@@ -12,19 +12,19 @@ function FormValidation() {
     const value = event.target.value;
 
     switch (name) {
-      case username:
+      case "username":
         username.length < 3
           ? setError("username must be at least 3 characters")
           : "";
 
         break;
-      case email:
+      case "email":
         email.test("/^[^\s@]+@[^\s@]+\.[^\s@]+$/")
           ? setError("Invalid email format")
           : "";
 
         break;
-      case password:
+      case "password":
         password < 6 ? setError("password must be at least 6 characters") : "";
 
         break;
@@ -39,11 +39,11 @@ function FormValidation() {
     validateData(event);
   }
   function handleEmail(event) {
-    setUserEmail(event.target.value);
+    setEmail(event.target.value);
     validateData(event);
   }
   function handlePassword(event) {
-    setUserPassword(event.target.value);
+    setPassword(event.target.value);
     validateData(event);
   }
 
