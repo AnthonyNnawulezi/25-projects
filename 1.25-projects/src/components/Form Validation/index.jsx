@@ -12,7 +12,7 @@ function FormValidation() {
 
     switch (name) {
       case "username":
-        username.length < 3
+        value.length < 3
           ? setError("username must be at least 3 characters")
           : "";
 
@@ -24,7 +24,7 @@ function FormValidation() {
 
         break;
       case "password":
-        password < 6 ? setError("password must be at least 6 characters") : "";
+        value < 6 ? setError("password must be at least 6 characters") : "";
 
         break;
 
