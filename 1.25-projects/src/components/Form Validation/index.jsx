@@ -50,7 +50,7 @@ function FormValidation() {
     validateData(event);
   }
 
-  function onSubmit(key, value) {}
+  function onSubmit() {}
 
   return (
     <div>
@@ -93,7 +93,7 @@ function FormValidation() {
             />
             <span>{error}</span>
           </div>
-          <button type="button">Submit</button>
+          <button type="submit">Submit</button>
         </form>
       </div>
     </div>
