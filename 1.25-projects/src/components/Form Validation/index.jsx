@@ -23,9 +23,10 @@ function FormValidation() {
 
         break;
       case "email":
-        "/^[^\s@]+@[^\s@]+\.[^\s@]+$/".test(value)
-          ? setErrors("Invalid email format")
-          : "";
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(value)) {
+          setErrors("Invalid email format");
+        }
 
         break;
       case "password":

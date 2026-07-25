@@ -83,152 +83,148 @@ function FilterProducts() {
 
 export default FilterProducts;
 
+// const DEFAULT_TIP_PERCENTAGE = 10;
+// const DEFAULT_PEOPLE_COUNT = 1;
 
-import { useState } from "react";
-import "./style.css";
+// function TipCalculator() {
+//   const [billAmount, setBillAmount] = useState("");
+//   const [tipPercentage, setTipPercentage] = useState(
+//     DEFAULT_TIP_PERCENTAGE
+//   );
+//   const [numberOfPeople, setNumberOfPeople] = useState(
+//     DEFAULT_PEOPLE_COUNT
+//   );
+//   const [calculationResult, setCalculationResult] = useState(null);
+//   const [errorMessage, setErrorMessage] = useState("");
 
-const DEFAULT_TIP_PERCENTAGE = 10;
-const DEFAULT_PEOPLE_COUNT = 1;
+//   function calculateTip() {
+//     const bill = Number(billAmount);
 
-function TipCalculator() {
-  const [billAmount, setBillAmount] = useState("");
-  const [tipPercentage, setTipPercentage] = useState(
-    DEFAULT_TIP_PERCENTAGE
-  );
-  const [numberOfPeople, setNumberOfPeople] = useState(
-    DEFAULT_PEOPLE_COUNT
-  );
-  const [calculationResult, setCalculationResult] = useState(null);
-  const [errorMessage, setErrorMessage] = useState("");
+//     if (bill <= 0) {
+//       setErrorMessage("Please enter a valid bill amount.");
+//       setCalculationResult(null);
+//       return;
+//     }
 
-  function calculateTip() {
-    const bill = Number(billAmount);
+//     if (numberOfPeople <= 0) {
+//       setErrorMessage("Number of people must be at least 1.");
+//       setCalculationResult(null);
+//       return;
+//     }
 
-    if (bill <= 0) {
-      setErrorMessage("Please enter a valid bill amount.");
-      setCalculationResult(null);
-      return;
-    }
+//     if (tipPercentage < 0) {
+//       setErrorMessage("Tip percentage cannot be negative.");
+//       setCalculationResult(null);
+//       return;
+//     }
 
-    if (numberOfPeople <= 0) {
-      setErrorMessage("Number of people must be at least 1.");
-      setCalculationResult(null);
-      return;
-    }
+//     const tipAmount = bill * (tipPercentage / 100);
+//     const totalAmount = bill + tipAmount;
+//     const tipPerPerson = tipAmount / numberOfPeople;
+//     const totalPerPerson = totalAmount / numberOfPeople;
 
-    if (tipPercentage < 0) {
-      setErrorMessage("Tip percentage cannot be negative.");
-      setCalculationResult(null);
-      return;
-    }
+//     setCalculationResult({
+//       tipAmount: tipAmount.toFixed(2),
+//       totalAmount: totalAmount.toFixed(2),
+//       tipPerPerson: tipPerPerson.toFixed(2),
+//       totalPerPerson: totalPerPerson.toFixed(2),
+//     });
 
-    const tipAmount = bill * (tipPercentage / 100);
-    const totalAmount = bill + tipAmount;
-    const tipPerPerson = tipAmount / numberOfPeople;
-    const totalPerPerson = totalAmount / numberOfPeople;
+//     setErrorMessage("");
+//   }
 
-    setCalculationResult({
-      tipAmount: tipAmount.toFixed(2),
-      totalAmount: totalAmount.toFixed(2),
-      tipPerPerson: tipPerPerson.toFixed(2),
-      totalPerPerson: totalPerPerson.toFixed(2),
-    });
+//   return (
+//     <div className="tip-calculator-container">
+//       <h1>Tip Calculator</h1>
 
-    setErrorMessage("");
-  }
+//       <div className="input-wrapper">
+//         <label htmlFor="billAmount">
+//           Bill Amount
+//         </label>
 
-  return (
-    <div className="tip-calculator-container">
-      <h1>Tip Calculator</h1>
+//         <input
+//           id="billAmount"
+//           type="number"
+//           min="0"
+//           step="0.01"
+//           value={billAmount}
+//           onChange={(event) =>
+//             setBillAmount(event.target.value)
+//           }
+//         />
+//       </div>
 
-      <div className="input-wrapper">
-        <label htmlFor="billAmount">
-          Bill Amount
-        </label>
+//       <div className="input-wrapper">
+//         <label htmlFor="tipPercentage">
+//           Tip Percentage
+//         </label>
 
-        <input
-          id="billAmount"
-          type="number"
-          min="0"
-          step="0.01"
-          value={billAmount}
-          onChange={(event) =>
-            setBillAmount(event.target.value)
-          }
-        />
-      </div>
+//         <input
+//           id="tipPercentage"
+//           type="number"
+//           min="0"
+//           value={tipPercentage}
+//           onChange={(event) =>
+//             setTipPercentage(Number(event.target.value))
+//           }
+//         />
+//       </div>
 
-      <div className="input-wrapper">
-        <label htmlFor="tipPercentage">
-          Tip Percentage
-        </label>
+//       <div className="input-wrapper">
+//         <label htmlFor="numberOfPeople">
+//           Number of People
+//         </label>
 
-        <input
-          id="tipPercentage"
-          type="number"
-          min="0"
-          value={tipPercentage}
-          onChange={(event) =>
-            setTipPercentage(Number(event.target.value))
-          }
-        />
-      </div>
+//         <input
+//           id="numberOfPeople"
+//           type="number"
+//           min="1"
+//           value={numberOfPeople}
+//           onChange={(event) =>
+//             setNumberOfPeople(Number(event.target.value))
+//           }
+//         />
+//       </div>
 
-      <div className="input-wrapper">
-        <label htmlFor="numberOfPeople">
-          Number of People
-        </label>
+//       <button onClick={calculateTip}>
+//         Calculate Tip
+//       </button>
 
-        <input
-          id="numberOfPeople"
-          type="number"
-          min="1"
-          value={numberOfPeople}
-          onChange={(event) =>
-            setNumberOfPeople(Number(event.target.value))
-          }
-        />
-      </div>
+//       {errorMessage && (
+//         <p className="error">
+//           {errorMessage}
+//         </p>
+//       )}
 
-      <button onClick={calculateTip}>
-        Calculate Tip
-      </button>
+//       {calculationResult && (
+//         <div className="result">
+//           <p>
+//             Tip Amount:
+//             {" "}
+//             ${calculationResult.tipAmount}
+//           </p>
 
-      {errorMessage && (
-        <p className="error">
-          {errorMessage}
-        </p>
-      )}
+//           <p>
+//             Total Amount:
+//             {" "}
+//             ${calculationResult.totalAmount}
+//           </p>
 
-      {calculationResult && (
-        <div className="result">
-          <p>
-            Tip Amount:
-            {" "}
-            ${calculationResult.tipAmount}
-          </p>
+//           <p>
+//             Tip Per Person:
+//             {" "}
+//             ${calculationResult.tipPerPerson}
+//           </p>
 
-          <p>
-            Total Amount:
-            {" "}
-            ${calculationResult.totalAmount}
-          </p>
+//           <p>
+//             Total Per Person:
+//             {" "}
+//             ${calculationResult.totalPerPerson}
+//           </p>
+//         </div>
+//       )}
+//     </div>
+//   );
+// }
 
-          <p>
-            Tip Per Person:
-            {" "}
-            ${calculationResult.tipPerPerson}
-          </p>
-
-          <p>
-            Total Per Person:
-            {" "}
-            ${calculationResult.totalPerPerson}
-          </p>
-        </div>
-      )}
-    </div>
-  );
-}
-
-export default TipCalculator;
+// export default TipCalculator;
