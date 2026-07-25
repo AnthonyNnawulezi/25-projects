@@ -2,7 +2,7 @@ import { useState } from "react";
 import "./style.css";
 
 function FormValidation() {
-  const [errors, setErrors] = useState({
+  const [errors, setError] = useState({
     username: "",
     email: "",
     password: "",
@@ -16,9 +16,9 @@ function FormValidation() {
 
     switch (name) {
       case "username":
-        value.length < 3
-          ? setError("username must be at least 3 characters")
-          : "";
+        if (value.length < 3) {
+          setError("Username must be at least 3 characters");
+        }
 
         break;
       case "email":
@@ -28,7 +28,9 @@ function FormValidation() {
 
         break;
       case "password":
-        value < 6 ? setError("password must be at least 6 characters") : "";
+        if (value.length < 6) {
+          setError("Password must be at least 6 characters");
+        }
 
         break;
 
@@ -50,7 +52,7 @@ function FormValidation() {
     validateData(event);
   }
 
-  function onSubmit() {}
+  function onSubmit(key, value) {}
 
   return (
     <div>
@@ -67,7 +69,7 @@ function FormValidation() {
               value={username}
               name="username"
             />
-            <span>{error}</span>
+            <span>{errors.username}</span>
           </div>
           <div className="form-wrapper">
             <label htmlFor="email">Email</label>
@@ -79,7 +81,7 @@ function FormValidation() {
               value={email}
               name="email"
             />
-            <span>{error}</span>
+            <span>{errors.email}</span>
           </div>
           <div className="form-wrapper">
             <label htmlFor="password">Password</label>
@@ -91,7 +93,7 @@ function FormValidation() {
               placeholder="Enter your password"
               name="password"
             />
-            <span>{error}</span>
+            <span>{errors.password}</span>
           </div>
           <button type="submit">Submit</button>
         </form>
