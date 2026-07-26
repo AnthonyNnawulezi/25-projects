@@ -2,59 +2,26 @@ import { useState } from "react";
 import "./style.css";
 
 function FormValidation() {
-  const [errors, setErrors] = useState({
-    username: "",
-    email: "",
-    password: "",
-  });
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [username, setUsername] = useState("");
+  const MIN_USERNAME_LENGTH = 3;
+  const MIN_PASSWORD_LENGTH = 6;
+  const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-  function validateData(event) {
-    const name = event.target.name;
-    const value = event.target.value;
-
+  function getFieldError(name, value) {
     switch (name) {
       case "username":
-        if (value.length < 3) {
-          setErrors("Username must be at least 3 characters");
-        }
-
-        break;
+        return value.trim().length < MIN_USERNAME_LENGTH
+          ? `Username must be at least ${MIN_USERNAME_LENGTH} characters`
+          : "";
       case "email":
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(value)) {
-          setErrors("Invalid email format");
-        }
-
-        break;
+        return !EMAIL_REGEX.test(value) ? "Invalid email format" : "";
       case "password":
-        if (value.length < 6) {
-          setErrors("Password must be at least 6 characters");
-        }
-
-        break;
-
+        return value.length < MIN_PASSWORD_LENGTH
+          ? `Password must be at least ${MIN_PASSWORD_LENGTH} characters`
+          : "";
       default:
-        break;
+        return "";
     }
   }
-
-  function handleUsername(event) {
-    setUsername(event.target.value);
-    validateData(event);
-  }
-  function handleEmail(event) {
-    setEmail(event.target.value);
-    validateData(event);
-  }
-  function handlePassword(event) {
-    setPassword(event.target.value);
-    validateData(event);
-  }
-
-  function onSubmit(key, value) {}
 
   return (
     <div>
