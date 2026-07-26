@@ -76,7 +76,7 @@ function FormValidation() {
     if (Object.values(validateErrors).every((error) => error === "")) {
       //perform form submition logic
     } else {
-      // there is error please fix
+      console.log("error is present");
     }
   }
 
