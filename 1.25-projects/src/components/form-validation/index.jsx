@@ -17,7 +17,7 @@ function FormValidation() {
     const { name, value } = event.target;
     setFormData({
       ...formData,
-      name: value,
+      [name]: value,
     });
     validateInput(name, value);
   }
@@ -57,10 +57,33 @@ function FormValidation() {
 
   console.log(formData);
 
+  function handleSubmit(event) {
+    event.preventDefault();
+    const validateErrors = {};
+
+    Object.keys(formData).forEach((dataItem) => {
+      validateInput(dataItem, formData[dataItem]);
+      if (errors[dataItem]) {
+        validateErrors[dataItem] = errors[dataItem];
+      }
+    });
+
+    setErrors((prev) => ({
+      ...prev,
+      ...validateErrors,
+    }));
+
+    if (Object.values(validateErrors).every((error) => error === "")) {
+      //perform form submition logic
+    } else {
+      // there is error please fix
+    }
+  }
+
   return (
     <div>
       <h1>Simple Form Validation</h1>
-      <form action="">
+      <form onSubmit={handleSubmit}>
         <div className="input-wrapper">
           <label htmlFor="username">User Name</label>
           <input
@@ -74,7 +97,7 @@ function FormValidation() {
           <span>{errors.username}</span>
         </div>
         <div className="input-wrapper">
-          <label htmlFor="email">User Name</label>
+          <label htmlFor="email">Eamil</label>
           <input
             type="email"
             id="email"
@@ -86,7 +109,7 @@ function FormValidation() {
           <span>{errors.email}</span>
         </div>
         <div className="input-wrapper">
-          <label htmlFor="password">User Name</label>
+          <label htmlFor="password">Password</label>
           <input
             type="password"
             id="password"
