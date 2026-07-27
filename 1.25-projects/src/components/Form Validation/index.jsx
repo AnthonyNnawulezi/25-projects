@@ -1,6 +1,10 @@
 import { useState } from "react";
 import "./style.css";
 
+const MIN_USERNAME_LENGTH = 3;
+const MIN_PASSWORD_LENGTH = 6;
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 function validateField(name, value) {
   switch (name) {
     case "username":
@@ -19,10 +23,6 @@ function validateField(name, value) {
 }
 
 function FormValidation() {
-  const MIN_USERNAME_LENGTH = 3;
-  const MIN_PASSWORD_LENGTH = 6;
-  const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -56,7 +56,7 @@ function FormValidation() {
               id="username"
               placeholder="Enter your username"
               onChange={handleChange}
-              value={username}
+              value={formData.username}
               name="username"
             />
             <span>{errors.username}</span>
@@ -68,7 +68,7 @@ function FormValidation() {
               id="email"
               onChange={handleChange}
               placeholder="Enter your email"
-              value={email}
+              value={formData.email}
               name="email"
             />
             <span>{errors.email}</span>
@@ -78,7 +78,7 @@ function FormValidation() {
             <input
               type="password"
               id="password"
-              value={password}
+              value={formData.password}
               onChange={handleChange}
               placeholder="Enter your password"
               name="password"
