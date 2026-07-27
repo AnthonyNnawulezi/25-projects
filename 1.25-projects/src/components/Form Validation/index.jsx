@@ -1,27 +1,39 @@
 import { useState } from "react";
 import "./style.css";
 
+function validateField(name, value) {
+  switch (name) {
+    case "username":
+      return value.trim().length < MIN_USERNAME_LENGTH
+        ? `Username must be at least ${MIN_USERNAME_LENGTH} characters`
+        : "";
+    case "email":
+      return !EMAIL_REGEX.test(value) ? "Invalid email format" : "";
+    case "password":
+      return value.length < MIN_PASSWORD_LENGTH
+        ? `Password must be at least ${MIN_PASSWORD_LENGTH} characters`
+        : "";
+    default:
+      return "";
+  }
+}
+
 function FormValidation() {
   const MIN_USERNAME_LENGTH = 3;
   const MIN_PASSWORD_LENGTH = 6;
   const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-  function validateField(name, value) {
-    switch (name) {
-      case "username":
-        return value.trim().length < MIN_USERNAME_LENGTH
-          ? `Username must be at least ${MIN_USERNAME_LENGTH} characters`
-          : "";
-      case "email":
-        return !EMAIL_REGEX.test(value) ? "Invalid email format" : "";
-      case "password":
-        return value.length < MIN_PASSWORD_LENGTH
-          ? `Password must be at least ${MIN_PASSWORD_LENGTH} characters`
-          : "";
-      default:
-        return "";
-    }
-  }
+  const [formData, setFormData] = useState({
+    username: "",
+    email: "",
+    password: "",
+  });
+
+  const [errors, setErrors] = useState({
+    username: "",
+    email: "",
+    password: "",
+  });
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -30,18 +42,20 @@ function FormValidation() {
     setErrors((prev) => ({ ...prev, [name]: validateField(name, value) }));
   }
 
+  function handleSubmit() {}
+
   return (
     <div>
       <h1>Simple Form Validation</h1>
       <div className="form-container">
-        <form action="" onSubmit={onSubmit} method="post">
+        <form action="" onSubmit={handleSubmit} method="post">
           <div className="form-wrapper">
             <label htmlFor="username">User Name</label>
             <input
               type="text"
               id="username"
               placeholder="Enter your username"
-              onChange={handleUsername}
+              onChange={handleChange}
               value={username}
               name="username"
             />
@@ -52,7 +66,7 @@ function FormValidation() {
             <input
               type="email"
               id="email"
-              onChange={handleEmail}
+              onChange={handleChange}
               placeholder="Enter your email"
               value={email}
               name="email"
@@ -65,7 +79,7 @@ function FormValidation() {
               type="password"
               id="password"
               value={password}
-              onChange={handlePassword}
+              onChange={handleChange}
               placeholder="Enter your password"
               name="password"
             />
