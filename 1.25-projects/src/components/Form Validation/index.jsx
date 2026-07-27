@@ -22,6 +22,14 @@ function validateField(name, value) {
   }
 }
 
+// function validateForm(values) {
+//   return {
+//     username: validateField("username", values.username),
+//     email: validateField("email", values.email),
+//     password: validateField("password", values.password),
+//   };
+// }
+
 function FormValidation() {
   const [formData, setFormData] = useState({
     username: "",
@@ -43,19 +51,27 @@ function FormValidation() {
   }
 
   function handleSubmit(event) {
-    event.preventDefault();
+    event.preventDefault(); // prevents reload on submit
 
     Object.entries(formData).forEach(([name, value]) => {
       validateField(name, value);
     });
 
+    // or
+    // const newErrors = validateForm(formData);
+    // setErrors(newErrors);
+
+    // const hasErrors = Object.values(newErrors).some((error) => error !== "");
+
     const hasErrors = Object.values(errors).some((error) => error !== "");
 
     if (hasErrors) {
-      return;
+      console.log("error is present");
+      return "Resolve these errors before proceeding";
+    } else {
+      //perform submittion logic
+      console.log("Submitted:", formData);
     }
-
-    console.log("Submitted:", formData);
   }
 
   return (
