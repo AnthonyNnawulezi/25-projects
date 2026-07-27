@@ -6,7 +6,7 @@ function FormValidation() {
   const MIN_PASSWORD_LENGTH = 6;
   const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-  function getFieldError(name, value) {
+  function validateField(name, value) {
     switch (name) {
       case "username":
         return value.trim().length < MIN_USERNAME_LENGTH
@@ -21,6 +21,13 @@ function FormValidation() {
       default:
         return "";
     }
+  }
+
+  function handleChange(event) {
+    const { name, value } = event.target;
+
+    setFormData((prev) => ({ ...prev, [name]: value }));
+    setErrors((prev) => ({ ...prev, [name]: validateField(name, value) }));
   }
 
   return (
