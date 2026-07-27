@@ -88,8 +88,9 @@ function FormValidation() {
               onChange={handleChange}
               value={formData.username}
               name="username"
+              aria-describedby="username-error"
             />
-            <span>{errors.username}</span>
+            <span role="alert">{errors.username}</span>
           </div>
           <div className="form-wrapper">
             <label htmlFor="email">Email</label>
@@ -100,8 +101,9 @@ function FormValidation() {
               placeholder="Enter your email"
               value={formData.email}
               name="email"
+              aria-describedby="email-error"
             />
-            <span>{errors.email}</span>
+            <span role="alert">{errors.email}</span>
           </div>
           <div className="form-wrapper">
             <label htmlFor="password">Password</label>
@@ -112,8 +114,9 @@ function FormValidation() {
               onChange={handleChange}
               placeholder="Enter your password"
               name="password"
+              aria-describedby="password-error"
             />
-            <span>{errors.password}</span>
+            <span role="alert">{errors.password}</span>
           </div>
           <button type="submit">Submit</button>
         </form>
