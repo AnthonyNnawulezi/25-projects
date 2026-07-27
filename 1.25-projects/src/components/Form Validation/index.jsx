@@ -42,7 +42,21 @@ function FormValidation() {
     setErrors((prev) => ({ ...prev, [name]: validateField(name, value) }));
   }
 
-  function handleSubmit() {}
+  function handleSubmit(event) {
+    event.preventDefault();
+
+    Object.entries(formData).forEach(([name, value]) => {
+      validateField(name, value);
+    });
+
+    const hasErrors = Object.values(errors).some((error) => error !== "");
+
+    if (hasErrors) {
+      return;
+    }
+
+    console.log("Submitted:", formData);
+  }
 
   return (
     <div>
