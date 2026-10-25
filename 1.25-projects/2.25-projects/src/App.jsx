@@ -7,6 +7,7 @@ import CurrencyConverter from "./Components/Currency Converter";
 import ProgressBar from "./Components/Custom Progress Bar";
 import DigitalClock from "./Components/Digital Clock";
 import DragAndDrop from "./Components/Drag and Drop";
+import FileUpload from "./Components/File Upload";
 import FilterProducts from "./Components/Filter Products";
 import MusicPlayer from "./Components/Music Player ";
 import ProductsList from "./Components/Pagination";
@@ -34,6 +35,7 @@ function App() {
       <RippleEffect />
       <DragAndDrop />
       <FormValidation />
+      <FileUpload />
     </div>
   );
 }
