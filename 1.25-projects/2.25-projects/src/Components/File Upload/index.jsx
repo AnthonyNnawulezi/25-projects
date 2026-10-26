@@ -9,22 +9,13 @@ function FileUpload() {
 
   function chooseImage(event) {
     const imageFile = event.target.files[0];
-    const loadPercentage =
-      Math.round(
-        progressPercentageRef.current.loaded /
-          progressPercentageRef.current.total,
-      ) * 100;
-    imageMetaDataRef.current = imageFile.current.responseText;
-    const loaded = progressPercentageRef.current.loaded;
-    const total = progressPercentageRef.current.total;
-    setstatusUpload(`Uploaded ${loaded} bytes of ${total}`);
 
-    const formData = new FormData();
-    imageURLRef.current = Object.createURL(imageFile);
-    formData.fetch(imageFile);
+    if (!imageFile) return;
 
     setFile(imageFile);
-    setProgressPercentage(loadPercentage);
+    setPreviewUrl(URL.createObjectURL(imageFile));
+    setProgressPercentage(0);
+    setstatusUpload("Image selected");
   }
   return (
     <div className="file-upload-container">
