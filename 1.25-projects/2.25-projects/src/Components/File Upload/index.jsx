@@ -2,11 +2,9 @@ import { useRef, useState } from "react";
 import "./file-upload.css";
 
 function FileUpload() {
-  const [file, setFile] = useState();
-  const [progressPercentage, setProgressPercentage] = useState();
-  const progressPercentageRef = useRef();
-  const imageMetaDataRef = useRef();
-  const imageURLRef = useRef();
+  const [file, setFile] = useState(null);
+  const [previewUrl, setPreviewUrl] = useState("");
+  const [progressPercentage, setProgressPercentage] = useState(0);
   const [statusUpload, setstatusUpload] = useState("");
 
   function chooseImage(event) {
@@ -34,7 +32,7 @@ function FileUpload() {
       <div className="choose-image-wrapper">
         <input
           type="file"
-          onChange={() => chooseImage}
+          onChange={chooseImage}
           name="choose-image"
           id="choose-image"
         />
