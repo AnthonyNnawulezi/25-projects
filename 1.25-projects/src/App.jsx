@@ -10,7 +10,7 @@ import DigitalClock from "./components/digital-clock";
 import DragAndDrop from "./components/drag-and-drop";
 import FilterProducts from "./components/filter-category";
 import FormValidation from "./components/form-validation";
-import FileUpload1 from "./components/form-validation/index1";
+import FileUpload1 from "./components/form-validation";
 import MusicPlayer from "./components/music-player";
 import NestedComments from "./components/nested-comments";
 import ProductList from "./components/pagination/test";
@@ -44,7 +44,7 @@ function App() {
       <ButtonRippleEffect />
       <DragAndDrop />
       <FormValidation />
-      <FileUpload1 />
+      <FileUpload />
       <Quiz />
       <NestedComments />
       <PdfViewer />
