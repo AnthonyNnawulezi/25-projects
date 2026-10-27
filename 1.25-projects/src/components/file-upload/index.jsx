@@ -13,6 +13,7 @@ function FileUpload() {
     const file = uploadReference.current.files[0];
 
     if (!file) return;
+
     setFile(URL.createObjectURL(file));
     let formData = new FormData();
     formData.append("image", file);
@@ -71,9 +72,6 @@ function FileUpload() {
         alt="Selected image"
         width={250}
         style={{ width: "100px", height: "100px" }}
-        onError={(event) => {
-          console.log("Could not display:", event.currentTarget.src);
-        }}
       />
     </div>
   );
