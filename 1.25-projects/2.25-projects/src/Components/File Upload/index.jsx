@@ -99,7 +99,90 @@ function FileUpload() {
     request.send(formData);
   }
 
-  return <div>FileUpload</div>;
+  function handleCancelUpload() {
+    activeRequestRef.current?.abort();
+  }
+
+  function handleFileChange(event) {
+    const imageFile = event.currentTarget.files?.[0];
+    event.target.value = "";
+
+    setPreviewUrl(null);
+    setUploadPercent(0);
+    setUploadStatus("");
+    setServerResponse("");
+
+    if (!selectedFile) {
+      setUploadStatus("No file selected.");
+      return;
+    }
+
+    const errorMessage = getFileError(selectedFile);
+    if (errorMessage) {
+      setUploadStatus(errorMessage);
+      return;
+    }
+
+    if (imageFile.size === 0) {
+      setUploadStatus("The selected image is empty.");
+      event.currentTarget.value = "";
+      return;
+    }
+
+    if (imageFile.size > MAX_FILE_SIZE_BYTES) {
+      setUploadStatus("Image must be 5 MiB or smaller.");
+      event.currentTarget.value = "";
+      return;
+    }
+
+    setPreviewUrl(URL.createObjectURL(selectedFile));
+    uploadImage(selectedFile);
+  }
+
+  return (
+    <div>
+      <h1>File Upload</h1>
+
+      <div className="choose-image-wrapper">
+        <label htmlFor="choose-image">Choose an image</label>
+        {/* accept only filters the file picker. getFileError is the real check.
+            disabled stops a second upload from starting mid-upload. */}
+        <input
+          type="file"
+          id="choose-image"
+          name="choose-image"
+          accept={ALLOWED_FILE_TYPES.join(",")}
+          onChange={handleFileChange}
+          disabled={isUploading}
+        />
+      </div>
+
+      <div className="file-progress">
+        <label htmlFor="file-progress">File progress</label>
+        {/* <progress> is a read-only bar made for this job */}
+        <progress id="file-progress" value={uploadPercent} max={100}></progress>
+      </div>
+
+      {/* role="status" makes screen readers announce changes */}
+      <p className="uploaded-status" role="status">
+        {uploadStatus}
+      </p>
+
+      {/* Only shown once the server has replied successfully */}
+      {serverResponse && (
+        <div className="image-url-response">
+          <pre>{serverResponse}</pre>
+        </div>
+      )}
+
+      {/* Only shown once an image has been chosen */}
+      {previewUrl && (
+        <div className="file-image">
+          <img src={previewUrl} alt="Preview of the chosen file" />
+        </div>
+      )}
+    </div>
+  );
 }
 
 export default FileUpload;
