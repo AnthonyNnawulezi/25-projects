@@ -1,60 +1,105 @@
-import { useState } from "react";
-import "./file-upload.css";
+import { useEffect, useRef, useState } from "react";
+
+const UPLOAD_URL = "https://v2.convertapi.com/upload";
+const MAX_FILE_SIZE_BYTES = 5 * 1024 * 1024; // convert MB to bytes
+const ALLOWED_FILE_TYPES = [
+  "image/jpeg",
+  "image/png",
+  "image/gif",
+  "image/webp",
+];
 
 function FileUpload() {
-  // State variables to track the selected file, preview URL, and status text
   const [selectedFile, setSelectedFile] = useState(null);
+  const [uploadPercent, setUploadPercent] = useState(0);
   const [previewUrl, setPreviewUrl] = useState(null);
-  const [statusMessage, setStatusMessage] = useState("");
+  const [uploadStatus, setUploadStatus] = useState("");
+  const [serverResponse, setServerResponse] = useState("");
+  const [isUploading, setIsUploading] = useState(false);
+  const activeRequestRef = useRef(null);
 
-  // Function that runs when a user selects an image file
-  const handleImageChange = (event) => {
-    const file = event.target.files?.[0];
+  useEffect(() => {
+    return () => {
+      if (previewUrl) {
+        URL.revokeObjectURL(previewUrl);
+      }
+    };
+  }, [previewUrl]);
 
-    // Check if the user cancelled the file picker
-    if (!file) {
-      setStatusMessage("No file selected.");
-      return;
+  useEffect(() => {
+    return () => {
+      const activeRequest = activeRequestRef.current;
+
+      activeRequestRef.current = null;
+      activeRequest?.abort();
+    };
+  }, []);
+
+  function getFileError(file) {
+    if (!ALLOWED_FILE_TYPES.includes(file.type)) {
+      return "Please choose an image (JPG, PNG, GIF or WebP).";
     }
+    if (file.size > MAX_FILE_SIZE_BYTES) {
+      return `File is too large. Maximum size is ${MAX_FILE_SIZE_BYTES}.`;
+    }
+    return null; // null means "no problem found"
+  }
 
-    // Save the file object into state
-    setSelectedFile(file);
-    setStatusMessage(`Selected: ${file.name} (${file.size} bytes)`);
+  function uploadImage(imageFile) {
+    const formData = new FormData();
+    formData.append("image", imageFile);
 
-    // Create a temporary browser URL so the user can preview the image
-    const imageUrl = URL.createObjectURL(file);
-    setPreviewUrl(imageUrl);
-  };
+    const request = new XMLHttpRequest();
+    setIsUploading(true);
+    setUploadStatus("Starting upload...");
+    activeRequestRef.current = request;
 
-  return (
-    <div className="file-upload-container">
-      <h1>File Upload</h1>
+    request.upload.addEventListener("progress", (event) => {
+      if (!event.lengthComputable) return; // the browser doesn't know the total size, so skip
 
-      <div className="choose-image-wrapper">
-        <input
-          type="file"
-          accept="image/*"
-          onChange={handleImageChange}
-          name="choose-image"
-          id="choose-image"
-        />
-      </div>
+      const percent = Math.round((event.loaded / event.total) * 100);
+      setUploadPercent(percent);
+      setUploadStatus(`Uploaded ${event.loaded} bytes of ${event.total}`);
+    });
 
-      {/* Show status message */}
-      <p className="uploaded-status">{statusMessage}</p>
+    request.addEventListener("load", () => {
+      setIsUploading(false);
+      activeRequestRef.current = null;
+      const isSuccess = request.status >= 200 && request.status < 300;
 
-      {/* Display the image preview if a valid preview URL exists */}
-      {previewUrl && (
-        <div className="file-image">
-          <img
-            src={previewUrl}
-            alt="Selected file preview"
-            style={{ width: "200px", height: "200px", objectFit: "cover" }}
-          />
-        </div>
-      )}
-    </div>
-  );
+      if (isSuccess) {
+        setUploadPercent(100);
+        setUploadStatus("Upload complete!");
+        setServerResponse(request.responseText); // the server's reply as text
+      } else {
+        setUploadPercent(0);
+        setUploadStatus(
+          `Upload failed (server replied ${request.status}). Please try again.`,
+        );
+      }
+    });
+
+    request.addEventListener("error", () => {
+      setIsUploading(false);
+      activeRequestRef.current = null;
+      setUploadPercent(0);
+      setUploadStatus(
+        "Upload failed. Please check your connection and try again.",
+      );
+    });
+
+    request.addEventListener("abort", () => {
+      setIsUploading(false);
+      activeRequestRef.current = null;
+      setUploadPercent(0);
+      setUploadStatus("Upload cancelled.");
+    });
+
+    request.open("POST", UPLOAD_URL);
+    request.send(formData);
+  }
+
+  return <div>FileUpload</div>;
 }
 
 export default FileUpload;
