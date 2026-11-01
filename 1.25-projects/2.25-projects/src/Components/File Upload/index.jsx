@@ -10,7 +10,6 @@ const ALLOWED_FILE_TYPES = [
 ];
 
 function FileUpload() {
-  const [selectedFile, setSelectedFile] = useState(null);
   const [uploadPercent, setUploadPercent] = useState(0);
   const [previewUrl, setPreviewUrl] = useState(null);
   const [uploadStatus, setUploadStatus] = useState("");
@@ -18,6 +17,7 @@ function FileUpload() {
   const [isUploading, setIsUploading] = useState(false);
   const activeRequestRef = useRef(null);
 
+  // Release the old preview URL whenever it changes or on unmount.
   useEffect(() => {
     return () => {
       if (previewUrl) {
@@ -26,6 +26,7 @@ function FileUpload() {
     };
   }, [previewUrl]);
 
+  // Abort any in-flight upload when the component unmounts.
   useEffect(() => {
     return () => {
       const activeRequest = activeRequestRef.current;
@@ -35,19 +36,29 @@ function FileUpload() {
     };
   }, []);
 
+  // Check the file is allowed. Returns an error message, or null if the file is fine.
   function getFileError(file) {
+    console.log(file);
+
     if (!ALLOWED_FILE_TYPES.includes(file.type)) {
       return "Please choose an image (JPG, PNG, GIF or WebP).";
     }
     if (file.size > MAX_FILE_SIZE_BYTES) {
       return `File is too large. Maximum size is ${MAX_FILE_SIZE_BYTES}.`;
     }
+    if (file.size === 0) {
+      event.currentTarget.value = "";
+      return "The selected image is empty.";
+    }
     return null; // null means "no problem found"
   }
 
+  // STEP 1 — user picks a file. Validate + preview only.
+  // Send one file to the server and report progress as it goes.
   function uploadImage(imageFile) {
     const formData = new FormData();
-    formData.append("image", imageFile);
+
+    formData.append("image", imageFile); // "image" must match the field name your server expects
 
     const request = new XMLHttpRequest();
     setIsUploading(true);
@@ -62,6 +73,7 @@ function FileUpload() {
       setUploadStatus(`Uploaded ${event.loaded} bytes of ${event.total}`);
     });
 
+    // Fires when the server replies, whether it said "OK" or reported an error.
     request.addEventListener("load", () => {
       setIsUploading(false);
       activeRequestRef.current = null;
@@ -79,6 +91,7 @@ function FileUpload() {
       }
     });
 
+    // Fires when the request could not reach the server at all.
     request.addEventListener("error", () => {
       setIsUploading(false);
       activeRequestRef.current = null;
@@ -95,48 +108,43 @@ function FileUpload() {
       setUploadStatus("Upload cancelled.");
     });
 
+    // Fires after load OR error, so the cleanup lives in one place.
+    request.addEventListener("loadend", () => {
+      setIsUploading(false);
+    });
+
     request.open("POST", UPLOAD_URL);
-    request.send(formData);
+    request.send(formData); // the browser sets the Content-Type header for FormData itself
   }
 
-  function handleCancelUpload() {
-    activeRequestRef.current?.abort();
-  }
+  //   function handleCancelUpload() {
+  //     activeRequestRef.current?.abort();
+  //   }
 
   function handleFileChange(event) {
     const imageFile = event.currentTarget.files?.[0];
-    event.target.value = "";
+    event.target.value = ""; // allow picking the same file again
 
+    // Reset everything from a previous selection.
     setPreviewUrl(null);
     setUploadPercent(0);
     setUploadStatus("");
     setServerResponse("");
 
-    if (!selectedFile) {
+    if (!imageFile) {
       setUploadStatus("No file selected.");
       return;
     }
 
-    const errorMessage = getFileError(selectedFile);
+    // Stop early if the file isn't allowed.
+    const errorMessage = getFileError(imageFile);
     if (errorMessage) {
       setUploadStatus(errorMessage);
       return;
     }
 
-    if (imageFile.size === 0) {
-      setUploadStatus("The selected image is empty.");
-      event.currentTarget.value = "";
-      return;
-    }
-
-    if (imageFile.size > MAX_FILE_SIZE_BYTES) {
-      setUploadStatus("Image must be 5 MiB or smaller.");
-      event.currentTarget.value = "";
-      return;
-    }
-
-    setPreviewUrl(URL.createObjectURL(selectedFile));
-    uploadImage(selectedFile);
+    setPreviewUrl(URL.createObjectURL(imageFile));
+    uploadImage(imageFile);
   }
 
   return (
@@ -178,7 +186,11 @@ function FileUpload() {
       {/* Only shown once an image has been chosen */}
       {previewUrl && (
         <div className="file-image">
-          <img src={previewUrl} alt="Preview of the chosen file" />
+          <img
+            src={previewUrl}
+            alt="Preview of the chosen file"
+            style={{ width: 300, height: 300 }}
+          />
         </div>
       )}
     </div>
