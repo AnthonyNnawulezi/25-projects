@@ -1,34 +1,26 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import "./file-upload.css";
 
-// Largest accepted file: 5 * 1024 * 1024 bytes = 5 MB.
-const MAX_FILE_SIZE_IN_BYTES = 5 * 1024 * 1024;
-
-// Where the upload is sent. Replace with your real endpoint.
-// (httpbin echoes the request back — useful while testing.)
-const UPLOAD_ENDPOINT = "https://httpbin.org/post";
+// ===== Settings: easy to find and change in one place =====
+const UPLOAD_URL = "https://v2.convertapi.com/upload"; // TODO: replace with your real endpoint
+const MAX_FILE_SIZE_MB = 5;
+const MAX_FILE_SIZE_BYTES = MAX_FILE_SIZE_MB * 1024 * 1024; // convert MB to bytes
+const ALLOWED_FILE_TYPES = [
+  "image/jpeg",
+  "image/png",
+  "image/gif",
+  "image/webp",
+];
 
 function FileUpload() {
-  // The file the user picked. Null until they choose one.
-  const [selectedFile, setSelectedFile] = useState(null);
+  // ===== State: values that redraw the screen when they change =====
+  const [previewUrl, setPreviewUrl] = useState(null); // temporary address used to show the image
+  const [uploadPercent, setUploadPercent] = useState(0); // 0 to 100
+  const [statusMessage, setStatusMessage] = useState(""); // text shown under the progress bar
+  const [serverResponse, setServerResponse] = useState(""); // what the server sent back
+  const [isUploading, setIsUploading] = useState(false); // true while an upload is running
 
-  // Temporary blob URL for the preview. State (not ref) because changing it
-  // must re-render the <img>.
-  const [previewUrl, setPreviewUrl] = useState("");
-
-  // 0–100, bound to the <progress> element.
-  const [progressPercent, setProgressPercent] = useState(0);
-
-  // Short status text shown under the controls.
-  const [statusMessage, setStatusMessage] = useState("");
-
-  // True while a request is in flight; disables the controls.
-  const [isUploading, setIsUploading] = useState(false);
-
-  // The live XMLHttpRequest, so Cancel and unmount can abort it.
-  const activeRequestRef = useRef(null);
-
-  // Release the old preview URL whenever it changes or on unmount.
+  // Free the preview image from memory when it is replaced or the component is removed.
   useEffect(() => {
     return () => {
       if (previewUrl) {
@@ -37,106 +29,97 @@ function FileUpload() {
     };
   }, [previewUrl]);
 
-  // Abort any in-flight upload when the component unmounts.
-  useEffect(() => {
-    return () => {
-      activeRequestRef.current?.abort();
-    };
-  }, []);
-
-  // STEP 1 — user picks a file. Validate + preview only.
-  function handleFileChange(event) {
-    const imageFile = event.target.files?.[0];
-
-    // Reset everything from a previous selection.
-    setStatusMessage("");
-    setProgressPercent(0);
-    setSelectedFile(null);
-    setPreviewUrl("");
-
-    if (!imageFile) {
-      return; // user cancelled the file picker
+  // Check the file is allowed. Returns an error message, or null if the file is fine.
+  function getFileError(file) {
+    if (!ALLOWED_FILE_TYPES.includes(file.type)) {
+      return "Please choose an image (JPG, PNG, GIF or WebP).";
     }
-
-    if (!imageFile.type.startsWith("image/")) {
-      setStatusMessage("Please choose an image file (PNG, JPG, GIF…).");
-      event.target.value = ""; // allow picking the same file again
-      return;
+    if (file.size > MAX_FILE_SIZE_BYTES) {
+      return `File is too large. Maximum size is ${MAX_FILE_SIZE_MB} MB.`;
     }
-
-    if (imageFile.size > MAX_FILE_SIZE_IN_BYTES) {
-      setStatusMessage("File is too large. The maximum size is 5 MB.");
-      event.target.value = "";
-      return;
-    }
-
-    setSelectedFile(imageFile);
-    setPreviewUrl(URL.createObjectURL(imageFile));
+    return null; // null means "no problem found"
   }
 
-  // STEP 2 — user clicks Upload. This is where the network request lives.
-  function handleUpload() {
-    if (!selectedFile || isUploading) {
-      return;
-    }
-
+  // Send one file to the server and report progress as it goes.
+  function uploadImage(imageFile) {
     const formData = new FormData();
-    formData.append("image", selectedFile);
+    formData.append("image", imageFile); // "image" must match the field name your server expects
 
     const request = new XMLHttpRequest();
-    activeRequestRef.current = request;
     setIsUploading(true);
+    setStatusMessage("Starting upload...");
 
-    // Fires repeatedly while the request body is being sent.
-    request.upload.addEventListener("progress", (progressEvent) => {
-      if (!progressEvent.lengthComputable) {
-        return;
-      }
-      const percent = Math.round(
-        (progressEvent.loaded / progressEvent.total) * 100,
-      );
-      setProgressPercent(percent);
-      setStatusMessage(
-        `Uploaded ${progressEvent.loaded} bytes of ${progressEvent.total}`,
-      );
+    // Fires again and again while bytes are being sent.
+    request.upload.addEventListener("progress", (event) => {
+      if (!event.lengthComputable) return; // the browser doesn't know the total size, so skip
+
+      const percent = Math.round((event.loaded / event.total) * 100);
+      setUploadPercent(percent);
+      setStatusMessage(`Uploaded ${event.loaded} bytes of ${event.total}`);
     });
 
-    // "load" fires for ANY finished response — including HTTP errors —
-    // so we must inspect the status code ourselves.
+    // Fires when the server replies, whether it said "OK" or reported an error.
     request.addEventListener("load", () => {
-      setIsUploading(false);
-      activeRequestRef.current = null;
+      const isSuccess = request.status >= 200 && request.status < 300;
 
-      if (request.status >= 200 && request.status < 300) {
-        setProgressPercent(100); // keep the bar full on success
+      if (isSuccess) {
+        setUploadPercent(100);
         setStatusMessage("Upload complete!");
+        setServerResponse(request.responseText); // the server's reply as text
       } else {
-        setProgressPercent(0);
-        setStatusMessage(`Upload failed (HTTP ${request.status}).`);
+        setUploadPercent(0);
+        setStatusMessage(
+          `Upload failed (server replied ${request.status}). Please try again.`,
+        );
       }
     });
 
+    // Fires when the request could not reach the server at all.
     request.addEventListener("error", () => {
-      setIsUploading(false);
-      activeRequestRef.current = null;
-      setProgressPercent(0);
-      setStatusMessage("Upload failed. Check your connection and try again.");
+      setUploadPercent(0);
+      setStatusMessage(
+        "Upload failed. Please check your connection and try again.",
+      );
     });
 
-    request.addEventListener("abort", () => {
+    // Fires after load OR error, so the cleanup lives in one place.
+    request.addEventListener("loadend", () => {
       setIsUploading(false);
-      activeRequestRef.current = null;
-      setProgressPercent(0);
-      setStatusMessage("Upload cancelled.");
     });
 
-    request.open("POST", UPLOAD_ENDPOINT);
-    request.send(formData);
+    request.open("POST", UPLOAD_URL);
+    request.send(formData); // the browser sets the Content-Type header for FormData itself
   }
 
-  // Lets the user stop an upload in progress.
-  function handleCancelUpload() {
-    activeRequestRef.current?.abort();
+  // Runs when the user picks a file.
+  function handleFileChange(event) {
+    const selectedFile = event.target.files[0];
+
+    // Clear the input so choosing the same file again still triggers onChange.
+    // (We already saved the file in selectedFile, so nothing is lost.)
+    event.target.value = "";
+
+    // Remove anything left over from the previous file.
+    setPreviewUrl(null);
+    setUploadPercent(0);
+    setStatusMessage("");
+    setServerResponse("");
+
+    // The user may have cancelled the file dialog.
+    if (!selectedFile) {
+      setStatusMessage("No file selected.");
+      return;
+    }
+
+    // Stop early if the file isn't allowed.
+    const errorMessage = getFileError(selectedFile);
+    if (errorMessage) {
+      setStatusMessage(errorMessage);
+      return;
+    }
+
+    setPreviewUrl(URL.createObjectURL(selectedFile)); // show the image straight away
+    uploadImage(selectedFile);
   }
 
   return (
@@ -144,41 +127,38 @@ function FileUpload() {
       <h1>File Upload</h1>
 
       <div className="choose-image-wrapper">
-        <label htmlFor="choose-image">Choose an image:</label>
+        <label htmlFor="choose-image">Choose an image</label>
+        {/* accept only filters the file picker. getFileError is the real check.
+            disabled stops a second upload from starting mid-upload. */}
         <input
           type="file"
           id="choose-image"
-          accept="image/*"
+          name="choose-image"
+          accept={ALLOWED_FILE_TYPES.join(",")}
           onChange={handleFileChange}
           disabled={isUploading}
         />
       </div>
 
-      <div className="file-actions">
-        <button
-          type="button"
-          onClick={handleUpload}
-          disabled={!selectedFile || isUploading}
-        >
-          Upload
-        </button>
-
-        {isUploading && (
-          <button type="button" onClick={handleCancelUpload}>
-            Cancel
-          </button>
-        )}
-      </div>
-
       <div className="file-progress">
-        <label htmlFor="file-progress">File Progress: {progressPercent}%</label>
-        <progress id="file-progress" value={progressPercent} max={100} />
+        <label htmlFor="file-progress">File progress</label>
+        {/* <progress> is a read-only bar made for this job */}
+        <progress id="file-progress" value={uploadPercent} max={100}></progress>
       </div>
 
+      {/* role="status" makes screen readers announce changes */}
       <p className="uploaded-status" role="status">
         {statusMessage}
       </p>
 
+      {/* Only shown once the server has replied successfully */}
+      {serverResponse && (
+        <div className="image-url-response">
+          <pre>{serverResponse}</pre>
+        </div>
+      )}
+
+      {/* Only shown once an image has been chosen */}
       {previewUrl && (
         <div className="file-image">
           <img src={previewUrl} alt="Preview of the chosen file" />
