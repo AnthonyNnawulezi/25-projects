@@ -12,6 +12,7 @@ import FilterProducts from "./Components/Filter Products";
 import MusicPlayer from "./Components/Music Player ";
 import ProductsList from "./Components/Pagination";
 import ProgressStep from "./Components/Progress Step";
+import Quiz from "./Components/quiz-app";
 import RandomQuoteGenerator from "./Components/Random Quote Generator";
 import TipCalculator from "./Components/Tip Calculator";
 import Tooltip from "./Components/Tooltip";
@@ -36,6 +37,7 @@ function App() {
       <DragAndDrop />
       <FormValidation />
       <FileUpload />
+      <Quiz />
     </div>
   );
 }
