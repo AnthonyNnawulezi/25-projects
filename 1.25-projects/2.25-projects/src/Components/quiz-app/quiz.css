@@ -1,0 +1,13 @@
+.quiz-container {
+  background-color: cadetblue;
+  gap: 30px;
+}
+
+/* .quiz-options-boxtions {
+  display: flex;
+  justify-content: center;
+} */
+
+.answer {
+  background-color: blueviolet;
+}

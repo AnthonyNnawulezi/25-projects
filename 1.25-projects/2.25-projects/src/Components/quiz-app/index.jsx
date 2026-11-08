@@ -13,6 +13,8 @@ function Quiz() {
   const [isLoading, setIsLoading] = useState(false);
   const [questionNumber, setQuestionNumber] = useState(0);
   const [questionOptions, setQuestionOptions] = useState([]);
+  let indexNumber = 0;
+
   async function loadQuestions() {
     try {
       setIsLoading(true);
@@ -23,7 +25,7 @@ function Quiz() {
       const data = await response.json();
 
       const apiQuestions = data.results ?? {};
-      //   console.log(apiQuestions);
+      console.log(apiQuestions);
 
       if (quizQuestions <= 0) {
         return <p>No Questions</p>;
@@ -57,17 +59,43 @@ function Quiz() {
   useEffect(() => {
     loadQuestions();
   }, []);
+
+  function goto(index, total) {
+    ((index + 1) % (total - 1)) + total;
+  }
+
+  function handleAnswer(event) {
+    const clickedAnswer = event.target;
+    console.log(clickedAnswer);
+
+    questionOptions.forEach((option, i) => {
+      if (clickedAnswer.textContent === option) {
+        clickedAnswer.classList.add("answer");
+        goto(i + 1, option.length);
+      }
+    });
+  }
   return (
-    <main>
+    <main className="quiz-container">
       <h1>Quiz App</h1>
       {isLoading && <p>Loading... Please wait</p>}
       {quizQuestions ? (
-        <div className="quiz-container">
+        <div className="quiz-options-box">
           <h2 key={questionNumber}>Question {questionNumber}</h2>
           <div className="question">{quizQuestion}</div>
           {questionOptions
-            ? questionOptions.map((option) => (
-                <div className="options" key={option}>
+            ? questionOptions.map((option, index) => (
+                <div
+                  className="options answer"
+                  key={index}
+                  style={{
+                    background: "yellow",
+                    padding: "12px",
+                    borderRadius: "8px",
+                    border: "1px solid brown",
+                  }}
+                  onClick={handleAnswer}
+                >
                   {option}
                 </div>
               ))
@@ -77,10 +105,12 @@ function Quiz() {
           ) : (
             ""
           )}
-          <div className="buttons">
-            <button>Previous</button>
-            <button>Next</button>
-          </div>
+          {quizQuestions && (
+            <div className="buttons">
+              <button onClick={goto(indexNumber - 1)}>Previous</button>
+              <button onClick={goto(indexNumber + 1)}>Next</button>
+            </div>
+          )}
         </div>
       ) : (
         <p>Nothing to display</p>
