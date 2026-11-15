@@ -60,8 +60,13 @@ function Quiz() {
     loadQuestions();
   }, []);
 
-  function goto(index, total) {
-    ((index + 1) % (total - 1)) + total;
+  function goto(index) {
+    if (indexNumber === index) {
+      indexNumber++;
+    }
+    for (let i = 0; i < quizQuestions.length; i++) {
+      ((index + 1) % (quizQuestions.length - 1)) + quizQuestions.length;
+    }
   }
 
   function handleAnswer(event) {
@@ -86,10 +91,10 @@ function Quiz() {
           {questionOptions
             ? questionOptions.map((option, index) => (
                 <div
-                  className="options answer"
+                  className="options"
                   key={index}
                   style={{
-                    background: "yellow",
+                    // background: "yellow",
                     padding: "12px",
                     borderRadius: "8px",
                     border: "1px solid brown",
@@ -107,8 +112,18 @@ function Quiz() {
           )}
           {quizQuestions && (
             <div className="buttons">
-              <button onClick={goto(indexNumber - 1)}>Previous</button>
-              <button onClick={goto(indexNumber + 1)}>Next</button>
+              <button
+                className="previous-button"
+                onClick={() => goto(indexNumber - 1)}
+              >
+                Previous
+              </button>
+              <button
+                className="next-button"
+                onClick={() => goto(indexNumber + 1)}
+              >
+                Next
+              </button>
             </div>
           )}
         </div>

@@ -11,3 +11,8 @@
 .answer {
   background-color: blueviolet;
 }
+
+.previous-button,
+.next-button {
+  cursor: pointer;
+}
