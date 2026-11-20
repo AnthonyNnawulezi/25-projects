@@ -13,7 +13,7 @@ function Quiz() {
   const [isLoading, setIsLoading] = useState(false);
   const [questionNumber, setQuestionNumber] = useState(0);
   const [questionOptions, setQuestionOptions] = useState([]);
-  let indexNumber = 0;
+  const [indexNumber, setIndexNumber] = useState(0);
 
   function showQuestion(questions, index) {
     const { question, correct_answer, incorrect_answers, category } =
@@ -45,21 +45,21 @@ function Quiz() {
 
       setQuizQuestions(apiQuestions);
 
-      if (apiQuestions) {
-        apiQuestions.forEach((quizQuestion) => {
-          const { question, correct_answer, incorrect_answers, category } =
-            quizQuestion;
-          setQuizCategory(category);
-          setQuizInCorrectAnswers(incorrect_answers);
-          setQuizCorrectAnswers(correct_answer);
-          setQuizQuestion(question);
-          setQuestionNumber((prev) => prev + 1);
+      //   if (apiQuestions) {
+      //     apiQuestions.forEach((quizQuestion) => {
+      //       const { question, correct_answer, incorrect_answers, category } =
+      //         quizQuestion;
+      //       setQuizCategory(category);
+      //       setQuizInCorrectAnswers(incorrect_answers);
+      //       setQuizCorrectAnswers(correct_answer);
+      //       setQuizQuestion(question);
+      //       setQuestionNumber((prev) => prev + 1);
 
-          const options = [...incorrect_answers, correct_answer];
+      //       const options = [...incorrect_answers, correct_answer];
 
-          setQuestionOptions(options);
-        });
-      }
+      //       setQuestionOptions(options);
+      //     });
+      //   }
 
       showQuestion(apiQuestions, 0); // show the first question
     } catch (error) {
@@ -74,7 +74,7 @@ function Quiz() {
     loadQuestions();
   }, []);
 
-  function goto(index, questions = quizQuestions) {
+  function goto(index) {
     // if (indexNumber === index) {
     //   indexNumber++;
     // }
@@ -83,17 +83,14 @@ function Quiz() {
     //     ((index + 1) % (quizQuestions.length - 1)) + quizQuestions.length;
     //   }
     // };
+    if (index < 0 || index >= quizQuestions.length) return;
 
-    const selectedQuestion = questions[index];
-
-    if (!selectedQuestion) return;
+    document
+      .querySelectorAll(".options")
+      .forEach((option) => option.classList.remove("answer"));
 
     setIndexNumber(index);
-    setQuestionNumber(index + 1);
-    setQuizQuestion(selectedQuestion.question);
-    setQuizCategory(selectedQuestion.category);
-    setQuizCorrectAnswers(selectedQuestion.correct_answer);
-    setQuizInCorrectAnswers(selectedQuestion.incorrect_answers);
+    showQuestion(quizQuestions, index);
   }
 
   function handleAnswer(event) {
