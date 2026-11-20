@@ -83,7 +83,13 @@ function Quiz() {
     //     ((index + 1) % (quizQuestions.length - 1)) + quizQuestions.length;
     //   }
     // };
-    if (index < 0 || index >= quizQuestions.length) return;
+    // if (index < 0 || index >= quizQuestions.length) return;
+
+    if (index >= quizQuestions.length) {
+      index = 0;
+    } else if (index < 0) {
+      index = quizQuestions.length - 1;
+    }
 
     document
       .querySelectorAll(".options")
@@ -99,7 +105,7 @@ function Quiz() {
     document
       .querySelectorAll(".options")
       .forEach((option) => option.classList.remove("answer"));
-    questionOptions.forEach((option, i) => {
+    questionOptions.forEach((option) => {
       if (clickedAnswer.textContent === option) {
         clickedAnswer.classList.add("answer");
       }
@@ -107,7 +113,6 @@ function Quiz() {
         // setQuizCorrectAnswers(quizCorrectAnswers.push(clickedAnswer));
         setQuizCorrectAnswers([...quizCorrectAnswers, clickedAnswer]);
       }
-      goto();
     });
   }
   return (
@@ -145,12 +150,14 @@ function Quiz() {
               <button
                 className="previous-button"
                 onClick={() => goto(indexNumber - 1)}
+                type="button"
               >
                 Previous
               </button>
               <button
                 className="next-button"
                 onClick={() => goto(indexNumber + 1)}
+                type="button"
               >
                 Next
               </button>
