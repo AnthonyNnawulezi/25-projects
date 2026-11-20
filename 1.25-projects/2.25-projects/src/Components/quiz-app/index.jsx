@@ -5,15 +5,27 @@ const NUMBER_OF_QUESTIONS = 10;
 const QUESTION_TYPE = "multiple";
 
 function Quiz() {
-  const [quizQuestion, setQuizQuestion] = useState("");
-  const [quizCorrectAnswer, setQuizCorrectAnswer] = useState("");
-  const [quizInCorrectAnswers, setQuizInCorrectAnswers] = useState("");
+  const [quizQuestion, setQuizQuestion] = useState([]);
+  const [quizCorrectAnswers, setQuizCorrectAnswers] = useState([]);
+  const [quizInCorrectAnswers, setQuizInCorrectAnswers] = useState([]);
   const [quizCategory, setQuizCategory] = useState("");
   const [quizQuestions, setQuizQuestions] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [questionNumber, setQuestionNumber] = useState(0);
   const [questionOptions, setQuestionOptions] = useState([]);
   let indexNumber = 0;
+
+  function showQuestion(questions, index) {
+    const { question, correct_answer, incorrect_answers, category } =
+      questions[index];
+
+    setQuizCategory(category);
+    setQuizInCorrectAnswers(incorrect_answers);
+    setQuizCorrectAnswers(correct_answer);
+    setQuizQuestion(question);
+    setQuestionNumber(index + 1);
+    setQuestionOptions([...incorrect_answers, correct_answer]);
+  }
 
   async function loadQuestions() {
     try {
@@ -24,12 +36,12 @@ function Quiz() {
       if (!response.ok) throw new Error("Network failure");
       const data = await response.json();
 
-      const apiQuestions = data.results ?? {};
+      const apiQuestions = data.results ?? [];
       console.log(apiQuestions);
 
-      if (quizQuestions <= 0) {
-        return <p>No Questions</p>;
-      }
+      //   if (quizQuestions <= 0) {
+      //     return <p>No Questions</p>;
+      //   }
 
       setQuizQuestions(apiQuestions);
 
@@ -39,7 +51,7 @@ function Quiz() {
             quizQuestion;
           setQuizCategory(category);
           setQuizInCorrectAnswers(incorrect_answers);
-          setQuizCorrectAnswer(correct_answer);
+          setQuizCorrectAnswers(correct_answer);
           setQuizQuestion(question);
           setQuestionNumber((prev) => prev + 1);
 
@@ -48,6 +60,8 @@ function Quiz() {
           setQuestionOptions(options);
         });
       }
+
+      showQuestion(apiQuestions, 0); // show the first question
     } catch (error) {
       <p>{error}</p>;
       console.error(error);
@@ -60,24 +74,43 @@ function Quiz() {
     loadQuestions();
   }, []);
 
-  function goto(index) {
-    if (indexNumber === index) {
-      indexNumber++;
-    }
-    for (let i = 0; i < quizQuestions.length; i++) {
-      ((index + 1) % (quizQuestions.length - 1)) + quizQuestions.length;
-    }
+  function goto(index, questions = quizQuestions) {
+    // if (indexNumber === index) {
+    //   indexNumber++;
+    // }
+    // const totalQuestions = () => {
+    //   for (let i = 0; i < quizQuestions.length; i++) {
+    //     ((index + 1) % (quizQuestions.length - 1)) + quizQuestions.length;
+    //   }
+    // };
+
+    const selectedQuestion = questions[index];
+
+    if (!selectedQuestion) return;
+
+    setIndexNumber(index);
+    setQuestionNumber(index + 1);
+    setQuizQuestion(selectedQuestion.question);
+    setQuizCategory(selectedQuestion.category);
+    setQuizCorrectAnswers(selectedQuestion.correct_answer);
+    setQuizInCorrectAnswers(selectedQuestion.incorrect_answers);
   }
 
   function handleAnswer(event) {
     const clickedAnswer = event.target;
     console.log(clickedAnswer);
-
+    document
+      .querySelectorAll(".options")
+      .forEach((option) => option.classList.remove("answer"));
     questionOptions.forEach((option, i) => {
       if (clickedAnswer.textContent === option) {
         clickedAnswer.classList.add("answer");
-        goto(i + 1, option.length);
       }
+      if (clickedAnswer.classList.contains("answer")) {
+        // setQuizCorrectAnswers(quizCorrectAnswers.push(clickedAnswer));
+        setQuizCorrectAnswers([...quizCorrectAnswers, clickedAnswer]);
+      }
+      goto();
     });
   }
   return (
