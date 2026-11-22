@@ -14,6 +14,8 @@ function Quiz() {
   const [questionNumber, setQuestionNumber] = useState(0);
   const [questionOptions, setQuestionOptions] = useState([]);
   const [indexNumber, setIndexNumber] = useState(0);
+  const [finished, setFinished] = useState(false);
+  const [score, setScore] = useState(0);
 
   function showQuestion(questions, index) {
     const { question, correct_answer, incorrect_answers, category } =
@@ -74,6 +76,30 @@ function Quiz() {
     loadQuestions();
   }, []);
 
+  function restartQuiz() {}
+
+  function showResult() {
+    // const notEmpty = questionOptions.some((option) => option != "");
+
+    // if (questionOptions.correct_answer) {
+    //   setScore((prev) => prev + 1);
+    // }
+
+    // if (index >= quizQuestions.length && notEmpty) {
+    //   document.querySelector(".quiz-options-box").innerHTML = (
+    //     <div className="result-container">
+    //       <p>Quiz Completed</p>
+    //       <p>Your Score: `{score}`</p>
+    //       <button onClick={restartQuiz}>Restart Quiz</button>
+    //     </div>
+    //   );
+    // }
+
+    if (indexNumber === quizQuestions.length - 1) {
+      setFinished(true);
+    }
+  }
+
   function goto(index) {
     // if (indexNumber === index) {
     //   indexNumber++;
@@ -84,11 +110,17 @@ function Quiz() {
     //   }
     // };
     // if (index < 0 || index >= quizQuestions.length) return;
+    if (index < 0) return;
+
+    // if (index >= quizQuestions.length) {
+    //   index = 0;
+    // } else if (index < 0) {
+    //   index = quizQuestions.length - 1;
+    // }
 
     if (index >= quizQuestions.length) {
-      index = 0;
-    } else if (index < 0) {
-      index = quizQuestions.length - 1;
+      setFinished(true);
+      return;
     }
 
     document
@@ -97,10 +129,11 @@ function Quiz() {
 
     setIndexNumber(index);
     showQuestion(quizQuestions, index);
+    // showResult();
   }
 
   function handleAnswer(event) {
-    const clickedAnswer = event.target;
+    const clickedAnswer = event.currentTarget;
     console.log(clickedAnswer);
     document
       .querySelectorAll(".options")
@@ -113,7 +146,27 @@ function Quiz() {
         // setQuizCorrectAnswers(quizCorrectAnswers.push(clickedAnswer));
         setQuizCorrectAnswers([...quizCorrectAnswers, clickedAnswer]);
       }
+
+      if (option.correct_answer) {
+        setScore((prev) => prev + 1);
+      }
+
+      const isIncorrect = questionOptions.filter(
+        (prev) => prev == questionOptions.incorrect_answers,
+      );
+      setQuizInCorrectAnswers([...isIncorrect]);
+      showResult();
     });
+  }
+  if (finished) {
+    return (
+      <div className="result-container">
+        <p>Quiz Completed</p>
+        <p>
+          Your Score: {score} out of {quizQuestions.length}
+        </p>
+      </div>
+    );
   }
   return (
     <main className="quiz-container">
@@ -151,6 +204,9 @@ function Quiz() {
                 className="previous-button"
                 onClick={() => goto(indexNumber - 1)}
                 type="button"
+                disabled={
+                  indexNumber < 0 || indexNumber >= quizQuestions.length
+                }
               >
                 Previous
               </button>
@@ -158,6 +214,9 @@ function Quiz() {
                 className="next-button"
                 onClick={() => goto(indexNumber + 1)}
                 type="button"
+                disabled={
+                  indexNumber < 0 || indexNumber >= quizQuestions.length
+                }
               >
                 Next
               </button>
