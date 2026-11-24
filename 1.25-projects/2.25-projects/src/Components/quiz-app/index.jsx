@@ -16,6 +16,7 @@ function Quiz() {
   const [indexNumber, setIndexNumber] = useState(0);
   const [finished, setFinished] = useState(false);
   const [score, setScore] = useState(0);
+  const [answeredQuestions, setAnsweredQuestions] = useState([]);
 
   function showQuestion(questions, index) {
     const { question, correct_answer, incorrect_answers, category } =
@@ -75,8 +76,6 @@ function Quiz() {
   useEffect(() => {
     loadQuestions();
   }, []);
-
-  function restartQuiz() {}
 
   function showResult() {
     // const notEmpty = questionOptions.some((option) => option != "");
@@ -146,18 +145,30 @@ function Quiz() {
         // setQuizCorrectAnswers(quizCorrectAnswers.push(clickedAnswer));
         setQuizCorrectAnswers([...quizCorrectAnswers, clickedAnswer]);
       }
-
-      if (option.correct_answer) {
-        setScore((prev) => prev + 1);
-      }
-
-      const isIncorrect = questionOptions.filter(
-        (prev) => prev == questionOptions.incorrect_answers,
-      );
-      setQuizInCorrectAnswers([...isIncorrect]);
-      showResult();
     });
+    const correctAnswer = quizQuestions[indexNumber].correct_answer;
+
+    if (clickedAnswer.textContent === correctAnswer) {
+      setScore((prev) => prev + 1);
+    }
+
+    // setAnsweredQuestions((prev) => [...prev, indexNumber]);
+
+    const isIncorrect = questionOptions.filter(
+      (prev) => prev == questionOptions.incorrect_answers,
+    );
+    setQuizInCorrectAnswers([...isIncorrect]);
+    showResult();
   }
+
+  function restartQuiz() {
+    setFinished(false); // Show the questions again
+    setIndexNumber(0); // Start at the first question
+    setScore(0); // Clear the score
+    setAnsweredQuestions([]); // Clear previous attempts
+    showQuestion(quizQuestions, 0); // restarts with the same questions
+  }
+
   if (finished) {
     return (
       <div className="result-container">
@@ -165,6 +176,9 @@ function Quiz() {
         <p>
           Your Score: {score} out of {quizQuestions.length}
         </p>
+        <button type="button" onClick={restartQuiz}>
+          Restart
+        </button>
       </div>
     );
   }
