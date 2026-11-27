@@ -166,7 +166,8 @@ function Quiz() {
     setIndexNumber(0); // Start at the first question
     setScore(0); // Clear the score
     setAnsweredQuestions([]); // Clear previous attempts
-    showQuestion(quizQuestions, 0); // restarts with the same questions
+    // showQuestion(quizQuestions, 0); // restarts with the same questions
+    loadQuestions(); //restarts with the new questions
   }
 
   if (finished) {

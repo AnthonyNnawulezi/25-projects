@@ -16,3 +16,8 @@
 .next-button {
   cursor: pointer;
 }
+
+.result-container {
+  padding: 12px;
+  background-color: cadetblue;
+}
